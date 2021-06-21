@@ -29,6 +29,6 @@ export default function auth (state = initialAuthState, action){
                 inProgress: false,
             };
         default:
-            break;
+            return state;
     }
 }
