@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/posts';
 import { PostsList } from './';
 
+import PropTypes from 'prop-types';
+
 class App extends React.Component {
   // to fetch the post from an api
   componentDidMount() {
@@ -27,6 +29,10 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
   };
+}
+
+App.propTypes = {
+    posts: PropTypes.array.isRequired,
 }
 
 // connect our app componnet to the redux store
