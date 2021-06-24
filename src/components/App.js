@@ -1,12 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Signup } from './';
 import * as jwtDecode from 'jwt-decode';
-import {authenticateUser} from '../actions/auth';
+import { authenticateUser } from '../actions/auth';
+
+const Settings = () => <div>Setting</div>;
+
+const PrivateRoute = (privateRouteProps) => {
+  // rename component as Component while destructuring props
+  const { isLoggedin, path, component: Component } = privateRouteProps;
+
+  // this props is the one passed by react-router-dom to Route component
+  return (
+    <Route
+      path={path}
+      render={(props) => {
+        // if user is logged in render the component
+        // otherwise redirect to login component
+        return isLoggedin ? <Component {...props} /> : <Redirect to="login" />;
+      }}
+    />
+  );
+};
 
 class App extends React.Component {
   // to fetch the post from an api
@@ -32,7 +56,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { posts } = this.props;
+    const { posts, auth } = this.props;
     return (
       <Router>
         <div>
@@ -50,11 +74,19 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) => {
+                // here we can use some logic to render
+                // different components and pass props
                 return <Home {...props} posts={posts} />;
               }}
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            {/* private route : settings component is accessible only when user is logged in */}
+            <PrivateRoute
+              path="/settings"
+              component={Settings}
+              isLoggedin={auth.isLoggedin}
+            />
             <Route component={Page404} />
           </Switch>
         </div>
@@ -66,6 +98,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts,
+    auth: state.auth,
   };
 }
 
