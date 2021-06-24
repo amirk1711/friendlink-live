@@ -7,4 +7,8 @@ export function getFormBody(params) {
         formBody.push(encodedKey + '=' + encodedValue);
     }
     return formBody.join('&');
-}   
+}
+
+export function getAuthTokenFromLocalStorage() {
+    return localStorage.getItem('token');
+}
