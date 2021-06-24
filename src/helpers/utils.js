@@ -5,7 +5,6 @@ export function getFormBody(params) {
         let encodedValue = encodeURIComponent(params[property]); //Amir Khan => Amir%20Khan
 
         formBody.push(encodedKey + '=' + encodedValue);
-
-        return formBody.join('&');
     }
+    return formBody.join('&');
 }   
