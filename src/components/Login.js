@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { Redirect } from 'react-router-dom';
+import { login, clearAuthState } from '../actions/auth';
 
 class Login extends Component {
   // to initialize a reference
@@ -16,23 +17,24 @@ class Login extends Component {
       password: '',
     };
   }
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthState());
+  }
 
   handleEmailChange = (e) => {
     // e.preventDefault();
     // console.log(e.target.value);
     this.setState({
-        email: e.target.value,
+      email: e.target.value,
     });
-
   };
 
   handlePasswordChange = (e) => {
     // e.preventDefault();
     // console.log(e.target.value);
     this.setState({
-        password: e.target.value,
+      password: e.target.value,
     });
-    
   };
 
   handleFormSubmit = (e) => {
@@ -41,16 +43,19 @@ class Login extends Component {
     // console.log('this.passwordInputRef', this.passwordInputRef);
     console.log('this.state', this.state);
 
-    const {email, password} = this.state;
-    if(email && password){
-        // but for now dispatch will not be avialable 
-        // because we have not connected it to store yet
-        this.props.dispatch(login(email, password));
+    const { email, password } = this.state;
+    if (email && password) {
+      // but for now dispatch will not be avialable
+      // because we have not connected it to store yet
+      this.props.dispatch(login(email, password));
     }
   };
 
   render() {
-      const {error, inProgress} = this.props.auth; 
+    const { error, inProgress, isLoggedin } = this.props.auth;
+    if (isLoggedin) {
+      return <Redirect to="/" />;
+    }
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>
@@ -74,7 +79,7 @@ class Login extends Component {
           />
         </div>
         <div className="field">
-        {inProgress ? (
+          {inProgress ? (
             <button onClick={this.handleFormSubmit} disabled={inProgress}>
               Logging in...
             </button>
@@ -83,18 +88,16 @@ class Login extends Component {
               Log In
             </button>
           )}
-
         </div>
       </form>
     );
   }
 }
 
-
-function mapStateToProps(state){
-    return {
-        auth: state.auth,
-    };
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
 }
 
 export default connect(mapStateToProps)(Login);

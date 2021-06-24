@@ -9,6 +9,7 @@ import {
   SIGNUP_SUCCESS,
   AUTHENTICATE_USER,
   LOG_OUT,
+  CLEAR_AUTH_STATE
 } from './actionTypes';
 
 export function startLogin() {
@@ -110,7 +111,7 @@ export function signup(email, password, confirmPassword, name) {
   };
 }
 
-export function startSingup() {
+export function startSignup() {
   return {
     type: SIGNUP_START,
   };
@@ -127,5 +128,11 @@ export function signupSuccessful(user) {
   return {
     type: SIGNUP_SUCCESS,
     user,
+  };
+}
+
+export function clearAuthState() {
+  return {
+    type: CLEAR_AUTH_STATE,
   };
 }
