@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Signup } from './';
+import * as jwtDecode from 'jwt-decode';
 
 class App extends React.Component {
   // to fetch the post from an api
@@ -12,6 +13,13 @@ class App extends React.Component {
     // dispatch an async action to fetch posts from an api
     // and store those posts in the redux store
     this.props.dispatch(fetchPosts());
+
+    const token = localStorage.getItem('token');
+    if(token){
+        // user is logged in
+        // get user out of token
+        const user  = jwtDecode(token);
+    }
   }
 
   render() {

@@ -54,6 +54,8 @@ export function login(email, password) {
         console.log('data', data);
         if (data.success) {
           // dispatch action to save user
+          //   save the token to make user persisitent
+          localStorage.setItem('token', data.data.token);
           dispatch(loginSuccess(data.data.user));
           return;
         }
@@ -76,7 +78,7 @@ export function logoutUser() {
 }
 
 export function signup(email, password, confirmPassword, name) {
-    // console.log('inside signup');
+  // console.log('inside signup');
   return (dispatch) => {
     const url = APIUrls.signup();
     // console.log('url', url);
@@ -93,9 +95,9 @@ export function signup(email, password, confirmPassword, name) {
       }),
     })
       .then((response) => {
-          console.log('response', response);
-          return response.json()
-        })
+        console.log('response', response);
+        return response.json();
+      })
       .then((data) => {
         console.log('data', data);
         if (data.success) {
