@@ -10,9 +10,8 @@ import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Signup, Settings } from './';
-import * as jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
-
 
 const PrivateRoute = (privateRouteProps) => {
   // rename component as Component while destructuring props
@@ -25,7 +24,22 @@ const PrivateRoute = (privateRouteProps) => {
       render={(props) => {
         // if user is logged in render the component
         // otherwise redirect to login component
-        return isLoggedin ? <Component {...props} /> : <Redirect to="login" />;
+        return isLoggedin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              // in state whatever data we pass will be
+              // given to the login component
+              state: {
+                // from: path from which user is coming to log in
+                from: props.location,
+                //this from will have an object like { pathname: '/settings'} if i am accessing settings page without logging in
+              },
+            }}
+          />
+        );
       }}
     />
   );
