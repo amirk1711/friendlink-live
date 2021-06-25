@@ -11,7 +11,6 @@ class CreatePost extends Component {
     }
 
     handleOnClick = () => {
-        // dispatch an action
         this.props.dispatch(createPost(this.state.content));
     };
 
@@ -31,7 +30,7 @@ class CreatePost extends Component {
 
                 <div>
                     <button id="add-post-btn" onClick={this.handleOnClick}>
-                        Post
+                        Add Post
                     </button>
                 </div>
             </div>
