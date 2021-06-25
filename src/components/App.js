@@ -10,7 +10,16 @@ import {
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup, Settings, UserProfile } from './';
+import { fetchUserFriends } from '../actions/friends';
+import {
+    Home,
+    Navbar,
+    Page404,
+    Login,
+    Signup,
+    Settings,
+    UserProfile,
+} from './';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
@@ -66,11 +75,13 @@ class App extends React.Component {
                     name: user.name,
                 })
             );
+
+            this.props.dispatch(fetchUserFriends());
         }
     }
 
     render() {
-        const { posts, auth } = this.props;
+        const { posts, auth, friends } = this.props;
         return (
             <Router>
                 <div>
@@ -90,7 +101,14 @@ class App extends React.Component {
                             render={(props) => {
                                 // here we can use some logic to render
                                 // different components and pass props
-                                return <Home {...props} posts={posts} />;
+                                return (
+                                    <Home
+                                        {...props}
+                                        posts={posts}
+                                        friends={friends}
+                                        isLoggedin={auth.isLoggedin}
+                                    />
+                                );
                             }}
                         />
                         <Route path="/login" component={Login} />
