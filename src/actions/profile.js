@@ -28,7 +28,7 @@ export function userProfileFailed(error) {
 
 export function fetchUserProfile(userId) {
     return (dispatch) => {
-        dispatch(startUserProfileFetch);
+        dispatch(startUserProfileFetch());
         const url = APIUrls.userProfile(userId);
         // Get request
         fetch(url, {
@@ -40,7 +40,11 @@ export function fetchUserProfile(userId) {
         .then(response => response.json())
         .then(data => {
             console.log('USER PROFILE data', data);
-            dispatch(data.data.user);
-        })
+            if(data.success){
+                dispatch(userProfileSuccess(data.data.user));
+                return;
+            }
+            dispatch(userProfileFailed(data.message));
+        });
     };
 }
