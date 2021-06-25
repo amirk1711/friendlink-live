@@ -12,18 +12,38 @@ class UserProfile extends Component {
         }
     }
 
+    checkIfUserIsAFriend = () => {
+        console.log('this.props', this.props);
+        const { match, friends } = this.props;
+        const userId = match.params.userId;
+
+        // index of the user id of the particualr user in friends array
+        const index = friends
+            .mqp((friend) => friend.to_user._id)
+            .indexOf(userId);
+
+        if (index !== -1) {
+            // user is friend
+            return true;
+        }
+        return false;
+    };
+
     render() {
         const {
-            match: { params }, profile
+            match: { params },
+            profile,
         } = this.props;
         console.log('this.props', params);
         const user = profile.user;
 
-        console.log('profile.inProgress', profile.inProgress)
-        if(profile.inProgress){
+        console.log('profile.inProgress', profile.inProgress);
+        if (profile.inProgress) {
             // TODO: show a loader
             return <h4>Loading...</h4>;
         }
+
+        const isUserAFriend = this.checkIfUserIsAFriend();
         return (
             <div className="settings">
                 <div className="img-container">
@@ -44,16 +64,23 @@ class UserProfile extends Component {
                 </div>
 
                 <div className="btn-grp">
-                    <button className="button save-btn">Add Friend</button>
+                    {!isUserAFriend ? (
+                        <button className="button save-btn">Add Friend</button>
+                    ) : (
+                        <button className="button save-btn">
+                            Remove Friend
+                        </button>
+                    )}
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps ({profile}) {
+function mapStateToProps({ profile, friends }) {
     return {
         profile,
+        friends,
     };
 }
 
