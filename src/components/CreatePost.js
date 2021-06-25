@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createPost } from '../actions/posts';
 
 class CreatePost extends Component {
     constructor(props) {
@@ -10,11 +12,12 @@ class CreatePost extends Component {
 
     handleOnClick = () => {
         // dispatch an action
+        this.props.dispatch(createPost(this.state.content));
     };
 
     handleChange = (e) => {
         this.setState({
-            content: e.target.value
+            content: e.target.value,
         });
     };
     render() {
@@ -27,11 +30,15 @@ class CreatePost extends Component {
                 />
 
                 <div>
-                    <button id="add-post-btn" onClick={this.handleOnClick}>Post</button>
+                    <button id="add-post-btn" onClick={this.handleOnClick}>
+                        Post
+                    </button>
                 </div>
             </div>
         );
     }
 }
 
-export default CreatePost;
+// if i dont pass any function then
+// i'll get only dispatch
+export default connect()(CreatePost);
