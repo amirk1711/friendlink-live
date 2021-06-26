@@ -93,7 +93,7 @@ export function addComment(comment, postId) {
 // because like can be made either on post or comment
 export function addLike(id, likeType, userId) {
     return (dispatch) => {
-        const url = APIUrls.toggleLike();
+        const url = APIUrls.toggleLike(id, likeType);
         fetch(url, {
             method: 'POST',
             headers: {
