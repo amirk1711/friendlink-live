@@ -23,17 +23,18 @@ import {
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
+// PrivateRoute is a functional component
 const PrivateRoute = (privateRouteProps) => {
     // rename component as Component while destructuring props
     const { isLoggedin, path, component: Component } = privateRouteProps;
 
-    // this props is the one passed by react-router-dom to Route component
     return (
         <Route
             path={path}
             render={(props) => {
-                // if user is logged in render the component
-                // otherwise redirect to login component
+                // this props is props passed by React Router
+                // if user is logged in, render the passed component
+                // otherwise redirect to the login component
                 return isLoggedin ? (
                     <Component {...props} />
                 ) : (
@@ -68,6 +69,7 @@ class App extends React.Component {
             // get user out of token
             const user = jwtDecode(token);
             console.log('user', user);
+            // authenticate user
             this.props.dispatch(
                 authenticateUser({
                     email: user.email,
@@ -76,6 +78,7 @@ class App extends React.Component {
                 })
             );
 
+            // fetch user friends
             this.props.dispatch(fetchUserFriends());
         }
     }
@@ -86,19 +89,12 @@ class App extends React.Component {
             <Router>
                 <div>
                     <Navbar />
-                    {/* <PostsList posts={posts} /> */}
-
-                    {/* whatever is above this will be common for every route */}
-                    {/* <Route exact path="/" component={Home} /> */}
-                    {/* to pass props into Home */}
-                    {/* this props is provided by react router */}
-                    {/* switch will render only the first route that matches 
-          the path and wont go further down in the Route list */}
                     <Switch>
                         <Route
                             exact
                             path="/"
                             render={(props) => {
+                                // this props is props passed by React Router
                                 // here we can use some logic to render
                                 // different components and pass props
                                 return (
@@ -108,6 +104,8 @@ class App extends React.Component {
                                         friends={friends}
                                         isLoggedin={auth.isLoggedin}
                                     />
+                                    // now Home component will get posts, friends, isLoggedin
+                                    // and history, locations, match, etc as props
                                 );
                             }}
                         />
@@ -132,6 +130,8 @@ class App extends React.Component {
     }
 }
 
+// take any state from the redux store and
+// pass it to the props of the app component
 function mapStateToProps(state) {
     return {
         posts: state.posts,
@@ -140,9 +140,36 @@ function mapStateToProps(state) {
     };
 }
 
+// validate prop types
 App.propTypes = {
     posts: PropTypes.array.isRequired,
 };
 
-// connect our app componnet to the redux store
+// connect our react app component to the redux store
 export default connect(mapStateToProps)(App);
+
+
+/*
+
+App >
+	Navbar
+
+	Home(/) >
+		PostList >
+			CreatePost
+			Post >
+				Comment
+		FriendList >
+			FriendListItem
+
+	Login(/login)
+
+	Signup(/signup)
+
+	Settings(/settings)
+
+	UserProfile(/user/:id)
+
+    Page404(/random)
+
+*/

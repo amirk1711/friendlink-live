@@ -4,6 +4,7 @@ import { createPost } from '../actions/posts';
 
 class CreatePost extends Component {
     constructor(props) {
+        // only dispatch function is available in the props
         super(props);
         this.state = {
             content: '',
@@ -24,13 +25,14 @@ class CreatePost extends Component {
             <div className="create-post">
                 <textarea
                     className="add-post"
+                    placeholder="Type here to post..."
                     value={this.state.content}
                     onChange={this.handleChange}
                 />
 
                 <div>
                     <button id="add-post-btn" onClick={this.handleOnClick}>
-                        Add Post
+                        Post
                     </button>
                 </div>
             </div>
@@ -38,6 +40,6 @@ class CreatePost extends Component {
     }
 }
 
-// if i dont pass any function then
-// i'll get only dispatch
+// if i dont pass any callback function like mapStatetoProps then
+// i'll get only dispatch function in the CreatePost component
 export default connect()(CreatePost);

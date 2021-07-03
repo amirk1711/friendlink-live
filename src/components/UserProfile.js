@@ -31,13 +31,16 @@ class UserProfile extends Component {
         const {
             match: { params: currentParams },
         } = this.props;
-        if(prevParams && currentParams && prevParams.userId !== currentParams.userId) {
+        if (
+            prevParams &&
+            currentParams &&
+            prevParams.userId !== currentParams.userId
+        ) {
             this.props.dispatch(fetchUserProfile(currentParams.userId));
         }
     }
 
     checkIfUserIsAFriend = () => {
-        console.log('this.props', this.props);
         const { match, friends } = this.props;
         const userId = match.params.userId;
 
@@ -83,7 +86,6 @@ class UserProfile extends Component {
     };
 
     handleRemoveFriendClick = async () => {
-        // Mini Assignment
         const { match } = this.props;
         const url = APIUrls.removeFriend(match.params.userId);
 
@@ -123,7 +125,7 @@ class UserProfile extends Component {
         const user = profile.user;
 
         if (profile.inProgress) {
-            return <h1>Loading!</h1>;
+            return <h1>Loading...</h1>;
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();

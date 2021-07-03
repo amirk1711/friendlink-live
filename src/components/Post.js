@@ -8,11 +8,11 @@ import { addLike, createComment } from '../actions/posts';
 class Post extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             comment: '',
         };
     }
+
     handleAddComment = (e) => {
         const { comment } = this.state;
         const { post } = this.props;
@@ -114,6 +114,7 @@ class Post extends Component {
     }
 }
 
+// validate prop types
 Post.propTypes = {
     post: PropTypes.object.isRequired,
 };
@@ -123,4 +124,5 @@ function mapStateToProps({ auth }) {
         user: auth.user,
     };
 }
+
 export default connect(mapStateToProps)(Post);
