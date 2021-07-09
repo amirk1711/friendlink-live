@@ -40,6 +40,21 @@ const CreatePost = (props) => {
             // if user has uploded a photo
             // set that photo in 'image' variable
             setImage(e.target.files[0]);
+
+            // Get the selected file
+            const [file] = e.target.files;
+            // Get the file name and size
+            let { name: fileName, size } = file;
+            let spanElement = document.querySelector('.file-name');
+            let width = spanElement.offsetWidth;
+            // Convert size in bytes to MB
+            const fileSize = (size / 1000000).toFixed(2);
+            if(fileName.length > width/10){
+                fileName = fileName.substr(0, parseInt(width/10));
+            }
+            // Set the text content
+            const fileNameAndSize = `${fileName} - ${fileSize}MB`;
+            spanElement.innerHTML = fileNameAndSize;
         }
     };
 
@@ -47,35 +62,32 @@ const CreatePost = (props) => {
 
     return (
         <div className="create-post">
-            <input type="file" onChange={handleChange} />
-            <div>
-                {progress > 0 && progress < 100 ? (
-                    <div>
-                        <progress value={progress} max="100" />
-                        <button
-                            id="add-post-btn"
-                            onClick={handleOnClick}
-                            disabled={true}
-                        >
-                            Posting...
-                        </button>
-                    </div>
-                ) : (
-                    <button id="add-post-btn" onClick={handleOnClick}>
-                        Post
-                    </button>
-                )}
+            {/* With file inputs, clicking on the label also opens up the file picker */}
+            <div className="file-input">
+                <input
+                    type="file"
+                    id="file"
+                    className="file"
+                    onChange={handleChange}
+                />
+                <label htmlFor="file">Choose file...</label>
+                <span className="file-name"></span>
             </div>
 
-            <br />
-            {url}
-            <br />
-            <img
-                src={url || 'http://via.placeholder.com/300x250'}
-                alt="post-pic"
-                height={250}
-                width={300}
-            />
+            {progress > 0 && progress < 100 ? (
+                    <button
+                        id="add-post-btn"
+                        onClick={handleOnClick}
+                        disabled={true}
+                    >
+                        Posting...
+                    </button>
+            ) : (
+                <button id="add-post-btn" onClick={handleOnClick}>
+                    Post
+                </button>
+            )}
+            
         </div>
     );
 };
