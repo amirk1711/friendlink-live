@@ -36,7 +36,7 @@ export function addPost(post) {
     };
 }
 
-export function createPost(content) {
+export function createPost(postImageUrl) {
     return (dispatch) => {
         const url = APIUrls.createPost();
 
@@ -47,7 +47,7 @@ export function createPost(content) {
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
             body: getFormBody({
-                content,
+                postImageUrl,
             }),
         })
             .then((response) => response.json())

@@ -523,3 +523,7 @@ nav .nav-links ul li:hover {
 #add-post-btn:hover {
     cursor: pointer;
 }
+
+#add-post-btn:disabled {
+    cursor: not-allowed;
+}
