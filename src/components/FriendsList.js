@@ -4,8 +4,6 @@ import { FriendsListItem } from './';
 const FriendsList = (props) => {
     return (
         <div className="friends-list">
-            <div className="header">Friends</div>
-
             {props.friends && props.friends.length === 0 && (
                 <div className="no-friends">No friends found!</div>
             )}

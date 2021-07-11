@@ -12,6 +12,39 @@ body {
 }
 
 /* COMMON */
+img {
+    display: block;   
+}
+.text-center {
+    text-align: center;
+}
+.copy-text {
+    color: #c5c5c5;
+}
+.mb-8 {
+    margin-bottom: 8px;
+}
+.no-link {
+    text-decoration: none;
+}
+.black-text {
+    color: var(--black-text);
+}
+.grey-text {
+    color: var(--light-grey);
+}
+.blue-text {
+    color: var(--blue);
+}
+.small-text {
+    font-size: 12px;
+}
+.medium-text {
+    font-size: 14px;
+}
+.bold-text{
+    font-weight: 600;
+}
 .no-btn {
     border: none;
     background-color: var(--light-white);
@@ -38,6 +71,23 @@ body {
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    object-fit: cover;
+}
+.small {
+    width: 22px;
+    height: 22px;
+}
+.medium {
+    width: 40px;
+    height: 40px;
+}
+.large {
+    width: 50px;
+    height: 50px;
 }
 
 /* Post Item */
@@ -418,58 +468,84 @@ nav .right-nav {
 
 /* HOME AND FRIENDSLIST COMPONENT */
 .home {
-    padding: 20px 50px;
-    display: flex;
-    width: 65%;
+    position: relative;
+    width: 80%;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
-.home .posts-list {
-    flex-grow: 0.8;
-}
-.friends-list {
-    background: #fff;
-    margin-left: 50px;
-    flex-grow: 0.2;
-    height: 50vh;
+.posts-list {
+    padding-top: 20px;
+    width: 65%;
+    height: calc(100vh - 60px);
     box-sizing: border-box;
-    margin-top: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    overflow-y: scroll;
+    overflow: scroll;
+    margin-right: 30px;
 }
-.friends-list .header {
-    border-bottom: 1px solid #e0e0e0;
-    font-weight: 600;
-    font-size: 16px;
-    color: #424242;
-    padding: 20px;
+.posts-list::-webkit-scrollbar {
+    display: none;
 }
-.friends-list .friends-img img {
-    height: 40px;
+.side-bar {
+    padding-top: 20px;
+    width: 30%;
+    background: var(--light-white);
+    height: calc(100vh - 60px);
+    box-sizing: border-box;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
 }
+.side-bar::-webkit-scrollbar {
+    display: none;
+}
+.friends-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.suggestions-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.friends-list {
+    height: 202px;
+    overflow: scroll;
+}
+.friends-list::-webkit-scrollbar {
+    display: none;
+}
+
 .no-friends {
     display: flex;
     justify-content: center;
     margin: 20px 0;
 }
 .friends-item {
+    padding: 2px;
     display: flex;
     align-items: center;
-    padding: 5px 10px;
-    color: #616161;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 22px;
+    justify-content: center;
     text-decoration: none;
+    margin-bottom: 6px;
 }
-.friends-item:hover {
+.friends-detail {
+    margin-left: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.friends-action {
     cursor: pointer;
-    background-color: #f1f1f1;
 }
-.friends-name {
-    padding: 0 10px;
+
+.follow-suggestion {
+    cursor: pointer;
 }
+
 
 /* LOGIN & SIGNUP COMPONENTS */
 .login-signup-header {

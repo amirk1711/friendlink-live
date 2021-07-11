@@ -12,7 +12,9 @@ import FriendsListItem from './FriendsListItem';
 import CreatePost from './CreatePost';
 import Post from './Post';
 import Comment from './Comment';
-
+import Sidebar from './Sidebar';
+import SuggestionsList from './SuggestionsList';
+import SuggestionsListItem from './SuggestionsListItem';
 
 export {
     PostsList,
@@ -29,4 +31,7 @@ export {
     CreatePost,
     Post,
     Comment,
+    Sidebar,
+    SuggestionsList,
+    SuggestionsListItem,
 };
