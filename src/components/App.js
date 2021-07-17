@@ -13,7 +13,6 @@ import { fetchPosts } from '../actions/posts';
 import { fetchUserFriends } from '../actions/friends';
 import {
     Home,
-    Navbar,
     Page404,
     Login,
     Signup,
@@ -88,7 +87,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Navbar />
+                    {/* <Navbar /> */}
                     <Switch>
                         <Route
                             exact

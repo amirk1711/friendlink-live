@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { login, clearAuthState } from '../actions/auth';
 
 class Login extends Component {
@@ -42,27 +42,29 @@ class Login extends Component {
     };
 
     render() {
+        console.log('props from login', this.props);
         const { error, inProgress, isLoggedin } = this.props.auth;
-        const { from } = this.props.location.state || {
-            from: { pathname: '/' },
-        };
+        const { from } =
+            {
+                from: { pathname: '/' },
+            } || this.props.location.state;
         if (isLoggedin) {
             return <Redirect to={from} />;
         }
         return (
             <form className="login-form">
-                <span className="login-signup-header">Log In</span>
+                <h1 className="login-header">Friendlink</h1>
                 {error && <div className="alert error-dailog">{error}</div>}
-                <div className="field">
+                <div className="login-field">
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="Email or username"
                         required
                         onChange={this.handleEmailChange}
                         value={this.state.email}
                     />
                 </div>
-                <div className="field">
+                <div className="login-field">
                     <input
                         type="password"
                         placeholder="Password"
@@ -71,7 +73,7 @@ class Login extends Component {
                         value={this.state.password}
                     />
                 </div>
-                <div className="field">
+                <div className="login-field">
                     {inProgress ? (
                         <button
                             onClick={this.handleFormSubmit}
@@ -87,6 +89,27 @@ class Login extends Component {
                             Log In
                         </button>
                     )}
+                </div>
+
+                <div className="other-actions">
+                    <div className="or-text">
+                        <div className="left-line"></div>OR
+                        <div className="right-line"></div>
+                    </div>
+                    <Link className="social-auth">
+                        <img
+                            src="https://image.flaticon.com/icons/png/128/281/281764.png"
+                            alt=""
+                        />
+                        Continue with Google
+                    </Link>
+                    <Link className="forgot-text">Forgot Password?</Link>
+                    <span className="signup-text">
+                        Don't have an account?{' '}
+                        <Link to="/signup" className="blue-text">
+                            Sign up
+                        </Link>
+                    </span>
                 </div>
             </form>
         );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startSignup, signup, clearAuthState } from '../actions/auth';
 
@@ -10,7 +10,7 @@ class Signup extends Component {
             email: '',
             password: '',
             name: '',
-            confirmPassword: '',
+            username: '',
         };
     }
 
@@ -42,19 +42,10 @@ class Signup extends Component {
 
         return (
             <form className="login-form">
-                <span className="login-signup-header"> Signup</span>
+                <h1 className="login-header">Friendlink</h1>
                 {error && <div className="alert error-dailog">{error}</div>}
-                <div className="field">
-                    <input
-                        placeholder="Name"
-                        type="text"
-                        required
-                        onChange={(e) =>
-                            this.handleInputChange('name', e.target.value)
-                        }
-                    />
-                </div>
-                <div className="field">
+
+                <div className="login-field">
                     <input
                         placeholder="Email"
                         type="email"
@@ -64,19 +55,21 @@ class Signup extends Component {
                         }
                     />
                 </div>
-                <div className="field">
+
+                <div className="login-field">
                     <input
-                        placeholder="Password"
-                        type="password"
+                        placeholder="Name"
+                        type="text"
                         required
                         onChange={(e) =>
-                            this.handleInputChange('password', e.target.value)
+                            this.handleInputChange('name', e.target.value)
                         }
                     />
                 </div>
-                <div className="field">
+
+                <div className="login-field">
                     <input
-                        placeholder="Confirm Password"
+                        placeholder="Username"
                         type="password"
                         required
                         onChange={(e) =>
@@ -87,7 +80,19 @@ class Signup extends Component {
                         }
                     />
                 </div>
-                <div className="field">
+
+                <div className="login-field">
+                    <input
+                        placeholder="Password"
+                        type="password"
+                        required
+                        onChange={(e) =>
+                            this.handleInputChange('password', e.target.value)
+                        }
+                    />
+                </div>
+
+                <div className="login-field">
                     {inProgress ? (
                         <button
                             onClick={this.onFormSubmit}
@@ -103,6 +108,28 @@ class Signup extends Component {
                             Sign Up
                         </button>
                     )}
+                </div>
+
+                <div className="other-actions">
+                    <div className="or-text">
+                        <div className="left-line"></div>OR
+                        <div className="right-line"></div>
+                    </div>
+
+                    <Link className="social-auth">
+                        <img
+                            src="https://image.flaticon.com/icons/png/128/281/281764.png"
+                            alt=""
+                        />
+                        Continue with Google
+                    </Link>
+
+                    <span className="signup-text">
+                        Already have an account?{' '}
+                        <Link to="/login" className="blue-text">
+                            Log in
+                        </Link>
+                    </span>
                 </div>
             </form>
         );

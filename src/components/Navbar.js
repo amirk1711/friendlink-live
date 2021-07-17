@@ -61,24 +61,26 @@ class Navbar extends React.Component {
                     )}
                 </div>
                 <div className="right-nav">
-                    <div className="nav-icons">
-                        <div className="nav-icon-item">
-                            <HomeOutlined />
+                    {auth.isLoggedin && (
+                        <div className="nav-icons">
+                            <div className="nav-icon-item">
+                                <HomeOutlined />
+                            </div>
+                            <div className="nav-icon-item">
+                                <NotificationsOutlined />
+                                <span className="nav-icon-badge"></span>
+                            </div>
+                            <div className="nav-icon-item">
+                                <MessageOutlined />
+                                <span className="nav-icon-badge"></span>
+                            </div>
                         </div>
-                        <div className="nav-icon-item">
-                            <NotificationsOutlined />
-                            <span className="nav-icon-badge"></span>
-                        </div>
-                        <div className="nav-icon-item">
-                            <MessageOutlined />
-                            <span className="nav-icon-badge"></span>
-                        </div>
-                        
-                    </div>
+                    )}
 
                     {auth.isLoggedin && (
                         <div className="user">
-                            <Link to="/settings">
+                            {/* /settings */}
+                            <Link to={`/user/${auth.user._id}`}>
                                 {/* <Person id="user-dp"/> */}
                                 <img
                                     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
@@ -91,6 +93,7 @@ class Navbar extends React.Component {
                     )}
 
                     <div className="nav-links">
+                        {/* {!auth.isLoggedin && ()} */}
                         <ul>
                             {!auth.isLoggedin && (
                                 <li>
@@ -98,15 +101,15 @@ class Navbar extends React.Component {
                                 </li>
                             )}
 
-                            {auth.isLoggedin && (
-                                <li onClick={this.logOut}>
-                                    <LogoutOutlined />
-                                </li>
-                            )}
-
                             {!auth.isLoggedin && (
                                 <li>
                                     <Link to="/signup">Register</Link>
+                                </li>
+                            )}
+
+                            {auth.isLoggedin && (
+                                <li onClick={this.logOut}>
+                                    <LogoutOutlined />
                                 </li>
                             )}
                         </ul>

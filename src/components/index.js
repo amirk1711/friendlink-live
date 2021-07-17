@@ -15,6 +15,11 @@ import Comment from './Comment';
 import Sidebar from './Sidebar';
 import SuggestionsList from './SuggestionsList';
 import SuggestionsListItem from './SuggestionsListItem';
+import ProfilePostCard from './ProfilePostCard';
+import EditProfile from './EditProfile';
+import ChangePassword from './ChangePassword';
+import DeleteAccount from './DeleteAccount';
+import Help from './Help';
 
 export {
     PostsList,
@@ -34,4 +39,9 @@ export {
     Sidebar,
     SuggestionsList,
     SuggestionsListItem,
+    ProfilePostCard,
+    EditProfile,
+    ChangePassword,
+    DeleteAccount,
+    Help,
 };
