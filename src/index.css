@@ -432,17 +432,23 @@ nav .right-nav {
     position: relative;
     color: var(--black);
 }
+.noti-icon {
+    width: 23px !important;
+    height: 23px !important;
+}
+.msg-icon {
+    width: 21px !important;
+    height: 21px !important;
+}
 .nav-icon-badge {
-    background-color: rgb(236, 55, 55);
-    border-radius: 50%;
+    color: rgb(236, 55, 55);
+    font-size: 16px;
     position: absolute;
-    top: 24px;
-    left: 1px;
+    top: 16px;
+    left: -1px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 3px;
-    width: 3px;
 }
 .user {
     width: 50%;
@@ -458,10 +464,13 @@ nav .right-nav {
     object-fit: cover;
 }
 
+/* 
 .nav-links {
-    /* width: 10%; */
-    border: 1px solid red;
+    width: 10%; 
+    border: 1px solid red; 
 }
+*/
+
 .nav-links ul {
     display: flex;
     list-style-type: none;
@@ -503,9 +512,7 @@ nav .right-nav {
 .posts-list::-webkit-scrollbar {
     display: none;
 }
-/* .post-list::-moz-scrollbar {
-    display: none;
-} */
+
 .side-bar {
     padding-top: 20px;
     width: 30%;
@@ -977,4 +984,9 @@ textarea:focus {
 }
 #add-post-btn:disabled {
     cursor: not-allowed;
+}
+
+.footer-text {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }

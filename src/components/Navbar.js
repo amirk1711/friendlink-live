@@ -64,15 +64,15 @@ class Navbar extends React.Component {
                     {auth.isLoggedin && (
                         <div className="nav-icons">
                             <div className="nav-icon-item">
-                                <HomeOutlined />
+                                <HomeOutlined className="home-icon" />
                             </div>
                             <div className="nav-icon-item">
-                                <NotificationsOutlined />
-                                <span className="nav-icon-badge"></span>
+                                <NotificationsOutlined className="noti-icon" />
+                                <span className="nav-icon-badge">&bull;</span>
                             </div>
                             <div className="nav-icon-item">
-                                <MessageOutlined />
-                                <span className="nav-icon-badge"></span>
+                                <MessageOutlined className="msg-icon" />
+                                <span className="nav-icon-badge">&bull;</span>
                             </div>
                         </div>
                     )}
@@ -93,20 +93,7 @@ class Navbar extends React.Component {
                     )}
 
                     <div className="nav-links">
-                        {/* {!auth.isLoggedin && ()} */}
                         <ul>
-                            {!auth.isLoggedin && (
-                                <li>
-                                    <Link to="/login">Log in</Link>
-                                </li>
-                            )}
-
-                            {!auth.isLoggedin && (
-                                <li>
-                                    <Link to="/signup">Register</Link>
-                                </li>
-                            )}
-
                             {auth.isLoggedin && (
                                 <li onClick={this.logOut}>
                                     <LogoutOutlined />

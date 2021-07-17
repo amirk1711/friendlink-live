@@ -52,66 +52,75 @@ class Login extends Component {
             return <Redirect to={from} />;
         }
         return (
-            <form className="login-form">
-                <h1 className="login-header">Friendlink</h1>
-                {error && <div className="alert error-dailog">{error}</div>}
-                <div className="login-field">
-                    <input
-                        type="email"
-                        placeholder="Email or username"
-                        required
-                        onChange={this.handleEmailChange}
-                        value={this.state.email}
-                    />
-                </div>
-                <div className="login-field">
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        required
-                        onChange={this.handlePasswordChange}
-                        value={this.state.password}
-                    />
-                </div>
-                <div className="login-field">
-                    {inProgress ? (
-                        <button
-                            onClick={this.handleFormSubmit}
-                            disabled={inProgress}
-                        >
-                            Logging in...
-                        </button>
-                    ) : (
-                        <button
-                            onClick={this.handleFormSubmit}
-                            disabled={inProgress}
-                        >
-                            Log In
-                        </button>
-                    )}
-                </div>
-
-                <div className="other-actions">
-                    <div className="or-text">
-                        <div className="left-line"></div>OR
-                        <div className="right-line"></div>
-                    </div>
-                    <Link className="social-auth">
-                        <img
-                            src="https://image.flaticon.com/icons/png/128/281/281764.png"
-                            alt=""
+            <div>
+                <form className="login-form">
+                    <h1 className="login-header">Friendlink</h1>
+                    {error && <div className="alert error-dailog">{error}</div>}
+                    <div className="login-field">
+                        <input
+                            type="email"
+                            placeholder="Email or username"
+                            required
+                            onChange={this.handleEmailChange}
+                            value={this.state.email}
                         />
-                        Continue with Google
-                    </Link>
-                    <Link className="forgot-text">Forgot Password?</Link>
-                    <span className="signup-text">
-                        Don't have an account?{' '}
-                        <Link to="/signup" className="blue-text">
-                            Sign up
+                    </div>
+                    <div className="login-field">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            required
+                            onChange={this.handlePasswordChange}
+                            value={this.state.password}
+                        />
+                    </div>
+                    <div className="login-field">
+                        {inProgress ? (
+                            <button
+                                onClick={this.handleFormSubmit}
+                                disabled={inProgress}
+                            >
+                                Logging in...
+                            </button>
+                        ) : (
+                            <button
+                                onClick={this.handleFormSubmit}
+                                disabled={inProgress}
+                            >
+                                Log In
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="other-actions">
+                        <div className="or-text">
+                            <div className="left-line"></div>OR
+                            <div className="right-line"></div>
+                        </div>
+                        <Link className="social-auth">
+                            <img
+                                src="https://image.flaticon.com/icons/png/128/281/281764.png"
+                                alt=""
+                            />
+                            Continue with Google
                         </Link>
+                        <Link className="forgot-text">Forgot Password?</Link>
+                        <span className="signup-text">
+                            Don't have an account?{' '}
+                            <Link to="/signup" className="blue-text">
+                                Sign up
+                            </Link>
+                        </span>
+                    </div>
+                </form>
+
+                <div className="text-center footer-text">
+                    <span className="copy-text medium-text">
+                        &copy; {new Date().getFullYear()} Friendlink From Amir
+                        Khan
                     </span>
                 </div>
-            </form>
+            </div>
         );
     }
 }

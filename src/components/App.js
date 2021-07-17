@@ -18,6 +18,7 @@ import {
     Signup,
     Settings,
     UserProfile,
+    Navbar
 } from './';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
@@ -84,10 +85,11 @@ class App extends React.Component {
 
     render() {
         const { posts, auth, friends } = this.props;
+        const { isLoggedin } = auth;
         return (
             <Router>
                 <div>
-                    {/* <Navbar /> */}
+                    {isLoggedin && <Navbar />}
                     <Switch>
                         <Route
                             exact

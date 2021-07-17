@@ -37,20 +37,29 @@ class Settings extends Component {
     }
 
     render() {
-        let activeTab = 4;
+        let activeTab = 1;
         return (
-            <div className="settings">
-                <div className="setting-btns">
-                    <button>Edit Profile</button>
-                    <button>Change Password</button>
-                    <button>Delete Account</button>
-                    <button>Help</button>
+            <div>
+                <div className="settings">
+                    <div className="setting-btns">
+                        <button>Edit Profile</button>
+                        <button>Change Password</button>
+                        <button>Delete Account</button>
+                        <button>Help</button>
+                    </div>
+
+                    {activeTab === 1 && <EditProfile />}
+                    {activeTab === 2 && <ChangePassword />}
+                    {activeTab === 3 && <DeleteAccount />}
+                    {activeTab === 4 && <Help />}
                 </div>
 
-                {activeTab === 1 && <EditProfile />}
-                {activeTab === 2 && <ChangePassword />}
-                {activeTab === 3 && <DeleteAccount />}
-                {activeTab === 4 && <Help />}
+                <div className="text-center footer-text">
+                    <span className="copy-text medium-text">
+                        &copy; {new Date().getFullYear()} Friendlink From Amir
+                        Khan
+                    </span>
+                </div>
             </div>
         );
     }

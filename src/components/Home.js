@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PostsList, Sidebar, Navbar } from './';
+import { PostsList, Sidebar } from './';
 import { Redirect } from 'react-router-dom';
 
 class Home extends Component {
@@ -14,7 +14,6 @@ class Home extends Component {
                         }}
                     />
                 )}
-                {isLoggedin && <Navbar />}
                 {isLoggedin && <PostsList posts={posts} />}
                 {isLoggedin && (
                     <Sidebar friends={friends} suggestions={friends} />

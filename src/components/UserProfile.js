@@ -230,6 +230,13 @@ class UserProfile extends Component {
                     {activeTab === 2 && <FriendsList friends={friends} />}
                     {activeTab === 3 && <FriendsList friends={friends} />}
                 </div>
+
+                <div className="text-center footer-text">
+                    <span className="copy-text medium-text">
+                        &copy; {new Date().getFullYear()} Friendlink From Amir
+                        Khan
+                    </span>
+                </div>
             </div>
         );
     }
