@@ -42,12 +42,10 @@ class Login extends Component {
     };
 
     render() {
-        console.log('props from login', this.props);
         const { error, inProgress, isLoggedin } = this.props.auth;
-        const { from } =
-            {
-                from: { pathname: '/' },
-            } || this.props.location.state;
+        const { from } = this.props.location.state || {
+            from: { pathname: '/' },
+        };
         if (isLoggedin) {
             return <Redirect to={from} />;
         }
@@ -97,14 +95,14 @@ class Login extends Component {
                             <div className="left-line"></div>OR
                             <div className="right-line"></div>
                         </div>
-                        <Link className="social-auth">
+                        <Link className="social-auth" to="/#">
                             <img
                                 src="https://image.flaticon.com/icons/png/128/281/281764.png"
                                 alt=""
                             />
                             Continue with Google
                         </Link>
-                        <Link className="forgot-text">Forgot Password?</Link>
+                        <Link className="forgot-text" to="/#">Forgot Password?</Link>
                         <span className="signup-text">
                             Don't have an account?{' '}
                             <Link to="/signup" className="blue-text">

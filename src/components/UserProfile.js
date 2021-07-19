@@ -18,7 +18,6 @@ class UserProfile extends Component {
     }
     componentDidMount() {
         const { match } = this.props;
-
         if (match.params.userId) {
             // dispatch an action
             this.props.dispatch(fetchUserProfile(match.params.userId));
@@ -126,6 +125,8 @@ class UserProfile extends Component {
             auth,
             friends,
         } = this.props;
+        
+        console.log('props in profile', this.props);
         console.log('this.props', params);
         const user = profile.user;
         console.log('auth user', auth.user);
@@ -242,11 +243,12 @@ class UserProfile extends Component {
     }
 }
 
-function mapStateToProps({ profile, friends, auth }) {
+function mapStateToProps({ profile, friends, auth, posts }) {
     return {
         profile,
         friends,
         auth,
+        posts,
     };
 }
 export default connect(mapStateToProps)(UserProfile);

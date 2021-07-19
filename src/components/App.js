@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
-import { fetchUserFriends } from '../actions/friends';
+// import { fetchUserFriends } from '../actions/friends';
 import {
     Home,
     Page404,
@@ -68,7 +68,6 @@ class App extends React.Component {
             // user is logged in
             // get user out of token
             const user = jwtDecode(token);
-            console.log('user', user);
             // authenticate user
             this.props.dispatch(
                 authenticateUser({
@@ -79,7 +78,7 @@ class App extends React.Component {
             );
 
             // fetch user friends
-            this.props.dispatch(fetchUserFriends());
+            // this.props.dispatch(fetchUserFriends());
         }
     }
 

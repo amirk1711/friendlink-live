@@ -4,7 +4,6 @@ import { FriendsList, SuggestionsList } from './';
 class Sidebar extends Component {
     render() {
         const { friends, suggestions } = this.props;
-        console.log('porps from sidebar', this.props);
         return (
             <div className="side-bar">
                 <div className="friends-list-wrapper">

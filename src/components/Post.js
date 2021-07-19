@@ -20,17 +20,20 @@ class Post extends Component {
     }
 
     handleAddComment = (e) => {
+        e.preventDefault();
+
         const { comment } = this.state;
         const { post } = this.props;
 
-        if (e.key === 'Enter') {
-            this.props.dispatch(createComment(comment, post._id));
+        console.log('comment', comment);
+        console.log('post', post);
 
-            // clear comment
-            this.setState({
-                comment: '',
-            });
-        }
+        this.props.dispatch(createComment(comment, post._id));
+
+        // clear comment
+        this.setState({
+            comment: '',
+        });
     };
 
     handleOnCommentChange = (e) => {
@@ -48,7 +51,10 @@ class Post extends Component {
         const { post, user } = this.props;
         const { comment } = this.state;
 
-        const isPostLikedByUser = post.likes.includes(user._id);
+        const isPostLikedByUser = post.likes.some(
+            (like) => like._id === user._id || like === user._id
+        );
+
         return (
             <div className="post">
                 <div className="post-wrapper" key={post._id}>
@@ -56,16 +62,16 @@ class Post extends Component {
                         <div className="post-top-left">
                             <Link to={`/user/${post.user._id}`}>
                                 <img
-                                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                                    src={post.user.avatar}
                                     alt="user-pic"
                                     className="post-profile-image"
                                 />
                             </Link>
                             <div className="post-details">
                                 <span className="post-author">
-                                    {post.user.name}
+                                    {post.user.username}
                                 </span>
-                                <span className="post-time">7m ago</span>
+                                <span className="post-time">2m ago</span>
                             </div>
                         </div>
 
@@ -76,7 +82,7 @@ class Post extends Component {
 
                     <div className="post-center">
                         <img
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+                            src={post.content}
                             className="post-image"
                             alt="post-img"
                         />
@@ -111,11 +117,8 @@ class Post extends Component {
                         </div>
                         <div className="post-caption">
                             <p>
-                                <span>amirkhann.17</span>
-                                &nbsp; Hey! This is my first post. Hey! This is
-                                my first post. Hey! This is my first post. Hey!
-                                This is my first post. Hey! This is my first
-                                post.Hey! This is my first post.
+                                <span>{post.user.username}</span>
+                                &nbsp; {post.caption}
                             </p>
                         </div>
                     </div>
@@ -126,6 +129,7 @@ class Post extends Component {
                         <div className="post-comments-list">
                             {post.comments.map((comment) => (
                                 <Comment
+                                    user={post.user}
                                     comment={comment}
                                     key={comment._id}
                                     postId={post._id}
@@ -137,12 +141,11 @@ class Post extends Component {
                             <input
                                 placeholder="Start typing a comment"
                                 onChange={this.handleOnCommentChange}
-                                onKeyPress={this.handleAddComment}
                                 value={comment}
                             />
 
                             <button
-                                onSubmit={this.handleAddComment}
+                                onClick={this.handleAddComment}
                                 className="add-comment-btn"
                             >
                                 Post

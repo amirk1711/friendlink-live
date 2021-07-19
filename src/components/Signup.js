@@ -26,11 +26,11 @@ class Signup extends Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        const { email, password, confirmPassword, name } = this.state;
+        const { email, password, username, name } = this.state;
 
-        if (email && password && confirmPassword && name) {
+        if (email && password && username && name) {
             this.props.dispatch(startSignup());
-            this.props.dispatch(signup(email, password, confirmPassword, name));
+            this.props.dispatch(signup(email, password, username, name));
         }
     };
 
@@ -71,11 +71,11 @@ class Signup extends Component {
                     <div className="login-field">
                         <input
                             placeholder="Username"
-                            type="password"
+                            type="text"
                             required
                             onChange={(e) =>
                                 this.handleInputChange(
-                                    'confirmPassword',
+                                    'username',
                                     e.target.value
                                 )
                             }
@@ -120,7 +120,7 @@ class Signup extends Component {
                             <div className="right-line"></div>
                         </div>
 
-                        <Link className="social-auth">
+                        <Link className="social-auth" to="/#">
                             <img
                                 src="https://image.flaticon.com/icons/png/128/281/281764.png"
                                 alt=""

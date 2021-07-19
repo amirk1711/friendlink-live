@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-// import { createPost } from '../actions/posts';
+import { createPost } from '../actions/posts';
 import { storage } from '../config/firebase';
 
 const CreatePost = (props) => {
-    console.log('props from cretePost', props);
     const [image, setImage] = useState(null);
-    const [url, setUrl] = useState('');
+    const [localUrl, setLocalUrl] = useState(null);
     const [progress, setProgress] = useState(0);
+    const [fileType, setFileType] = useState(null);
+    const [caption, setCaption] = useState('');
 
     const handleOnClick = () => {
         // create reference to the firebase storage and select 'postImages/filename-date' folder
@@ -15,80 +16,94 @@ const CreatePost = (props) => {
         const uploadTask = storage
             .ref(`postImages/${image.name + '-' + Date.now()}`)
             .put(image);
+
         uploadTask.on(
             'state_changed',
             (snapshot) => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                setProgress(
+                    Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    )
                 );
-                setProgress(progress);
             },
             (error) => {
                 console.log('error', error);
             },
             () => {
                 uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-                    setUrl(url);
+                    props.dispatch(createPost(url, fileType, caption));
                 });
             }
         );
-        // props.dispatch(createPost(url));
     };
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         if (e.target.files[0]) {
             // if user has uploded a photo
             // set that photo in 'image' variable
-            setImage(e.target.files[0]);
 
-            // Get the selected file
-            const [file] = e.target.files;
-            // Get the file name and size
-            let { name: fileName, size } = file;
-            let spanElement = document.querySelector('.file-name');
-            let width = spanElement.offsetWidth;
-            // Convert size in bytes to MB
-            const fileSize = (size / 1000000).toFixed(2);
-            if(fileName.length > width/10){
-                fileName = fileName.substr(0, parseInt(width/10));
-            }
-            // Set the text content
-            const fileNameAndSize = `${fileName} - ${fileSize}MB`;
-            spanElement.innerHTML = fileNameAndSize;
+            setImage(e.target.files[0]);
+            setFileType(e.target.files[0].type);
+            setLocalUrl(URL.createObjectURL(e.target.files[0]));
         }
     };
 
-    console.log('image', image);
-    console.log('url', url);
+    const handleCancelBtn = () => {
+        setImage(null);
+        // document.getElementById('file').value = null;
+    };
+
+    const handleCaptionChange = (e) => {
+        e.preventDefault();
+        console.log('caption', e.target.value);
+        setCaption(e.target.value);
+    };
 
     return (
         <div className="create-post">
             {/* With file inputs, clicking on the label also opens up the file picker */}
-            <div className="file-input">
-                <input
-                    type="file"
-                    id="file"
-                    className="file"
-                    onChange={handleChange}
-                />
-                <label htmlFor="file">Choose file...</label>
-                <span className="file-name"></span>
-            </div>
 
-            {progress > 0 && progress < 100 ? (
-                    <button
-                        id="add-post-btn"
-                        onClick={handleOnClick}
-                        disabled={true}
-                    >
+            {image && (
+                <div className="preview-and-caption">
+                    <img src={localUrl} alt="" className="post-preview-img" />
+                    <div className="caption-input">
+                        <textarea
+                            placeholder="Write caption here..."
+                            onChange={handleCaptionChange}
+                        />
+                    </div>
+                </div>
+            )}
+
+            <div className="file-input-and-post">
+                {image && (
+                    <button className="cancel-btn" onClick={handleCancelBtn}>
+                        Cancel
+                    </button>
+                )}
+
+                {!image && (
+                    <div className="file-input">
+                        <input
+                            type="file"
+                            id="file"
+                            className="file"
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="file">Choose file...</label>
+                    </div>
+                )}
+
+                {progress > 0 && progress < 100 ? (
+                    <button id="add-post-btn" disabled={true}>
                         Posting...
                     </button>
-            ) : (
-                <button id="add-post-btn" onClick={handleOnClick}>
-                    Post
-                </button>
-            )}
-            
+                ) : (
+                    <button id="add-post-btn" onClick={handleOnClick}>
+                        Post
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

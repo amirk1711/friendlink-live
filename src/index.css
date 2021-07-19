@@ -644,7 +644,7 @@ nav .right-nav {
     flex-direction: column;
     align-items: center;
 }
-.other-actions > *{
+.other-actions > * {
     margin-top: 20px;
 }
 .or-text {
@@ -655,7 +655,8 @@ nav .right-nav {
     justify-content: center;
     align-items: center;
 }
-.left-line, .right-line {
+.left-line,
+.right-line {
     display: inline-block;
     width: 40%;
     height: 1px;
@@ -875,7 +876,10 @@ nav .right-nav {
     margin-bottom: 2px;
 }
 
-.edit-profile, .change-password, .delete-account, .help-page {
+.edit-profile,
+.change-password,
+.delete-account,
+.help-page {
     padding: 3% 10%;
 }
 
@@ -923,16 +927,47 @@ textarea:focus {
 
 /* CREATEPOST */
 .create-post {
+    /* border: 1px solid blue; */
     background: var(--white);
     box-sizing: border-box;
-    box-shadow: 0 0 0 0.5pt var(--border);
+    /* border: 1px solid var(--border); */
     border-radius: 4px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.create-post .preview-and-caption {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
+.caption-input {
+    width: 100%;
+}
+.caption-input > textarea {
+    border: none;
+    width: 100%;
+    min-height: 70px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+.post-preview-img{
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+.create-post .file-input-and-post {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 .file-input {
-    width: 85%;
+    /* width: 85%; */
     max-height: 50px;
     position: relative;
 }
@@ -942,7 +977,9 @@ textarea:focus {
     opacity: 0;
     width: 0.1px;
     height: 0.1px;
+    overflow: hidden;
     position: absolute;
+    z-index: -1;
 }
 
 .file-input label {
@@ -957,16 +994,22 @@ textarea:focus {
     font-size: 1rem;
     cursor: pointer;
 }
-.file-name {
-    line-height: 50px;
-    display: inline-block;
-    width: calc(100% - 110px);
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--light-grey);
+.cancel-btn {
+    margin-right: 30px;
+    padding: 5px 16px;
+    line-height: 40px;
+    border: none;
+    background-color: rgb(221, 99, 99);
+    font-size: 1rem;
+    color: var(--black-text);
+    /* border: 1px solid var(--border); */
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    cursor: pointer;
 }
 
 #add-post-btn {
+    box-sizing: border-box;
     width: 15%;
     height: 50px;
     border-top-right-radius: 4px;

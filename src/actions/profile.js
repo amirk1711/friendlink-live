@@ -37,14 +37,17 @@ export function fetchUserProfile(userId) {
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('USER PROFILE data', data);
-            if(data.success){
-                dispatch(userProfileSuccess(data.data.user));
-                return;
-            }
-            dispatch(userProfileFailed(data.message));
-        });
+            .then((response) => {
+                console.log('Response fetch user', response);
+                return response.json();
+            })
+            .then((data) => {
+                console.log('USER PROFILE data', data);
+                if (data.success) {
+                    dispatch(userProfileSuccess(data.data.profile_user));
+                    return;
+                }
+                dispatch(userProfileFailed(data.message));
+            });
     };
 }

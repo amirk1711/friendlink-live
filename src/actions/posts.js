@@ -9,15 +9,19 @@ import {
 
 export function fetchPosts() {
     return (dispatch) => {
-        const url = APIUrls.fetchPosts(1, 25);
-        fetch(url)
-            .then((response) => {
-                console.log(response);
-                return response.json();
-            })
+        const url = APIUrls.fetchPosts();
+        fetch(url,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            mode: 'cors',
+        })
+            .then((response) => response.json())
             .then((data) => {
                 console.log('data', data);
-                dispatch(updatePosts(data.data.posts));
+                dispatch(updatePosts(data.data.timelinePosts));
             });
     };
 }
@@ -36,7 +40,7 @@ export function addPost(post) {
     };
 }
 
-export function createPost(postImageUrl) {
+export function createPost(content, contentType, caption) {
     return (dispatch) => {
         const url = APIUrls.createPost();
 
@@ -46,11 +50,14 @@ export function createPost(postImageUrl) {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
+            mode: 'cors',
             body: getFormBody({
-                postImageUrl,
+                content,
+                contentType,
+                caption,
             }),
         })
-            .then((response) => response.json())
+            .then(response => response.json())
             .then((data) => {
                 console.log('CREATE POST data', data);
 
@@ -61,21 +68,26 @@ export function createPost(postImageUrl) {
     };
 }
 
-export function createComment(content, postId) {
+export function createComment(content, post) {
     return (dispatch) => {
         const url = APIUrls.createComment();
+        console.log('before fetching comment');
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
-            body: getFormBody({ content, post_id: postId }),
+            mode: 'cors',
+            body: getFormBody({ content, post }),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                console.log('res', response);
+                return response.json();})
             .then((data) => {
+                console.log('Comment data', data);
                 if (data.success) {
-                    dispatch(addComment(data.data.comment, postId));
+                    dispatch(addComment(data.data.comment, post));
                 }
             });
     };
@@ -100,21 +112,23 @@ export function addLike(id, likeType, userId) {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
+            mode: 'cors',
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log('LIKE data', data);
                 if (data.success) {
-                    dispatch(addLikeToStore(id, userId));
+                    dispatch(addLikeToStore(id, userId, data.data.likes));
                 }
             });
     };
 }
 
-export function addLikeToStore(postId, userId) {
+export function addLikeToStore(postId, userId, likes) {
     return {
         type: UPDATE_POST_LIKE,
         postId,
         userId,
+        likes,
     };
 }

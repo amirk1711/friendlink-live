@@ -80,7 +80,7 @@ export function logoutUser() {
   };
 }
 
-export function signup(email, password, confirmPassword, name) {
+export function signup(email, password, username, name) {
   // console.log('inside signup');
   return (dispatch) => {
     const url = APIUrls.signup();
@@ -93,7 +93,7 @@ export function signup(email, password, confirmPassword, name) {
       body: getFormBody({
         email,
         password,
-        confirm_password: confirmPassword,
+        username,
         name,
       }),
     })
@@ -153,7 +153,7 @@ export function editUserFailed(error) {
   };
 }
 
-// this is actual asyn action to request the server
+// this is actual async action to request the server
 // to change the user profile data
 export function editUser(name, password, confirmPassword, userId) {
   return (dispatch) => {
