@@ -15,7 +15,6 @@ const intialProfileState = {
 export default function profile(state = intialProfileState, action) {
     switch (action.type) {
         case FETCH_USER_PROFILE:
-            console.log('came here');
             return {
                 ...state,
                 inProgress: true,

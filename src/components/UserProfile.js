@@ -5,7 +5,7 @@ import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { follow, unfollow } from '../actions/suggestions';
 import { Link } from 'react-router-dom';
-import { ProfilePostCard, FriendsList} from './';
+import { ProfilePostCard, FriendsList } from './';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -33,7 +33,11 @@ class UserProfile extends Component {
         const {
             match: { params: currentParams },
         } = this.props;
-        if(prevParams && currentParams && prevParams.userId !== currentParams.userId) {
+        if (
+            prevParams &&
+            currentParams &&
+            prevParams.userId !== currentParams.userId
+        ) {
             this.props.dispatch(fetchUserProfile(currentParams.userId));
         }
     }
@@ -118,11 +122,10 @@ class UserProfile extends Component {
 
     render() {
         const {
-            match: { params },
             profile,
             auth,
         } = this.props;
-        console.log('this.props', params);
+    
         const user = profile.user;
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;
@@ -140,7 +143,7 @@ class UserProfile extends Component {
                 <div className="user-profile-upper">
                     <div className="profile-img-container">
                         <img
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+                            src={user.avatar}
                             alt="user-dp"
                             className="extra-large profile-pic"
                         />
@@ -149,16 +152,27 @@ class UserProfile extends Component {
                     <div className="profile-user-details">
                         <div className="username-row">
                             <span className="profile-username black-text">
-                                amirkhann.17
+                                {user.username}
                             </span>
                             &emsp;&emsp;
                             {loggedInUser._id === user._id ? (
                                 <div className="profile-user-btns">
                                     <button className="mr-10">
-                                        {/* link to /settings */}
-                                        <Link to='/settings'>Edit Profile</Link>
+                                        <Link
+                                            to="/settings"
+                                            className="black-text"
+                                        >
+                                            Edit Profile
+                                        </Link>
                                     </button>
-                                    <button>Settings</button>
+                                    <button>
+                                        <Link
+                                            to="/settings"
+                                            className="black-text"
+                                        >
+                                            Settings
+                                        </Link>
+                                    </button>
                                 </div>
                             ) : (
                                 <div className="btn-grp">
@@ -189,25 +203,30 @@ class UserProfile extends Component {
 
                         <div className="profile-stat-btns">
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">16</span>{' '}
+                                <span className="large-text bold-text">
+                                    {userPosts.length}
+                                </span>{' '}
                                 &nbsp;Posts
                             </button>
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">67</span>{' '}
+                                <span className="large-text bold-text">
+                                    {user.followers.length}
+                                </span>{' '}
                                 &nbsp;Followers
                             </button>
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">94</span>{' '}
+                                <span className="large-text bold-text">
+                                    {user.following.length}
+                                </span>{' '}
                                 &nbsp;Following
                             </button>
                         </div>
 
                         <span className="profile-fullname black-text large-text bold-text">
-                            Amir Khan
+                            {user.name}
                         </span>
                         <span className="profile-bio large-text mb-8">
-                            JMI'22 <br />
-                            New Delhi
+                            {user.bio}
                         </span>
                     </div>
                 </div>
@@ -222,9 +241,13 @@ class UserProfile extends Component {
                             Following
                         </button>
                     </div>
-                    {activeTab === 1 && <ProfilePostCard posts={userPosts}/>}
-                    {activeTab === 2 && <FriendsList friends={user.followers} />}
-                    {activeTab === 3 && <FriendsList friends={user.following} />}
+                    {activeTab === 1 && <ProfilePostCard posts={userPosts} />}
+                    {activeTab === 2 && (
+                        <FriendsList friends={user.followers} />
+                    )}
+                    {activeTab === 3 && (
+                        <FriendsList friends={user.following} />
+                    )}
                 </div>
 
                 <div className="text-center footer-text">
@@ -390,104 +413,104 @@ export default connect(mapStateToProps)(UserProfile);
 //         // const { success, error, successMessage } = this.state;
 
 //         return (
-            // <div className="user-profile">
-            //     <div className="user-profile-upper">
-            //         <div className="profile-img-container">
-            //             <img
-            //                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
-            //                 alt="user-dp"
-            //                 className="extra-large profile-pic"
-            //             />
-            //         </div>
+// <div className="user-profile">
+//     <div className="user-profile-upper">
+//         <div className="profile-img-container">
+//             <img
+//                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+//                 alt="user-dp"
+//                 className="extra-large profile-pic"
+//             />
+//         </div>
 
-            //         <div className="profile-user-details">
-            //             <div className="username-row">
-            //                 <span className="profile-username black-text">
-            //                     amirkhann.17
-            //                 </span>
-            //                 &emsp;&emsp;
-            //                 {loggedInUser._id === user._id ? (
-            //                     <div className="profile-user-btns">
-            //                         <button className="mr-10">
-            //                             {/* link to /settings */}
-            //                             <Link to='/settings'>Edit Profile</Link>
-            //                         </button>
-            //                         <button>Settings</button>
-            //                     </div>
-            //                 ) : (
-            //                     <div className="btn-grp">
-            //                         {!isUserAFriend ? (
-            //                             <button
-            //                                 className="follow-btn no-btn medium-text mr-8 bold-text"
-            //                                 onClick={this.handleAddFriendClick}
-            //                             >
-            //                                 Follow
-            //                             </button>
-            //                         ) : (
-            //                             <button
-            //                                 className="unfollow-btn no-btn medium-text mr-10 bold-text"
-            //                                 onClick={
-            //                                     this.handleRemoveFriendClick
-            //                                 }
-            //                             >
-            //                                 Following
-            //                             </button>
-            //                         )}
+//         <div className="profile-user-details">
+//             <div className="username-row">
+//                 <span className="profile-username black-text">
+//                     amirkhann.17
+//                 </span>
+//                 &emsp;&emsp;
+//                 {loggedInUser._id === user._id ? (
+//                     <div className="profile-user-btns">
+//                         <button className="mr-10">
+//                             {/* link to /settings */}
+//                             <Link to='/settings'>Edit Profile</Link>
+//                         </button>
+//                         <button>Settings</button>
+//                     </div>
+//                 ) : (
+//                     <div className="btn-grp">
+//                         {!isUserAFriend ? (
+//                             <button
+//                                 className="follow-btn no-btn medium-text mr-8 bold-text"
+//                                 onClick={this.handleAddFriendClick}
+//                             >
+//                                 Follow
+//                             </button>
+//                         ) : (
+//                             <button
+//                                 className="unfollow-btn no-btn medium-text mr-10 bold-text"
+//                                 onClick={
+//                                     this.handleRemoveFriendClick
+//                                 }
+//                             >
+//                                 Following
+//                             </button>
+//                         )}
 
-            //                         <button className="msg-btn bold-text">
-            //                             Message
-            //                         </button>
-            //                     </div>
-            //                 )}
-            //             </div>
+//                         <button className="msg-btn bold-text">
+//                             Message
+//                         </button>
+//                     </div>
+//                 )}
+//             </div>
 
-            //             <div className="profile-stat-btns">
-            //                 <button className="stat-btn no-btn mr-10 large-text">
-            //                     <span className="large-text bold-text">16</span>{' '}
-            //                     &nbsp;Posts
-            //                 </button>
-            //                 <button className="stat-btn no-btn mr-10 large-text">
-            //                     <span className="large-text bold-text">67</span>{' '}
-            //                     &nbsp;Followers
-            //                 </button>
-            //                 <button className="stat-btn no-btn mr-10 large-text">
-            //                     <span className="large-text bold-text">94</span>{' '}
-            //                     &nbsp;Following
-            //                 </button>
-            //             </div>
+//             <div className="profile-stat-btns">
+//                 <button className="stat-btn no-btn mr-10 large-text">
+//                     <span className="large-text bold-text">16</span>{' '}
+//                     &nbsp;Posts
+//                 </button>
+//                 <button className="stat-btn no-btn mr-10 large-text">
+//                     <span className="large-text bold-text">67</span>{' '}
+//                     &nbsp;Followers
+//                 </button>
+//                 <button className="stat-btn no-btn mr-10 large-text">
+//                     <span className="large-text bold-text">94</span>{' '}
+//                     &nbsp;Following
+//                 </button>
+//             </div>
 
-            //             <span className="profile-fullname black-text large-text bold-text">
-            //                 Amir Khan
-            //             </span>
-            //             <span className="profile-bio large-text mb-8">
-            //                 JMI'22 <br />
-            //                 New Delhi
-            //             </span>
-            //         </div>
-            //     </div>
+//             <span className="profile-fullname black-text large-text bold-text">
+//                 Amir Khan
+//             </span>
+//             <span className="profile-bio large-text mb-8">
+//                 JMI'22 <br />
+//                 New Delhi
+//             </span>
+//         </div>
+//     </div>
 
-            //     <div className="user-profile-lower">
-            //         <div className="profile-action-btns">
-            //             <button className="large-text tab-btn">Posts</button>
-            //             <button className="large-text tab-btn">
-            //                 Followers
-            //             </button>
-            //             <button className="large-text tab-btn">
-            //                 Following
-            //             </button>
-            //         </div>
-            //         {activeTab === 1 && <ProfilePostCard />}
-            //         {activeTab === 2 && <FriendsList friends={friends} />}
-            //         {activeTab === 3 && <FriendsList friends={friends} />}
-            //     </div>
+//     <div className="user-profile-lower">
+//         <div className="profile-action-btns">
+//             <button className="large-text tab-btn">Posts</button>
+//             <button className="large-text tab-btn">
+//                 Followers
+//             </button>
+//             <button className="large-text tab-btn">
+//                 Following
+//             </button>
+//         </div>
+//         {activeTab === 1 && <ProfilePostCard />}
+//         {activeTab === 2 && <FriendsList friends={friends} />}
+//         {activeTab === 3 && <FriendsList friends={friends} />}
+//     </div>
 
-            //     <div className="text-center footer-text">
-            //         <span className="copy-text medium-text">
-            //             &copy; {new Date().getFullYear()} Friendlink From Amir
-            //             Khan
-            //         </span>
-            //     </div>
-            // </div>
+//     <div className="text-center footer-text">
+//         <span className="copy-text medium-text">
+//             &copy; {new Date().getFullYear()} Friendlink From Amir
+//             Khan
+//         </span>
+//     </div>
+// </div>
 //         );
 //     }
 // }
