@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FriendsList, SuggestionsList } from './';
+import { SuggestionsList } from './';
+
+
 class Sidebar extends Component {
     render() {
-        const { friends, suggestions } = this.props;
+        const { suggestions } = this.props;
         return (
             <div className="side-bar">
-                <div className="friends-list-wrapper">
+                {/* <div className="friends-list-wrapper">
                     <p className="grey-text mb-8 medium-text">Friends</p>
                     <FriendsList friends={friends} />
-                </div>
+                </div> */}
 
                 <div className="suggestions-list-wrapper">
                     <p className="grey-text mb-8 medium-text">

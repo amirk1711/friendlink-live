@@ -545,7 +545,12 @@ nav .right-nav {
     display: flex;
     flex-direction: column;
     margin-bottom: 18px;
-    height: 218px;
+    margin-top: 50px;
+    min-height: 65vh;
+}
+
+.suggestions-list-wrapper > p {
+    padding: 8px 0px;
 }
 
 .friends-list {
@@ -561,7 +566,7 @@ nav .right-nav {
 .no-friends {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin: 20vh 0;
 }
 .friends-item {
     padding: 2px;

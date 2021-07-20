@@ -15,6 +15,7 @@ export const APIUrls = {
 
     follow: (id) => `${API_ROOT}/users/follow/${id}`,
     unfollow: (id) => `${API_ROOT}/users/unfollow/${id}`,
+    fetchSuggestions: (id) => `${API_ROOT}/users/suggestions/${id}`,
 
     createComment: () => `${API_ROOT}/comments/create`,
     deleteComment: (id) => `${API_ROOT}/comments/destroy/${id}`,

@@ -10,7 +10,6 @@ import {
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
-// import { fetchUserFriends } from '../actions/friends';
 import {
     Home,
     Page404,
@@ -18,10 +17,11 @@ import {
     Signup,
     Settings,
     UserProfile,
-    Navbar
+    Navbar,
 } from './';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
+import { fetchUserSuggestions } from '../actions/suggestions';
 
 // PrivateRoute is a functional component
 const PrivateRoute = (privateRouteProps) => {
@@ -59,31 +59,34 @@ const PrivateRoute = (privateRouteProps) => {
 class App extends React.Component {
     // to fetch the post from an api
     componentDidMount() {
-        // dispatch an async action to fetch posts from an api
-        // and store those posts in the redux store
-        this.props.dispatch(fetchPosts());
-
         const token = getAuthTokenFromLocalStorage();
         if (token) {
             // user is logged in
             // get user out of token
             const user = jwtDecode(token);
             // authenticate user
+            // console.log('user here ',user);
+            // pass the whole user if needed
             this.props.dispatch(
                 authenticateUser({
                     email: user.email,
                     _id: user._id,
                     name: user.name,
+                    avatar: user.avatar,
                 })
             );
 
-            // fetch user friends
-            // this.props.dispatch(fetchUserFriends());
+            // dispatch an async action to fetch posts from an api
+            // and store those posts in the redux store
+            this.props.dispatch(fetchPosts());
+
+            // fetch user suggestions
+            this.props.dispatch(fetchUserSuggestions(user._id));
         }
     }
 
     render() {
-        const { posts, auth, friends } = this.props;
+        const { posts, auth, suggestions } = this.props;
         const { isLoggedin } = auth;
         return (
             <Router>
@@ -101,7 +104,7 @@ class App extends React.Component {
                                     <Home
                                         {...props}
                                         posts={posts}
-                                        friends={friends}
+                                        suggestions={suggestions}
                                         isLoggedin={auth.isLoggedin}
                                     />
                                     // now Home component will get posts, friends, isLoggedin
@@ -136,7 +139,7 @@ function mapStateToProps(state) {
     return {
         posts: state.posts,
         auth: state.auth,
-        friends: state.friends,
+        suggestions: state.suggestions,
     };
 }
 
@@ -147,7 +150,6 @@ App.propTypes = {
 
 // connect our react app component to the redux store
 export default connect(mapStateToProps)(App);
-
 
 /*
 

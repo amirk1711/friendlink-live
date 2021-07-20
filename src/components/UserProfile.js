@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchUserProfile } from '../actions/profile';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-import { addFriend, removeFriend } from '../actions/friends';
+import { follow, unfollow } from '../actions/suggestions';
 import { ProfilePostCard, FriendsList } from './';
 import { Link } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ class UserProfile extends Component {
                 successMessage: 'Added friend successfully!',
             });
 
-            this.props.dispatch(addFriend(data.data.friendship));
+            this.props.dispatch(follow(data.data.friendship));
         } else {
             this.setState({
                 success: null,
@@ -108,7 +108,7 @@ class UserProfile extends Component {
                 success: true,
                 successMessage: 'Removed friends successfully!',
             });
-            this.props.dispatch(removeFriend(match.params.userId));
+            this.props.dispatch(unfollow(match.params.userId));
         } else {
             this.setState({
                 success: null,
