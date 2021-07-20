@@ -23,15 +23,26 @@ import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { fetchUserSuggestions } from '../actions/suggestions';
 
+
 // PrivateRoute is a functional component
 const PrivateRoute = (privateRouteProps) => {
+    // console.log('dispatch', useDispatch());
     // rename component as Component while destructuring props
     const { isLoggedin, path, component: Component } = privateRouteProps;
-
+    // const dispatch = useDispatch();
     return (
         <Route
             path={path}
             render={(props) => {
+                // console.log('check propss if it has user id from params', props);
+
+                // console.log('path', path);
+
+                // if(path === '/user/:userId'){
+                //     console.log('b4 disp');
+                //     dispatch(fetchUserProfile(props.match.params.userId));
+                //     console.log('after disp');
+                // }
                 // this props is props passed by React Router
                 // if user is logged in, render the passed component
                 // otherwise redirect to the login component
@@ -82,6 +93,9 @@ class App extends React.Component {
 
             // fetch user suggestions
             this.props.dispatch(fetchUserSuggestions(user._id));
+
+            // fetch user profile
+            // this.props.dispatch(fetchUserProfile());
         }
     }
 

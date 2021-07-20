@@ -2,6 +2,7 @@ import React from 'react';
 import { FriendsListItem } from './';
 
 const FriendsList = (props) => {
+    console.log('props gggg', props);
     return (
         <div className="friends-list">
             {props.friends && props.friends.length === 0 && (
@@ -10,7 +11,7 @@ const FriendsList = (props) => {
 
             {props.friends &&
                 props.friends.map((friend) => (
-                    <FriendsListItem friend={friend.to_user} key={friend._id} />
+                    <FriendsListItem friend={friend} key={friend._id} />
                 ))}
         </div>
     );
