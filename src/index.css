@@ -22,6 +22,7 @@ body::-webkit-scrollbar {
 /* COMMON */
 a {
     text-decoration: none;
+    display: inline-block;
 }
 img {
     display: block;
@@ -545,7 +546,7 @@ nav .right-nav {
     display: flex;
     flex-direction: column;
     margin-bottom: 18px;
-    margin-top: 50px;
+    margin-top: 40px;
     min-height: 65vh;
 }
 

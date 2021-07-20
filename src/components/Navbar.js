@@ -7,7 +7,6 @@ import { searchUsers } from '../actions/search';
 
 import {
     Search,
-    PersonOutlined,
     MessageOutlined,
     NotificationsOutlined,
     HomeOutlined,
@@ -47,11 +46,11 @@ class Navbar extends React.Component {
                                         key={user._id}
                                     >
                                         <Link to={`/user/${user._id}`}>
-                                            {/* <img
-                                                src="user.avatar"
+                                            <img
+                                                src={user.avatar}
                                                 alt="user-dp"
-                                            /> */}
-                                            <PersonOutlined />
+                                            />
+                                            
                                             <span>{user.name}</span>
                                         </Link>
                                     </li>
@@ -64,15 +63,15 @@ class Navbar extends React.Component {
                     {auth.isLoggedin && (
                         <div className="nav-icons">
                             <div className="nav-icon-item">
-                                <HomeOutlined className="home-icon" />
+                                <Link to="/"><HomeOutlined className="home-icon black-text"/></Link>
                             </div>
                             <div className="nav-icon-item">
                                 <NotificationsOutlined className="noti-icon" />
-                                <span className="nav-icon-badge">&bull;</span>
+                                {/* <span className="nav-icon-badge">&bull;</span> */}
                             </div>
                             <div className="nav-icon-item">
                                 <MessageOutlined className="msg-icon" />
-                                <span className="nav-icon-badge">&bull;</span>
+                                {/* <span className="nav-icon-badge">&bull;</span> */}
                             </div>
                         </div>
                     )}
@@ -88,7 +87,8 @@ class Navbar extends React.Component {
                                     id="user-dp"
                                 />
                             </Link>
-                            <span>{auth.user.name}</span>
+                            <Link to={`/user/${auth.user._id}`}><span>{auth.user.name}</span></Link>
+                            
                         </div>
                     )}
 

@@ -8,12 +8,12 @@ export default function suggestions(state = defaultProfileState, action) {
         case FETCH_SUGGESTIONS_SUCCESS:
             return [...action.suggestions];
         case FOLLOW_FRIEND:
-            return state.concat(action.friend);
-        case UNFOLLOW_FRIEND:
             const newArr = state.filter(
-                (friend) => friend.to_user._id !== action.userId
+                (suggestion) => suggestion._id !== action.userId
             );
             return newArr;
+        case UNFOLLOW_FRIEND:
+            return state.concat(action.userId);
         default:
             return state;
     }
