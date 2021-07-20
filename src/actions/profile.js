@@ -12,11 +12,10 @@ export function startUserProfileFetch() {
     };
 }
 
-export function userProfileSuccess(user, userPosts) {
+export function userProfileSuccess(user) {
     return {
         type: USER_PROFILE_SUCCESS,
         user,
-        userPosts,
     };
 }
 
@@ -30,17 +29,13 @@ export function userProfileFailed(error) {
 export function fetchUserProfile(userId) {
     return (dispatch) => {
         dispatch(startUserProfileFetch());
-
         const url = APIUrls.userProfile(userId);
-        
         // Get request
         fetch(url, {
-            method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
             },
-            mode: 'cors',
         })
             .then((response) => {
                 console.log('Response fetch user', response);
@@ -49,12 +44,7 @@ export function fetchUserProfile(userId) {
             .then((data) => {
                 console.log('USER PROFILE data', data);
                 if (data.success) {
-                    dispatch(
-                        userProfileSuccess(
-                            data.data.profile_user,
-                            data.data.profile_posts
-                        )
-                    );
+                    dispatch(userProfileSuccess(data.data.profile_user));
                     return;
                 }
                 dispatch(userProfileFailed(data.message));

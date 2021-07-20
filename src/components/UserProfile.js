@@ -4,8 +4,12 @@ import { fetchUserProfile } from '../actions/profile';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { follow, unfollow } from '../actions/suggestions';
-import { Link } from 'react-router-dom';
 import { ProfilePostCard, FriendsList } from './';
+import { Link } from 'react-router-dom';
+<<<<<<< HEAD
+import { ProfilePostCard, FriendsList } from './';
+=======
+>>>>>>> parent of 9d740bd (UserProfile works!)
 
 class UserProfile extends Component {
     constructor(props) {
@@ -18,7 +22,6 @@ class UserProfile extends Component {
     }
     componentDidMount() {
         const { match } = this.props;
-
         if (match.params.userId) {
             // dispatch an action
             this.props.dispatch(fetchUserProfile(match.params.userId));
@@ -43,17 +46,16 @@ class UserProfile extends Component {
     }
 
     checkIfUserIsAFriend = () => {
-        console.log('this.props', this.props);
-        // const { match, friends } = this.props;
-        // const userId = match.params.userId;
+        const { match, friends } = this.props;
+        const userId = match.params.userId;
 
-        // const index = friends
-        //     .map((friend) => friend.to_user._id)
-        //     .indexOf(userId);
+        const index = friends
+            .map((friend) => friend.to_user._id)
+            .indexOf(userId);
 
-        // if (index !== -1) {
-        //     return true;
-        // }
+        if (index !== -1) {
+            return true;
+        }
 
         return false;
     };
@@ -89,7 +91,6 @@ class UserProfile extends Component {
     };
 
     handleRemoveFriendClick = async () => {
-        // Mini Assignment
         const { match } = this.props;
         const url = APIUrls.removeFriend(match.params.userId);
 
@@ -121,23 +122,31 @@ class UserProfile extends Component {
     };
 
     render() {
+        let activeTab = 1;
         const {
             profile,
             auth,
+            friends,
         } = this.props;
+<<<<<<< HEAD
     
+=======
+        
+        console.log('props in profile', this.props);
+        console.log('this.props', params);
+>>>>>>> parent of 9d740bd (UserProfile works!)
         const user = profile.user;
+        console.log('auth user', auth.user);
+        console.log('profile user', user);
         const loggedInUser = auth.user;
-        const userPosts = profile.userPosts;
 
         if (profile.inProgress) {
-            return <h1>Loading!</h1>;
+            return <h1>Loading...</h1>;
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();
         // const { success, error, successMessage } = this.state;
 
-        let activeTab = 1;
         return (
             <div className="user-profile">
                 <div className="user-profile-upper">
@@ -241,13 +250,9 @@ class UserProfile extends Component {
                             Following
                         </button>
                     </div>
-                    {activeTab === 1 && <ProfilePostCard posts={userPosts} />}
-                    {activeTab === 2 && (
-                        <FriendsList friends={user.followers} />
-                    )}
-                    {activeTab === 3 && (
-                        <FriendsList friends={user.following} />
-                    )}
+                    {activeTab === 1 && <ProfilePostCard />}
+                    {activeTab === 2 && <FriendsList friends={friends} />}
+                    {activeTab === 3 && <FriendsList friends={friends} />}
                 </div>
 
                 <div className="text-center footer-text">
@@ -261,14 +266,16 @@ class UserProfile extends Component {
     }
 }
 
-function mapStateToProps({ profile, friends, auth }) {
+function mapStateToProps({ profile, friends, auth, posts }) {
     return {
         profile,
         friends,
         auth,
+        posts,
     };
 }
 export default connect(mapStateToProps)(UserProfile);
+<<<<<<< HEAD
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
@@ -524,3 +531,5 @@ export default connect(mapStateToProps)(UserProfile);
 //     };
 // }
 // export default connect(mapStateToProps)(UserProfile);
+=======
+>>>>>>> parent of 9d740bd (UserProfile works!)
