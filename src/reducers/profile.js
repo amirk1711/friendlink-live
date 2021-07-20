@@ -6,6 +6,7 @@ import {
 
 const intialProfileState = {
     user: {},
+    userPosts: [],
     error: null,
     success: null,
     inProgress: false,
@@ -13,11 +14,18 @@ const intialProfileState = {
 
 export default function profile(state = intialProfileState, action) {
     switch (action.type) {
+        case FETCH_USER_PROFILE:
+            console.log('came here');
+            return {
+                ...state,
+                inProgress: true,
+            };
         case USER_PROFILE_SUCCESS:
             return {
                 ...state,
                 success: true,
                 user: action.user,
+                userPosts: action.userPosts,
                 inProgress: false,
             };
         case USER_PROFILE_FAILURE:
@@ -25,11 +33,6 @@ export default function profile(state = intialProfileState, action) {
                 ...state,
                 error: action.error,
                 inProgress: false,
-            };
-        case FETCH_USER_PROFILE:
-            return {
-                ...state,
-                inProgress: true,
             };
         default:
             return state;

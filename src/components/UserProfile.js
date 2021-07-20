@@ -4,12 +4,8 @@ import { fetchUserProfile } from '../actions/profile';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { follow, unfollow } from '../actions/suggestions';
-import { ProfilePostCard, FriendsList } from './';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-import { ProfilePostCard, FriendsList } from './';
-=======
->>>>>>> parent of 9d740bd (UserProfile works!)
+import { ProfilePostCard, FriendsList} from './';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -22,6 +18,7 @@ class UserProfile extends Component {
     }
     componentDidMount() {
         const { match } = this.props;
+
         if (match.params.userId) {
             // dispatch an action
             this.props.dispatch(fetchUserProfile(match.params.userId));
@@ -36,26 +33,23 @@ class UserProfile extends Component {
         const {
             match: { params: currentParams },
         } = this.props;
-        if (
-            prevParams &&
-            currentParams &&
-            prevParams.userId !== currentParams.userId
-        ) {
+        if(prevParams && currentParams && prevParams.userId !== currentParams.userId) {
             this.props.dispatch(fetchUserProfile(currentParams.userId));
         }
     }
 
     checkIfUserIsAFriend = () => {
-        const { match, friends } = this.props;
-        const userId = match.params.userId;
+        console.log('this.props', this.props);
+        // const { match, friends } = this.props;
+        // const userId = match.params.userId;
 
-        const index = friends
-            .map((friend) => friend.to_user._id)
-            .indexOf(userId);
+        // const index = friends
+        //     .map((friend) => friend.to_user._id)
+        //     .indexOf(userId);
 
-        if (index !== -1) {
-            return true;
-        }
+        // if (index !== -1) {
+        //     return true;
+        // }
 
         return false;
     };
@@ -91,6 +85,7 @@ class UserProfile extends Component {
     };
 
     handleRemoveFriendClick = async () => {
+        // Mini Assignment
         const { match } = this.props;
         const url = APIUrls.removeFriend(match.params.userId);
 
@@ -122,37 +117,30 @@ class UserProfile extends Component {
     };
 
     render() {
-        let activeTab = 1;
         const {
+            match: { params },
             profile,
             auth,
-            friends,
         } = this.props;
-<<<<<<< HEAD
-    
-=======
-        
-        console.log('props in profile', this.props);
         console.log('this.props', params);
->>>>>>> parent of 9d740bd (UserProfile works!)
         const user = profile.user;
-        console.log('auth user', auth.user);
-        console.log('profile user', user);
         const loggedInUser = auth.user;
+        const userPosts = profile.userPosts;
 
         if (profile.inProgress) {
-            return <h1>Loading...</h1>;
+            return <h1>Loading!</h1>;
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();
         // const { success, error, successMessage } = this.state;
 
+        let activeTab = 1;
         return (
             <div className="user-profile">
                 <div className="user-profile-upper">
                     <div className="profile-img-container">
                         <img
-                            src={user.avatar}
+                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
                             alt="user-dp"
                             className="extra-large profile-pic"
                         />
@@ -161,27 +149,16 @@ class UserProfile extends Component {
                     <div className="profile-user-details">
                         <div className="username-row">
                             <span className="profile-username black-text">
-                                {user.username}
+                                amirkhann.17
                             </span>
                             &emsp;&emsp;
                             {loggedInUser._id === user._id ? (
                                 <div className="profile-user-btns">
                                     <button className="mr-10">
-                                        <Link
-                                            to="/settings"
-                                            className="black-text"
-                                        >
-                                            Edit Profile
-                                        </Link>
+                                        {/* link to /settings */}
+                                        <Link to='/settings'>Edit Profile</Link>
                                     </button>
-                                    <button>
-                                        <Link
-                                            to="/settings"
-                                            className="black-text"
-                                        >
-                                            Settings
-                                        </Link>
-                                    </button>
+                                    <button>Settings</button>
                                 </div>
                             ) : (
                                 <div className="btn-grp">
@@ -212,30 +189,25 @@ class UserProfile extends Component {
 
                         <div className="profile-stat-btns">
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">
-                                    {userPosts.length}
-                                </span>{' '}
+                                <span className="large-text bold-text">16</span>{' '}
                                 &nbsp;Posts
                             </button>
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">
-                                    {user.followers.length}
-                                </span>{' '}
+                                <span className="large-text bold-text">67</span>{' '}
                                 &nbsp;Followers
                             </button>
                             <button className="stat-btn no-btn mr-10 large-text">
-                                <span className="large-text bold-text">
-                                    {user.following.length}
-                                </span>{' '}
+                                <span className="large-text bold-text">94</span>{' '}
                                 &nbsp;Following
                             </button>
                         </div>
 
                         <span className="profile-fullname black-text large-text bold-text">
-                            {user.name}
+                            Amir Khan
                         </span>
                         <span className="profile-bio large-text mb-8">
-                            {user.bio}
+                            JMI'22 <br />
+                            New Delhi
                         </span>
                     </div>
                 </div>
@@ -250,9 +222,9 @@ class UserProfile extends Component {
                             Following
                         </button>
                     </div>
-                    {activeTab === 1 && <ProfilePostCard />}
-                    {activeTab === 2 && <FriendsList friends={friends} />}
-                    {activeTab === 3 && <FriendsList friends={friends} />}
+                    {activeTab === 1 && <ProfilePostCard posts={userPosts}/>}
+                    {activeTab === 2 && <FriendsList friends={user.followers} />}
+                    {activeTab === 3 && <FriendsList friends={user.following} />}
                 </div>
 
                 <div className="text-center footer-text">
@@ -266,16 +238,14 @@ class UserProfile extends Component {
     }
 }
 
-function mapStateToProps({ profile, friends, auth, posts }) {
+function mapStateToProps({ profile, friends, auth }) {
     return {
         profile,
         friends,
         auth,
-        posts,
     };
 }
 export default connect(mapStateToProps)(UserProfile);
-<<<<<<< HEAD
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
@@ -420,104 +390,104 @@ export default connect(mapStateToProps)(UserProfile);
 //         // const { success, error, successMessage } = this.state;
 
 //         return (
-// <div className="user-profile">
-//     <div className="user-profile-upper">
-//         <div className="profile-img-container">
-//             <img
-//                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
-//                 alt="user-dp"
-//                 className="extra-large profile-pic"
-//             />
-//         </div>
+            // <div className="user-profile">
+            //     <div className="user-profile-upper">
+            //         <div className="profile-img-container">
+            //             <img
+            //                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+            //                 alt="user-dp"
+            //                 className="extra-large profile-pic"
+            //             />
+            //         </div>
 
-//         <div className="profile-user-details">
-//             <div className="username-row">
-//                 <span className="profile-username black-text">
-//                     amirkhann.17
-//                 </span>
-//                 &emsp;&emsp;
-//                 {loggedInUser._id === user._id ? (
-//                     <div className="profile-user-btns">
-//                         <button className="mr-10">
-//                             {/* link to /settings */}
-//                             <Link to='/settings'>Edit Profile</Link>
-//                         </button>
-//                         <button>Settings</button>
-//                     </div>
-//                 ) : (
-//                     <div className="btn-grp">
-//                         {!isUserAFriend ? (
-//                             <button
-//                                 className="follow-btn no-btn medium-text mr-8 bold-text"
-//                                 onClick={this.handleAddFriendClick}
-//                             >
-//                                 Follow
-//                             </button>
-//                         ) : (
-//                             <button
-//                                 className="unfollow-btn no-btn medium-text mr-10 bold-text"
-//                                 onClick={
-//                                     this.handleRemoveFriendClick
-//                                 }
-//                             >
-//                                 Following
-//                             </button>
-//                         )}
+            //         <div className="profile-user-details">
+            //             <div className="username-row">
+            //                 <span className="profile-username black-text">
+            //                     amirkhann.17
+            //                 </span>
+            //                 &emsp;&emsp;
+            //                 {loggedInUser._id === user._id ? (
+            //                     <div className="profile-user-btns">
+            //                         <button className="mr-10">
+            //                             {/* link to /settings */}
+            //                             <Link to='/settings'>Edit Profile</Link>
+            //                         </button>
+            //                         <button>Settings</button>
+            //                     </div>
+            //                 ) : (
+            //                     <div className="btn-grp">
+            //                         {!isUserAFriend ? (
+            //                             <button
+            //                                 className="follow-btn no-btn medium-text mr-8 bold-text"
+            //                                 onClick={this.handleAddFriendClick}
+            //                             >
+            //                                 Follow
+            //                             </button>
+            //                         ) : (
+            //                             <button
+            //                                 className="unfollow-btn no-btn medium-text mr-10 bold-text"
+            //                                 onClick={
+            //                                     this.handleRemoveFriendClick
+            //                                 }
+            //                             >
+            //                                 Following
+            //                             </button>
+            //                         )}
 
-//                         <button className="msg-btn bold-text">
-//                             Message
-//                         </button>
-//                     </div>
-//                 )}
-//             </div>
+            //                         <button className="msg-btn bold-text">
+            //                             Message
+            //                         </button>
+            //                     </div>
+            //                 )}
+            //             </div>
 
-//             <div className="profile-stat-btns">
-//                 <button className="stat-btn no-btn mr-10 large-text">
-//                     <span className="large-text bold-text">16</span>{' '}
-//                     &nbsp;Posts
-//                 </button>
-//                 <button className="stat-btn no-btn mr-10 large-text">
-//                     <span className="large-text bold-text">67</span>{' '}
-//                     &nbsp;Followers
-//                 </button>
-//                 <button className="stat-btn no-btn mr-10 large-text">
-//                     <span className="large-text bold-text">94</span>{' '}
-//                     &nbsp;Following
-//                 </button>
-//             </div>
+            //             <div className="profile-stat-btns">
+            //                 <button className="stat-btn no-btn mr-10 large-text">
+            //                     <span className="large-text bold-text">16</span>{' '}
+            //                     &nbsp;Posts
+            //                 </button>
+            //                 <button className="stat-btn no-btn mr-10 large-text">
+            //                     <span className="large-text bold-text">67</span>{' '}
+            //                     &nbsp;Followers
+            //                 </button>
+            //                 <button className="stat-btn no-btn mr-10 large-text">
+            //                     <span className="large-text bold-text">94</span>{' '}
+            //                     &nbsp;Following
+            //                 </button>
+            //             </div>
 
-//             <span className="profile-fullname black-text large-text bold-text">
-//                 Amir Khan
-//             </span>
-//             <span className="profile-bio large-text mb-8">
-//                 JMI'22 <br />
-//                 New Delhi
-//             </span>
-//         </div>
-//     </div>
+            //             <span className="profile-fullname black-text large-text bold-text">
+            //                 Amir Khan
+            //             </span>
+            //             <span className="profile-bio large-text mb-8">
+            //                 JMI'22 <br />
+            //                 New Delhi
+            //             </span>
+            //         </div>
+            //     </div>
 
-//     <div className="user-profile-lower">
-//         <div className="profile-action-btns">
-//             <button className="large-text tab-btn">Posts</button>
-//             <button className="large-text tab-btn">
-//                 Followers
-//             </button>
-//             <button className="large-text tab-btn">
-//                 Following
-//             </button>
-//         </div>
-//         {activeTab === 1 && <ProfilePostCard />}
-//         {activeTab === 2 && <FriendsList friends={friends} />}
-//         {activeTab === 3 && <FriendsList friends={friends} />}
-//     </div>
+            //     <div className="user-profile-lower">
+            //         <div className="profile-action-btns">
+            //             <button className="large-text tab-btn">Posts</button>
+            //             <button className="large-text tab-btn">
+            //                 Followers
+            //             </button>
+            //             <button className="large-text tab-btn">
+            //                 Following
+            //             </button>
+            //         </div>
+            //         {activeTab === 1 && <ProfilePostCard />}
+            //         {activeTab === 2 && <FriendsList friends={friends} />}
+            //         {activeTab === 3 && <FriendsList friends={friends} />}
+            //     </div>
 
-//     <div className="text-center footer-text">
-//         <span className="copy-text medium-text">
-//             &copy; {new Date().getFullYear()} Friendlink From Amir
-//             Khan
-//         </span>
-//     </div>
-// </div>
+            //     <div className="text-center footer-text">
+            //         <span className="copy-text medium-text">
+            //             &copy; {new Date().getFullYear()} Friendlink From Amir
+            //             Khan
+            //         </span>
+            //     </div>
+            // </div>
 //         );
 //     }
 // }
@@ -531,5 +501,3 @@ export default connect(mapStateToProps)(UserProfile);
 //     };
 // }
 // export default connect(mapStateToProps)(UserProfile);
-=======
->>>>>>> parent of 9d740bd (UserProfile works!)
