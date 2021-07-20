@@ -803,6 +803,7 @@ nav .right-nav {
 }
 
 .profile-post-card {
+    background-color: var(--white);
     position: relative;
     width: 30%;
     margin: 1.6%;

@@ -7,7 +7,7 @@ const ProfilePostCard = (props) => {
         <div className="profile-post-card-wrapper">
             {posts.map((post) => {
                 return (
-                    <div className="profile-post-card">
+                    <div className="profile-post-card" key={post._id}>
                         <img
                             src={post.content}
                             className="profile-post-image"
