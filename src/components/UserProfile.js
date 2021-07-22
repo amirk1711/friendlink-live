@@ -122,16 +122,16 @@ class UserProfile extends Component {
 
     render() {
         const {
-            match: { params },
             profile,
             auth,
         } = this.props;
-        console.log('this.props', params);
+        // console.log('this.props', params);
+        console.log('profile', profile);
         const user = profile.user;
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;
 
-        if (profile.inProgress) {
+        if (Object.keys(user).length === 0 && user.constructor === Object) {
             return <h1>Loading!</h1>;
         }
 
