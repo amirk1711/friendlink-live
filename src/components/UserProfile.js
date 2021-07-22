@@ -43,7 +43,7 @@ class UserProfile extends Component {
     }
 
     checkIfUserIsAFriend = () => {
-        console.log('this.props', this.props);
+        // console.log('this.props', this.props);
         // const { match, friends } = this.props;
         // const userId = match.params.userId;
 
@@ -126,7 +126,7 @@ class UserProfile extends Component {
             auth,
         } = this.props;
         // console.log('this.props', params);
-        console.log('profile', profile);
+        // console.log('profile', profile);
         const user = profile.user;
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;

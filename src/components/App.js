@@ -80,10 +80,16 @@ class App extends React.Component {
             // pass the whole user if needed
             this.props.dispatch(
                 authenticateUser({
+                    username: user.username,
                     email: user.email,
                     _id: user._id,
                     name: user.name,
                     avatar: user.avatar,
+                    followers: user.followers,
+                    following: user.following,
+                    suggestions: user.suggestions,
+                    bio: user.bio,
+                    website: user.website,
                 })
             );
 

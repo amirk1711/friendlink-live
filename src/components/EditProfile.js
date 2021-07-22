@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { editUser } from '../actions/auth';
 
 function EditProfile(props) {
-    // const { user, error } = this.props.auth;
-    //     const { editMode } = this.state;
+
+    const loggedInUser = props.auth.user;
+    // console.log('loggedInUser', loggedInUser);
+
+    const [name, setName] = useState(loggedInUser.name);
+    const [username, setUsername] = useState(loggedInUser.username);
+    const [website, setWebsite] = useState(loggedInUser.webiste);
+    const [bio, setBio] = useState(loggedInUser.bio);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (name && username && website && bio) {
+            // console.log(name, username, website, bio);
+            props.dispatch(editUser(name, username, website, bio, loggedInUser._id));
+        }
+    }
+
+    // console.log('props.auth.isUpdating', props.auth.isUpdating);
+    if(props.auth.isUpdating){
+        return (<div>Updating profile...</div>);
+    }
+
+
     return (
         <div className="setting-actions">
             <div className="settings-user-profile">
                 <img
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+                    src={loggedInUser.avatar}
                     alt=""
                     className="profile-pic large"
                 />
                 <div className="update-profile-pic-text">
-                    <span className="black-text">amirkhann.17</span>
+                    <span className="black-text">{loggedInUser.username}</span>
                     <span className="blue-text medium-text">
                         Change Profile Picture{' '}
                         <span className="black-text">&bull;</span> Remove
@@ -24,88 +48,48 @@ function EditProfile(props) {
             <div className="edit-profile">
                 <div className="field">
                     <div className="field-label bold-text">Name</div>
-                    <input type="text" />
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </div>
                 <div className="field">
                     <div className="field-label bold-text">Username</div>
-                    <input type="text" />
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                 </div>
                 <div className="field">
                     <div className="field-label bold-text">Website</div>
-                    <input type="text" />
+                    <input
+                        type="text"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                    />
                 </div>
                 <div className="field">
                     <div className="field-label bold-text">Bio</div>
-                    <textarea row="4" />
+                    <textarea
+                        row="4"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                    />
                 </div>
                 <div className="field">
-                    <input type="submit" />
-                    {/* <span className="blue-text medium-text">Delete account</span> */}
+                    <input type="submit" onClick={handleSubmit}/>                    
                 </div>
             </div>
         </div>
-        // <div>
-        //     {error && <div className="alert error-dailog">{error}</div>}
-        //     {error === false && (
-        //         <div className="alert success-dailog">Profile updated!</div>
-        //     )}
-
-        //     {editMode && (
-        //         <div className="field">
-        //             <div className="field-label">New password</div>
-
-        //             <input
-        //                 type="password"
-        //                 onChange={(e) =>
-        //                     this.handleChange('password', e.target.value)
-        //                 }
-        //                 value={this.state.password}
-        //             />
-        //         </div>
-        //     )}
-
-        //     {editMode && (
-        //         <div className="field">
-        //             <div className="field-label">Confirm password</div>
-
-        //             <input
-        //                 type="password"
-        //                 onChange={(e) =>
-        //                     this.handleChange('confirmPassword', e.target.value)
-        //                 }
-        //                 value={this.state.confirmPassword}
-        //             />
-        //         </div>
-        //     )}
-
-        //     <div className="btn-grp">
-        //         {editMode ? (
-        //             <button
-        //                 className="button save-btn"
-        //                 onClick={this.handleSave}
-        //             >
-        //                 Save
-        //             </button>
-        //         ) : (
-        //             <button
-        //                 className="button edit-btn"
-        //                 onClick={() => this.handleChange('editMode', true)}
-        //             >
-        //                 Edit profile
-        //             </button>
-        //         )}
-
-        //         {editMode && (
-        //             <div
-        //                 className="go-back"
-        //                 onClick={() => this.handleChange('editMode', true)}
-        //             >
-        //                 Go back
-        //             </div>
-        //         )}
-        //     </div>
-        // </div>
     );
 }
 
-export default EditProfile;
+function mapStateToProps({ auth }) {
+    return {
+        auth,
+    };
+}
+
+export default connect(mapStateToProps)(EditProfile);

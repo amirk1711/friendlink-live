@@ -29,12 +29,12 @@ export function userProfileFailed(error) {
 
 export function fetchUserProfile(userId) {
     return (dispatch) => {
-        console.log('userID in profile action', userId);
+        // console.log('userID in profile action', userId);
         dispatch(startUserProfileFetch());
 
         const url = APIUrls.userProfile(userId);
         
-        console.log('start fetching user profile', url);
+        // console.log('start fetching user profile', url);
         // Get request
         fetch(url, {
             method: 'GET',
