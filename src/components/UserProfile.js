@@ -229,6 +229,9 @@ class UserProfile extends Component {
                         <span className="profile-bio large-text mb-8">
                             {user.bio}
                         </span>
+                        <Link to={user.website} className="profile-bio large-text mb-8">
+                            {user.website}
+                        </Link>
                     </div>
                 </div>
 

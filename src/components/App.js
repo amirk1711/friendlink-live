@@ -78,6 +78,7 @@ class App extends React.Component {
             // authenticate user
             // console.log('user here ',user);
             // pass the whole user if needed
+
             this.props.dispatch(
                 authenticateUser({
                     username: user.username,

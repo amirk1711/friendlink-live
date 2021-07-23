@@ -11,6 +11,8 @@ import {
     EDIT_USER_SUCCESSFUL,
     EDIT_USER_FAILED,
     EDIT_USER_START,
+    CHANGE_USER_PROFILE_SUCCESSFUL,
+    START_UPLOAD_PROFILE,
 } from '../actions/actionTypes';
 
 const initialAuthState = {
@@ -19,6 +21,8 @@ const initialAuthState = {
     isLoggedin: false,
     inProgress: false,
     isUpdating: false,
+    isUploading: false,
+    isUploaded: false,
 };
 
 export default function auth(state = initialAuthState, action) {
@@ -34,6 +38,11 @@ export default function auth(state = initialAuthState, action) {
                 ...state,
                 inProgress: true,
             };
+        case START_UPLOAD_PROFILE:
+            return {
+                ...state,
+                isUploading: true,
+            }
         case LOGIN_SUCCESS:
         case SIGNUP_SUCCESS:
             return {
@@ -73,6 +82,13 @@ export default function auth(state = initialAuthState, action) {
                 user: action.user,
                 isUpdating: false,
                 error: false,
+            };
+        case CHANGE_USER_PROFILE_SUCCESSFUL: 
+            return {
+                ...state,
+                user: action.user,
+                isUploading: false,
+                isUploaded: true,
             };
         case EDIT_USER_FAILED:
             return {

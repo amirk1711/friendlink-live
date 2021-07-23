@@ -1,49 +1,175 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { editUser } from '../actions/auth';
+import { changeProfilePic, editUser } from '../actions/auth';
+import { storage } from '../config/firebase';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function EditProfile(props) {
-
     const loggedInUser = props.auth.user;
-    // console.log('loggedInUser', loggedInUser);
+    console.log('loggedInUser', props.auth);
 
     const [name, setName] = useState(loggedInUser.name);
     const [username, setUsername] = useState(loggedInUser.username);
-    const [website, setWebsite] = useState(loggedInUser.webiste);
+    const [website, setWebsite] = useState(loggedInUser.website);
     const [bio, setBio] = useState(loggedInUser.bio);
+    const [profile, setProfile] = useState(loggedInUser.avatar);
+
+    const [image, setImage] = useState(null);
+    const [localUrl, setLocalUrl] = useState(null);
+    // const [fileType, setFileType] = useState(null);
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        console.log('var changed!');
+        handleCancelBtn()
+    }, [props.auth.isUploaded]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (name && username && website && bio) {
             // console.log(name, username, website, bio);
-            props.dispatch(editUser(name, username, website, bio, loggedInUser._id));
+            props.dispatch(
+                editUser(name, username, website, bio, loggedInUser._id)
+            );
         }
-    }
+    };
 
     // console.log('props.auth.isUpdating', props.auth.isUpdating);
-    if(props.auth.isUpdating){
-        return (<div>Updating profile...</div>);
+    if (props.auth.isUpdating) {
+        return <div>Updating profile...</div>;
     }
 
+    const handleFileChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+            // setFileType(e.target.files[0].type);
+            setLocalUrl(URL.createObjectURL(e.target.files[0]));
+        }
+    };
+
+    const handleCancelBtn = () => {
+        setImage(null);
+        document.getElementById('file-p').value = null;
+    };
+
+    const handleSaveBtn = () => {
+        if (profile.substr(8, 5) !== 'image') {
+            // it means user has already uploaded a profile pic
+            // delete that profile pic before uploading the new one
+            let profileRef = storage.refFromURL(profile);
+            profileRef
+                .delete()
+                .then(() => {
+                    console.log('Image deleted froom firebase!');
+                })
+                .catch((err) =>
+                    console.log('Error in deleting image from firebase', err)
+                );
+        }
+
+        const uploadTask = storage
+            .ref(`profileImages/${image.name + '-' + Date.now()}`)
+            .put(image);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                setProgress(
+                    Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    )
+                );
+            },
+            (error) => {
+                console.log('error', error);
+            },
+            () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                    console.log('url of image', url);
+                    props.dispatch(changeProfilePic(url));
+                    setProfile(url);
+                });
+            }
+        );
+    };
+
+    const handleRemoveBtn = () => {
+        if (profile.substr(8, 5) !== 'image') {
+            // it means user has already uploaded a profile pic
+            // delete that profile pic before uploading the new one
+            let profileRef = storage.refFromURL(profile);
+            profileRef
+                .delete()
+                .then(() => {
+                    console.log('Image deleted froom firebase!');
+                })
+                .catch((err) =>
+                    console.log('Error in deleting image from firebase', err)
+                );
+        }
+
+        props.dispatch(
+            changeProfilePic(
+                'https://image.flaticon.com/icons/png/512/848/848043.png'
+            )
+        );
+        setProfile('https://image.flaticon.com/icons/png/512/848/848043.png');
+    };
+
+    // if (props.auth.isUploaded) {
+        
+    // }
+
+    
 
     return (
         <div className="setting-actions">
             <div className="settings-user-profile">
-                <img
-                    src={loggedInUser.avatar}
-                    alt=""
-                    className="profile-pic large"
-                />
+                <img src={profile} alt="" className="profile-pic large" />
                 <div className="update-profile-pic-text">
                     <span className="black-text">{loggedInUser.username}</span>
-                    <span className="blue-text medium-text">
-                        Change Profile Picture{' '}
-                        <span className="black-text">&bull;</span> Remove
-                        Profile Picture
+                    <span className="blue-text medium-text file-input">
+                        <input
+                            type="file"
+                            id="file-p"
+                            className="file"
+                            onChange={handleFileChange}
+                        />
+                        <label htmlFor="file-p">Change Profile Picture </label>
+                        <span className="black-text">&bull;</span>{' '}
+                        <span
+                            className="remove-profile-text"
+                            onClick={handleRemoveBtn}
+                        >
+                            Remove Profile Picture
+                        </span>
                     </span>
                 </div>
             </div>
+
+            {image && (
+                <div className="profile-preview">
+                    <img
+                        src={localUrl}
+                        alt=""
+                        className="profile-preview-img"
+                    />
+                    <button className="cancel-btn" onClick={handleCancelBtn}>
+                        Cancel
+                    </button>
+                    <CircularProgress variant="determinate" value={progress} />
+                    {props.auth.isUploading ? (
+                        <button className="save-btn" disabled>
+                            Saving...
+                        </button>
+                    ) : (
+                        <button className="save-btn" onClick={handleSaveBtn}>
+                            Save
+                        </button>
+                    )}
+                </div>
+            )}
 
             <div className="edit-profile">
                 <div className="field">
@@ -79,7 +205,7 @@ function EditProfile(props) {
                     />
                 </div>
                 <div className="field">
-                    <input type="submit" onClick={handleSubmit}/>                    
+                    <input type="submit" onClick={handleSubmit} />
                 </div>
             </div>
         </div>

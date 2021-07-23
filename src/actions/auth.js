@@ -13,6 +13,8 @@ import {
     EDIT_USER_SUCCESSFUL,
     EDIT_USER_FAILED,
     EDIT_USER_START,
+    CHANGE_USER_PROFILE_SUCCESSFUL,
+    START_UPLOAD_PROFILE,
 } from './actionTypes';
 
 export function startLogin() {
@@ -148,16 +150,16 @@ export function editUserSuccessful(user) {
 }
 
 export function editUserFailed(error) {
-  return {
-      type: EDIT_USER_FAILED,
-      error,
-  };
+    return {
+        type: EDIT_USER_FAILED,
+        error,
+    };
 }
 
 export function startEdit() {
-  return {
-    type: EDIT_USER_START,
-  }
+    return {
+        type: EDIT_USER_START,
+    };
 }
 
 // this is actual async action to request the server
@@ -193,5 +195,47 @@ export function editUser(name, username, website, bio, userId) {
                 }
                 dispatch(editUserFailed(data.message));
             });
+    };
+}
+
+export function changeProfilePic(profileUrl) {
+    return (dispatch) => {
+        dispatch(startUploadProfile());
+        const url = APIUrls.changeProfilePic();
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                //   this is a secure api so we need to pass the jwt as well
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            body: getFormBody({
+                profileUrl,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Change PROFILE Pic data', data);
+                if (data.success) {
+                    dispatch(changeUserProfileSuccessful(data.data.updated_profile));
+                    if (data.data.token) {
+                        // change the token as well
+                        localStorage.setItem('token', data.data.token);
+                    }
+                }
+            });
+    };
+}
+
+export function changeUserProfileSuccessful(user){
+    return {
+        type: CHANGE_USER_PROFILE_SUCCESSFUL,
+        user,
+    };
+}
+
+export function startUploadProfile() {
+    return {
+        type: START_UPLOAD_PROFILE,
     };
 }

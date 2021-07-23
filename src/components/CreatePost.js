@@ -90,7 +90,7 @@ const CreatePost = (props) => {
                             className="file"
                             onChange={handleChange}
                         />
-                        <label htmlFor="file">Choose file...</label>
+                        <label htmlFor="file" className="post-input-label">Choose file...</label>
                     </div>
                 )}
 

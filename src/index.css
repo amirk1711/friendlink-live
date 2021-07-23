@@ -24,6 +24,9 @@ a {
     text-decoration: none;
     display: inline-block;
 }
+label {
+    cursor: pointer;
+}
 img {
     display: block;
 }
@@ -973,12 +976,28 @@ textarea:focus {
     box-sizing: border-box;
     border-radius: 4px;
 }
+.profile-preview {
+    padding: 3% 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-preview-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid black;
+}
 .create-post .file-input-and-post {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 .file-input {
+    display: block;
     /* width: 85%; */
     max-height: 50px;
     position: relative;
@@ -994,7 +1013,7 @@ textarea:focus {
     z-index: -1;
 }
 
-.file-input label {
+.file-input .post-input-label {
     padding: 4px;
     display: inline-block;
     text-align: center;
@@ -1004,6 +1023,10 @@ textarea:focus {
     background: var(--white);
     color: var(--black);
     font-size: 1rem;
+    cursor: pointer;
+}
+
+.remove-profile-text {
     cursor: pointer;
 }
 .cancel-btn {
@@ -1017,6 +1040,18 @@ textarea:focus {
     /* border: 1px solid var(--border); */
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
+    cursor: pointer;
+}
+.save-btn {
+    margin-right: 30px;
+    padding: 5px 16px;
+    line-height: 40px;
+    border: none;
+    color: var(--white) !important;
+    background-color: var(--blue);
+    font-size: 1rem;
+    color: var(--black-text);
+    border-radius: 4px;
     cursor: pointer;
 }
 
