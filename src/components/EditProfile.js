@@ -6,7 +6,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 function EditProfile(props) {
     const loggedInUser = props.auth.user;
-    console.log('loggedInUser', props.auth);
 
     const [name, setName] = useState(loggedInUser.name);
     const [username, setUsername] = useState(loggedInUser.username);
@@ -16,11 +15,9 @@ function EditProfile(props) {
 
     const [image, setImage] = useState(null);
     const [localUrl, setLocalUrl] = useState(null);
-    // const [fileType, setFileType] = useState(null);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        console.log('var changed!');
         handleCancelBtn()
     }, [props.auth.isUploaded]);
 
@@ -28,14 +25,12 @@ function EditProfile(props) {
         e.preventDefault();
 
         if (name && username && website && bio) {
-            // console.log(name, username, website, bio);
             props.dispatch(
                 editUser(name, username, website, bio, loggedInUser._id)
             );
         }
     };
 
-    // console.log('props.auth.isUpdating', props.auth.isUpdating);
     if (props.auth.isUpdating) {
         return <div>Updating profile...</div>;
     }
@@ -43,7 +38,6 @@ function EditProfile(props) {
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
-            // setFileType(e.target.files[0].type);
             setLocalUrl(URL.createObjectURL(e.target.files[0]));
         }
     };
@@ -61,7 +55,7 @@ function EditProfile(props) {
             profileRef
                 .delete()
                 .then(() => {
-                    console.log('Image deleted froom firebase!');
+                    console.log('Image deleted from firebase!');
                 })
                 .catch((err) =>
                     console.log('Error in deleting image from firebase', err)
@@ -102,7 +96,7 @@ function EditProfile(props) {
             profileRef
                 .delete()
                 .then(() => {
-                    console.log('Image deleted froom firebase!');
+                    console.log('Image deleted from firebase!');
                 })
                 .catch((err) =>
                     console.log('Error in deleting image from firebase', err)
@@ -117,11 +111,6 @@ function EditProfile(props) {
         setProfile('https://image.flaticon.com/icons/png/512/848/848043.png');
     };
 
-    // if (props.auth.isUploaded) {
-        
-    // }
-
-    
 
     return (
         <div className="setting-actions">
