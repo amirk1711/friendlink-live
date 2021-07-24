@@ -17,6 +17,11 @@ function EditProfile(props) {
     const [localUrl, setLocalUrl] = useState(null);
     const [progress, setProgress] = useState(0);
 
+    const handleCancelBtn = () => {
+        setImage(null);
+        document.getElementById('file-p').value = null;
+    };
+
     useEffect(() => {
         handleCancelBtn()
     }, [props.auth.isUploaded]);
@@ -42,10 +47,6 @@ function EditProfile(props) {
         }
     };
 
-    const handleCancelBtn = () => {
-        setImage(null);
-        document.getElementById('file-p').value = null;
-    };
 
     const handleSaveBtn = () => {
         if (profile.substr(8, 5) !== 'image') {
