@@ -13,6 +13,10 @@ import {
     EDIT_USER_START,
     CHANGE_USER_PROFILE_SUCCESSFUL,
     START_UPLOAD_PROFILE,
+    CHANGE_PASSWORD_SUCCESSFULL,
+    CHANGE_PASSWORD_START,
+    START_DELETE_ACCOUNT,
+    DELETE_ACCOUNT_SUCCESSFULL,
 } from '../actions/actionTypes';
 
 const initialAuthState = {
@@ -42,7 +46,7 @@ export default function auth(state = initialAuthState, action) {
             return {
                 ...state,
                 isUploading: true,
-            }
+            };
         case LOGIN_SUCCESS:
         case SIGNUP_SUCCESS:
             return {
@@ -83,7 +87,7 @@ export default function auth(state = initialAuthState, action) {
                 isUpdating: false,
                 error: false,
             };
-        case CHANGE_USER_PROFILE_SUCCESSFUL: 
+        case CHANGE_USER_PROFILE_SUCCESSFUL:
             return {
                 ...state,
                 user: action.user,
@@ -94,6 +98,27 @@ export default function auth(state = initialAuthState, action) {
             return {
                 ...state,
                 error: action.error,
+                isUpdating: false,
+            };
+        case CHANGE_PASSWORD_SUCCESSFULL:
+            return {
+                ...state,
+                user: action.user,
+                isUpdating: false,
+            };
+        case CHANGE_PASSWORD_START:
+            return {
+                ...state,
+                isUpdating: true,
+            };
+        case START_DELETE_ACCOUNT:
+            return {
+                ...state,
+                isUpdating: true,
+            };
+        case DELETE_ACCOUNT_SUCCESSFULL:
+            return {
+                ...state,
                 isUpdating: false,
             };
         default:

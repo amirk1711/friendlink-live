@@ -15,6 +15,10 @@ import {
     EDIT_USER_START,
     CHANGE_USER_PROFILE_SUCCESSFUL,
     START_UPLOAD_PROFILE,
+    CHANGE_PASSWORD_SUCCESSFULL,
+    CHANGE_PASSWORD_START,
+    START_DELETE_ACCOUNT,
+    DELETE_ACCOUNT_SUCCESSFULL,
 } from './actionTypes';
 
 export function startLogin() {
@@ -217,7 +221,9 @@ export function changeProfilePic(profileUrl) {
             .then((data) => {
                 console.log('Change PROFILE Pic data', data);
                 if (data.success) {
-                    dispatch(changeUserProfileSuccessful(data.data.updated_profile));
+                    dispatch(
+                        changeUserProfileSuccessful(data.data.updated_profile)
+                    );
                     if (data.data.token) {
                         // change the token as well
                         localStorage.setItem('token', data.data.token);
@@ -227,7 +233,7 @@ export function changeProfilePic(profileUrl) {
     };
 }
 
-export function changeUserProfileSuccessful(user){
+export function changeUserProfileSuccessful(user) {
     return {
         type: CHANGE_USER_PROFILE_SUCCESSFUL,
         user,
@@ -237,5 +243,82 @@ export function changeUserProfileSuccessful(user){
 export function startUploadProfile() {
     return {
         type: START_UPLOAD_PROFILE,
+    };
+}
+
+export function changePassword(oldPassword, newPassword, confirmPassword) {
+    return (dispatch) => {
+        dispatch(changePasswordStart());
+        const url = APIUrls.changeUserPassword();
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                //   this is a secure api so we need to pass the jwt as well
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            body: getFormBody({
+                old_password: oldPassword,
+                new_password: newPassword,
+                confirm_password: confirmPassword,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Change Pasword data', data);
+                if (data.success) {
+                    dispatch(changePasswordSuccessFull(data.data.user));
+                    if (data.data.token) {
+                        localStorage.setItem('token', data.data.token);
+                    }
+                }
+            });
+    };
+}
+
+export function changePasswordStart() {
+    return {
+        type: CHANGE_PASSWORD_START,
+    };
+}
+
+export function changePasswordSuccessFull(user) {
+    return {
+        type: CHANGE_PASSWORD_SUCCESSFULL,
+        user,
+    };
+}
+
+export function startDeleteAccount() {
+    return {
+        type: START_DELETE_ACCOUNT,
+    };
+}
+
+export function deleteAccountSuccessfull() {
+    return {
+        type: DELETE_ACCOUNT_SUCCESSFULL,
+    };
+}
+
+export function deleteAccount(id) {
+    return (dispatch) => {
+        dispatch(startDeleteAccount());
+        const url = APIUrls.deleteUser(id);
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                //   this is a secure api so we need to pass the jwt as well
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Delete User Data', data);
+                if(data.success){
+                    dispatch(logoutUser());
+                }
+            });
     };
 }

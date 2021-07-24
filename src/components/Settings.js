@@ -11,6 +11,7 @@ class Settings extends Component {
             password: '',
             confirmPassword: '',
             editMode: false,
+            activeTab: 1,
         };
     }
 
@@ -37,16 +38,18 @@ class Settings extends Component {
     }
 
     render() {
-        let activeTab = 1;
+        const { activeTab } = this.state;
         return (
             <div>
                 <div className="settings">
                     <div className="setting-btns">
-                        <button>Edit Profile</button>
-                        <button>Change Password</button>
-                        <button>Delete Account</button>
-                        <button>Help</button>
+                        <button autoFocus onClick={() => {this.setState({activeTab: 1})}}>Edit Profile</button>
+                        <button onClick={() => {this.setState({activeTab: 2})}}>Change Password</button>
+                        <button onClick={() => {this.setState({activeTab: 3})}}>Delete Account</button>
+                        <button onClick={() => {this.setState({activeTab: 4})}}>Help</button>
                     </div>
+
+                    {/* {console.log('active tab', activeTab)} */}
 
                     {activeTab === 1 && <EditProfile />}
                     {activeTab === 2 && <ChangePassword />}

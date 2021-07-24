@@ -898,7 +898,13 @@ nav .right-nav {
     padding: 3% 10%;
 }
 
+.togglePassword {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
 .field {
+    position: relative;
     margin-bottom: 14px;
     display: flex;
     align-items: center;

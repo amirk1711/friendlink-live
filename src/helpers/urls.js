@@ -9,6 +9,8 @@ export const APIUrls = {
     userProfile: (id) => `${API_ROOT}/users/profile/${id}`,
     editProfile: (id) => `${API_ROOT}/users/update/${id}`,
     changeProfilePic: () => `${API_ROOT}/users/change/profile`,
+    changeUserPassword: () => `${API_ROOT}/users/change/password`,
+    deleteUser: (id) => `${API_ROOT}/users/${id}`,
 
     createPost: () => `${API_ROOT}/posts/create`,
     deletePost: (id) => `${API_ROOT}/posts/${id}`,
