@@ -131,6 +131,7 @@ img {
     align-items: center;
     justify-content: space-between;
     padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
 }
 .post-top-left {
     display: flex;
@@ -164,7 +165,7 @@ img {
     line-height: 18px;
 }
 .post-center {
-    margin-top: 2px;
+    /* margin-top: 2px; */
     display: flex;
     flex-direction: column;
 }

@@ -5,12 +5,13 @@ import {
     UPDATE_POSTS,
     ADD_COMMENT,
     UPDATE_POST_LIKE,
+    DELETE_POST_SUCCESSFULL,
 } from './actionTypes';
 
 export function fetchPosts() {
     return (dispatch) => {
         const url = APIUrls.fetchPosts();
-        fetch(url,{
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -57,7 +58,7 @@ export function createPost(content, contentType, caption) {
                 caption,
             }),
         })
-            .then(response => response.json())
+            .then((response) => response.json())
             .then((data) => {
                 console.log('CREATE POST data', data);
 
@@ -83,7 +84,8 @@ export function createComment(content, post) {
         })
             .then((response) => {
                 console.log('res', response);
-                return response.json();})
+                return response.json();
+            })
             .then((data) => {
                 console.log('Comment data', data);
                 if (data.success) {
@@ -130,5 +132,33 @@ export function addLikeToStore(postId, userId, likes) {
         postId,
         userId,
         likes,
+    };
+}
+
+export function deletePost(postId) {
+    return (dispatch) => {
+        const url = APIUrls.deletePost(postId);
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            mode: 'cors',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Delete Post data: ', data);
+                if (data.success) {
+                    dispatch(deletePostSuccessfull(postId));
+                }
+            });
+    };
+}
+
+export function deletePostSuccessfull(postId) {
+    return {
+        type: DELETE_POST_SUCCESSFULL,
+        postId,
     };
 }

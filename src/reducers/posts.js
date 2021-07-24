@@ -3,6 +3,7 @@ import {
     ADD_POST,
     ADD_COMMENT,
     UPDATE_POST_LIKE,
+    DELETE_POST_SUCCESSFULL,
 } from '../actions/actionTypes';
 
 export default function posts(state = [], action) {
@@ -34,6 +35,9 @@ export default function posts(state = [], action) {
                 return post;
             });
             return updatedPosts;
+        case DELETE_POST_SUCCESSFULL:
+            const delPosts = state.filter((post) => post._id !== action.postId);
+            return delPosts;
         default:
             return state;
     }

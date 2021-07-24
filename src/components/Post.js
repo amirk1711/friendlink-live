@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Comment } from './';
-import { addLike, createComment } from '../actions/posts';
+import { addLike, createComment, deletePost } from '../actions/posts';
 import {
     CommentOutlined,
     FavoriteBorder,
     Favorite,
-    MoreVert,
+    Delete,
 } from '@material-ui/icons';
 
 class Post extends Component {
@@ -47,9 +47,14 @@ class Post extends Component {
         this.props.dispatch(addLike(post._id, 'Post', user._id));
     };
 
+    handleDeletePost = () => {
+        this.props.dispatch(deletePost(this.props.post._id));
+    };
+
     render() {
         const { post, user } = this.props;
         const { comment } = this.state;
+        const postAuthor = post.user;
 
         const isPostLikedByUser = post.likes.some(
             (like) => like._id === user._id || like === user._id
@@ -76,7 +81,15 @@ class Post extends Component {
                         </div>
 
                         <div className="post-top-right">
-                            <MoreVert />
+                            {postAuthor._id === user._id && (
+                                <Delete
+                                    style={{
+                                        color: '#65676b',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={this.handleDeletePost}
+                                />
+                            )}
                         </div>
                     </div>
 
