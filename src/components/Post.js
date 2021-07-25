@@ -59,6 +59,10 @@ class Post extends Component {
 
         let twoComments = [];
 
+        // if(post.comments === undefined){
+        //     return <h2>Deleting comment</h2>
+        // }
+
         if (post.comments.length >= 2) {
             twoComments.push(post.comments[0]);
             twoComments.push(post.comments[1]);

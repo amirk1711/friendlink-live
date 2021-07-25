@@ -6,6 +6,7 @@ import {
     ADD_COMMENT,
     UPDATE_POST_LIKE,
     DELETE_POST_SUCCESSFULL,
+    REMOVE_COMMENT,
 } from './actionTypes';
 
 export function fetchPosts() {
@@ -93,6 +94,39 @@ export function createComment(content, post) {
                 }
             });
     };
+}
+
+export function deleteComment(id, postId) {
+    return (dispatch) => {
+        const url = APIUrls.deleteComment(id);
+        console.log('before deleting comment');
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            mode: 'cors',
+        })
+            .then((response) => {
+                console.log('res', response);
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Comment data', data);
+                if (data.success) {
+                    dispatch(removeComment(id, postId));
+                }
+            });
+    };
+}
+
+export function removeComment(id, postId){
+    return {
+        type: REMOVE_COMMENT,
+        id,
+        postId,
+    }
 }
 
 export function addComment(comment, postId) {

@@ -60,7 +60,7 @@ class UserProfile extends Component {
 
     handleAddFriendClick = async () => {
         const userId = this.props.match.params.userId;
-        const url = APIUrls.addFriend(userId);
+        const url = APIUrls.follow(userId);
 
         const options = {
             method: 'POST',

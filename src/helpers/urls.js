@@ -1,6 +1,4 @@
-// const API_ROOT = 'http://codeial.codingninjas.com:8000/api/v2';
 const API_ROOT = 'https://friendlink-app.herokuapp.com/api/v1';
-// const API_ROOT = 'http://localhost:8000/api/v1';
 
 export const APIUrls = {
     login: () => `${API_ROOT}/users/login`,
@@ -21,7 +19,7 @@ export const APIUrls = {
     fetchSuggestions: (id) => `${API_ROOT}/users/suggestions/${id}`,
 
     createComment: () => `${API_ROOT}/comments/create`,
-    deleteComment: (id) => `${API_ROOT}/comments/destroy/${id}`,
+    deleteComment: (id) => `${API_ROOT}/comments/${id}`,
 
     toggleLike: (id, likeType) => `${API_ROOT}/likes/toggle?id=${id}&type=${likeType}`,
     fetchposts: (id, likeType) => `${API_ROOT}/likes/fetch?id=${id}&type=${likeType}`,
