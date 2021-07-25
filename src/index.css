@@ -247,6 +247,7 @@ img {
     color: var(--light-grey);
     font-size: 14px;
     margin-bottom: 4px;
+    cursor: pointer;
 }
 .post-comments-list {
     margin-top: 4px;

@@ -16,6 +16,7 @@ class Post extends Component {
         super(props);
         this.state = {
             comment: '',
+            toggleViewComment: false,
         };
     }
 
@@ -56,10 +57,26 @@ class Post extends Component {
         const { comment } = this.state;
         const postAuthor = post.user;
 
+        let twoComments = [];
+
+        if (post.comments.length >= 2) {
+            twoComments.push(post.comments[0]);
+            twoComments.push(post.comments[1]);
+        }
+
         const isPostLikedByUser = post.likes.some(
             (like) => like._id === user._id || like === user._id
         );
 
+        let followingLikedUser = [];
+
+        for (let likedUser of post.likes) {
+            if (user.following.includes(likedUser._id)) {
+                followingLikedUser.push(likedUser);
+            }
+        }
+
+        
         return (
             <div className="post">
                 <div className="post-wrapper" key={post._id}>
@@ -118,16 +135,45 @@ class Post extends Component {
                                 <span>{post.comments.length}</span>
                             </button>
                         </div>
-                        <div className="liked-by-detail">
-                            <img
-                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
-                                alt=""
-                            />
-                            <p>
-                                Liked by <span>amirk1711</span> and{' '}
-                                <span>3 others</span>
-                            </p>
-                        </div>
+
+                        {followingLikedUser.length > 0 && (
+                            <div className="liked-by-detail">
+                                <img
+                                    src={followingLikedUser[0].avatar}
+                                    alt=""
+                                />
+                                {post.likes.length > 1 && (
+                                    <p>
+                                        Liked by{' '}
+                                        <span>
+                                            {followingLikedUser[0].username}
+                                        </span>{' '}
+                                        and{' '}
+                                        <span>
+                                            {post.likes.length - 1} others
+                                        </span>
+                                    </p>
+                                )}
+
+                                {post.likes.length <= 1 && (
+                                    <p>
+                                        Liked by{' '}
+                                        <span>
+                                            {followingLikedUser[0].username}
+                                        </span>
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        {followingLikedUser.length === 0 && (
+                            <div className="liked-by-detail">
+                                <p>
+                                    <span>{post.likes.length} Likes</span>
+                                </p>
+                            </div>
+                        )}
+
                         <div className="post-caption">
                             <p>
                                 <span>{post.user.username}</span>
@@ -137,18 +183,48 @@ class Post extends Component {
                     </div>
 
                     <div className="post-bottom">
-                        <p className="view-comments">View all 7 comments</p>
+                        {post.comments.length > 2 && (
+                            <p
+                                className="view-comments"
+                                onClick={() => {
+                                    this.setState({
+                                        toggleViewComment: !this.state.toggleViewComment,
+                                    });
+                                }}
+                            >
+                                View all {post.comments.length} comments
+                            </p>
+                        )}
 
-                        <div className="post-comments-list">
-                            {post.comments.map((comment) => (
-                                <Comment
-                                    user={post.user}
-                                    comment={comment}
-                                    key={comment._id}
-                                    postId={post._id}
-                                />
-                            ))}
-                        </div>
+                        {post.comments.length > 2 &&
+                            !this.state.toggleViewComment && (
+                                <div className="post-comments-list">
+                                    {twoComments.map((comment) => (
+                                        <Comment
+                                            user={post.user}
+                                            comment={comment}
+                                            key={comment._id}
+                                            postId={post._id}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+
+                        {(this.state.toggleViewComment ||
+                            post.comments.length <= 2) && (
+                            <div className="post-comments-list">
+                                {post.comments.map((comment) => (
+                                    <Comment
+                                        user={post.user}
+                                        comment={comment}
+                                        key={comment._id}
+                                        postId={post._id}
+                                    />
+                                ))}
+                            </div>
+                        )}
+
+                        {/* {!this.state.toggleViewComment && ()} */}
 
                         <div className="post-comment-box">
                             <input
