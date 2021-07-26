@@ -20,6 +20,7 @@ import EditProfile from './EditProfile';
 import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 import Help from './Help';
+import Chat from './Chat';
 
 export {
     PostsList,
@@ -44,4 +45,5 @@ export {
     ChangePassword,
     DeleteAccount,
     Help,
+    Chat,
 };

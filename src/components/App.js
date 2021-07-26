@@ -18,6 +18,7 @@ import {
     Settings,
     UserProfile,
     Navbar,
+    Chat,
 } from './';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
@@ -144,6 +145,11 @@ class App extends React.Component {
                         <PrivateRoute
                             path="/user/:userId"
                             component={UserProfile}
+                            isLoggedin={auth.isLoggedin}
+                        />
+                        <PrivateRoute
+                            path="/messages"
+                            component={Chat}
                             isLoggedin={auth.isLoggedin}
                         />
                         <Route component={Page404} />
