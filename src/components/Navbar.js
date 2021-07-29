@@ -50,7 +50,7 @@ class Navbar extends React.Component {
                                                 src={user.avatar}
                                                 alt="user-dp"
                                             />
-                                            
+
                                             <span>{user.name}</span>
                                         </Link>
                                     </li>
@@ -63,14 +63,19 @@ class Navbar extends React.Component {
                     {auth.isLoggedin && (
                         <div className="nav-icons">
                             <div className="nav-icon-item">
-                                <Link to="/"><HomeOutlined className="home-icon black-text"/></Link>
+                                <Link to="/">
+                                    <HomeOutlined className="home-icon black-text" />
+                                </Link>
                             </div>
                             <div className="nav-icon-item">
                                 <NotificationsOutlined className="noti-icon" />
+
                                 {/* <span className="nav-icon-badge">&bull;</span> */}
                             </div>
                             <div className="nav-icon-item">
-                                <MessageOutlined className="msg-icon" />
+                                <Link to="/messages">
+                                    <MessageOutlined className="msg-icon" />
+                                </Link>
                                 {/* <span className="nav-icon-badge">&bull;</span> */}
                             </div>
                         </div>
@@ -87,8 +92,9 @@ class Navbar extends React.Component {
                                     id="user-dp"
                                 />
                             </Link>
-                            <Link to={`/user/${auth.user._id}`}><span>{auth.user.name}</span></Link>
-                            
+                            <Link to={`/user/${auth.user._id}`}>
+                                <span>{auth.user.name}</span>
+                            </Link>
                         </div>
                     )}
 

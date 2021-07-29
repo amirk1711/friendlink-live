@@ -24,5 +24,10 @@ export const APIUrls = {
     toggleLike: (id, likeType) => `${API_ROOT}/likes/toggle?id=${id}&type=${likeType}`,
     fetchposts: (id, likeType) => `${API_ROOT}/likes/fetch?id=${id}&type=${likeType}`,
 
-    userSearch: (searchText) => `${API_ROOT}/users/search?text=${searchText}`
+    userSearch: (searchText) => `${API_ROOT}/users/search?text=${searchText}`,
+
+    createChatUser: () => `${API_ROOT}/chat-users`,
+    fetchChatUser: (id) => `${API_ROOT}/chat-users/${id}`,
+    createChat: () => `${API_ROOT}/chats`,
+    fetchChat: (id) => `${API_ROOT}/chats/${id}`,
 };

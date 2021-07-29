@@ -1148,6 +1148,7 @@ textarea:focus {
     padding: 12px 8px 6px 16px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .chat-users-list:hover {
@@ -1252,4 +1253,10 @@ textarea:focus {
     border-bottom-right-radius: 4px;
     cursor: pointer;
     border-top: 1px solid var(--border);
+}
+
+.no-chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
