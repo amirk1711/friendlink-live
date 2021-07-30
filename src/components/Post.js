@@ -11,6 +11,9 @@ import {
     Delete,
 } from '@material-ui/icons';
 
+import { format } from 'timeago.js';
+
+
 class Post extends Component {
     constructor(props) {
         super(props);
@@ -97,7 +100,7 @@ class Post extends Component {
                                 <span className="post-author">
                                     {post.user.username}
                                 </span>
-                                <span className="post-time">2m ago</span>
+                                <span className="post-time">{format(post.createdAt)}</span>
                             </div>
                         </div>
 
@@ -219,7 +222,7 @@ class Post extends Component {
                             <div className="post-comments-list">
                                 {post.comments.map((comment) => (
                                     <Comment
-                                        user={post.user}
+                                        user={user}
                                         comment={comment}
                                         key={comment._id}
                                         postId={post._id}

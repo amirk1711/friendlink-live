@@ -4,6 +4,7 @@ import {
     FETCH_USER_PROFILE,
     USER_PROFILE_FAILURE,
     USER_PROFILE_SUCCESS,
+    UPDATE_PROFILE,
 } from './actionTypes';
 
 export function startUserProfileFetch() {
@@ -33,7 +34,7 @@ export function fetchUserProfile(userId) {
         dispatch(startUserProfileFetch());
 
         const url = APIUrls.userProfile(userId);
-        
+
         // console.log('start fetching user profile', url);
         // Get request
         fetch(url, {
@@ -57,6 +58,61 @@ export function fetchUserProfile(userId) {
                             data.data.profile_posts
                         )
                     );
+                    return;
+                }
+                dispatch(userProfileFailed(data.message));
+            });
+    };
+}
+
+export function followUser(id) {
+    return (dispatch) => {
+        const url = APIUrls.follow(id);
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            mode: 'cors',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Follow user data', data);
+                if (data.success) {
+                    dispatch(updateProfile(data.data.updated_profile));
+                    return;
+                }
+                dispatch(userProfileFailed(data.message));
+            });
+    };
+}
+
+export function updateProfile(updated_profile) {
+    return {
+        type: UPDATE_PROFILE,
+        updated_profile,
+    };
+}
+
+export function unfollowUser(id) {
+    return (dispatch) => {
+        const url = APIUrls.unfollow(id);
+        
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+            },
+            mode: 'cors',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('UnFollow user data', data);
+                if (data.success) {
+                    dispatch(updateProfile(data.data.updated_profile));
                     return;
                 }
                 dispatch(userProfileFailed(data.message));

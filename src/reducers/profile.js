@@ -1,5 +1,6 @@
 import {
     FETCH_USER_PROFILE,
+    UPDATE_PROFILE,
     USER_PROFILE_FAILURE,
     USER_PROFILE_SUCCESS,
 } from '../actions/actionTypes';
@@ -33,6 +34,12 @@ export default function profile(state = intialProfileState, action) {
                 error: action.error,
                 inProgress: false,
             };
+        case UPDATE_PROFILE:
+            return {
+                ...state,
+                user: action.updated_profile,
+                inProgress: false,
+            }
         default:
             return state;
     }

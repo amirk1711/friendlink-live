@@ -762,12 +762,14 @@ nav .right-nav {
     color: var(--white);
     padding: 8px 10px;
     border-radius: 4px;
+    cursor: pointer;
 }
 .unfollow-btn {
     color: var(--black);
     padding: 8px 10px;
     border-radius: 4px;
     border: 1px solid var(--border);
+    cursor: pointer;
 }
 .msg-btn {
     background-color: transparent;
@@ -775,6 +777,7 @@ nav .right-nav {
     padding: 8px 10px;
     border-radius: 4px;
     border: 1px solid var(--border);
+    cursor: pointer;
 }
 .user-profile-lower {
     /* width: 80%; */

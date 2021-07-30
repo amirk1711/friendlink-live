@@ -2,9 +2,11 @@ import React from 'react';
 import { Delete } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { deleteComment } from '../actions/posts';
+import { format } from 'timeago.js';
 
 function Comment({ comment, user, dispatch }) {
 
+    
 
     const handleDeleteComment = (e) => {
         e.preventDefault();
@@ -27,7 +29,7 @@ function Comment({ comment, user, dispatch }) {
                     <p className="post-comment-content">{comment.content}</p>
                 </div>
                 <p className="post-comment-action">
-                    <span>2h&emsp;{comment.likes.length} Likes&emsp;Reply</span>
+                    <span>{format(comment.createdAt)}&emsp;{comment.likes.length} Likes&emsp;Reply</span>
                 </p>
             </div>
 

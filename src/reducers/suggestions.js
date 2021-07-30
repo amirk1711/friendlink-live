@@ -1,4 +1,8 @@
-import { FOLLOW_FRIEND, FETCH_SUGGESTIONS_SUCCESS, UNFOLLOW_FRIEND } from '../actions/actionTypes';
+import {
+    FOLLOW_FRIEND,
+    FETCH_SUGGESTIONS_SUCCESS,
+    UNFOLLOW_FRIEND,
+} from '../actions/actionTypes';
 
 const defaultProfileState = [];
 

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUserProfile } from '../actions/profile';
-import { APIUrls } from '../helpers/urls';
-import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-import { follow, unfollow } from '../actions/suggestions';
+import { fetchUserProfile, unfollowUser } from '../actions/profile';
+import { followUser } from '../actions/profile';
 import { Link } from 'react-router-dom';
 import { ProfilePostCard, FriendsList } from './';
 
@@ -43,81 +41,24 @@ class UserProfile extends Component {
     }
 
     checkIfUserIsAFriend = () => {
-        // console.log('this.props', this.props);
-        // const { match, friends } = this.props;
-        // const userId = match.params.userId;
-
-        // const index = friends
-        //     .map((friend) => friend.to_user._id)
-        //     .indexOf(userId);
-
-        // if (index !== -1) {
-        //     return true;
-        // }
-
+        const { profile, auth } = this.props;
+        for(let f of profile.user.followers){
+            if(f._id === auth.user._id){
+                return true;
+            }
+        }
         return false;
+        
     };
 
     handleAddFriendClick = async () => {
         const userId = this.props.match.params.userId;
-        const url = APIUrls.follow(userId);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
-            },
-        };
-
-        const response = await fetch(url, options);
-        const data = await response.json();
-
-        if (data.success) {
-            this.setState({
-                success: true,
-                successMessage: 'Added friend successfully!',
-            });
-
-            this.props.dispatch(follow(data.data.friendship));
-        } else {
-            this.setState({
-                success: null,
-                error: data.message,
-            });
-        }
-    };
+        this.props.dispatch(followUser(userId));
+    }; 
 
     handleRemoveFriendClick = async () => {
-        // Mini Assignment
-        const { match } = this.props;
-        const url = APIUrls.removeFriend(match.params.userId);
-
-        const extra = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
-            },
-        };
-
-        const response = await fetch(url, extra);
-        const data = await response.json();
-        console.log('await data', data);
-
-        if (data.success) {
-            // show user message
-            this.setState({
-                success: true,
-                successMessage: 'Removed friends successfully!',
-            });
-            this.props.dispatch(unfollow(match.params.userId));
-        } else {
-            this.setState({
-                success: null,
-                error: data.message,
-            });
-        }
+        const userId = this.props.match.params.userId;
+        this.props.dispatch(unfollowUser(userId));
     };
 
     render() {
@@ -125,8 +66,7 @@ class UserProfile extends Component {
             profile,
             auth,
         } = this.props;
-        // console.log('this.props', params);
-        // console.log('profile', profile);
+        
         const user = profile.user;
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;
@@ -136,7 +76,7 @@ class UserProfile extends Component {
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();
-        // const { success, error, successMessage } = this.state;
+        
 
         let activeTab = 1;
         return (
@@ -179,7 +119,7 @@ class UserProfile extends Component {
                                 <div className="btn-grp">
                                     {!isUserAFriend ? (
                                         <button
-                                            className="follow-btn no-btn medium-text mr-8 bold-text"
+                                            className="follow-btn no-btn medium-text mr-10 bold-text"
                                             onClick={this.handleAddFriendClick}
                                         >
                                             Follow

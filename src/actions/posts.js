@@ -9,6 +9,8 @@ import {
     REMOVE_COMMENT,
 } from './actionTypes';
 
+const sortOn = require('sort-on');
+
 export function fetchPosts() {
     return (dispatch) => {
         const url = APIUrls.fetchPosts();
@@ -23,7 +25,9 @@ export function fetchPosts() {
             .then((response) => response.json())
             .then((data) => {
                 console.log('data', data);
-                dispatch(updatePosts(data.data.timelinePosts));
+                let sortedTimelinePosts = sortOn(data.data.timelinePosts, '-createdAt');
+                // console.log('sorted poists', sortedTimelinePosts);
+                dispatch(updatePosts(sortedTimelinePosts));
             });
     };
 }
