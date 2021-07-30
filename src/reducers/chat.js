@@ -8,11 +8,19 @@ import {
     CREATE_CHAT_FAILED,
     CREATE_CHAT_START,
     CREATE_CHAT_SUCCESSFULL,
+    ADD_CHAT,
+    CREATE_CHAT_USERS_FAILED,
+    CREATE_CHAT_USERS_START,
+    CREATE_CHAT_USERS_SUCCESSFULL,
+    CLEAR_FETCH_STATE,
+    SEND_CURRENT_CHAT_USER,
 } from '../actions/actionTypes';
 
 const initialChatState = {
+    currentChatUser: {},
     chatUsers: [],
     chats: [],
+    isSettingCurrentChatUser: false,
     isFetchingChatUsers: false,
     isFetchingChats: false,
     isCreatingChat: false,
@@ -40,6 +48,7 @@ export default function chat(state = initialChatState, action) {
             return {
                 ...state,
                 isFetchingChats: true,
+                isSettingCurrentChatUser: true,
             };
         case FETCH_CHATS_SUCCESSFULL:
             return {
@@ -68,6 +77,39 @@ export default function chat(state = initialChatState, action) {
                 ...state,
                 isCreatingChat: false,
             };
+        case ADD_CHAT:
+            return {
+                ...state,
+                chats: [...state.chats, action.chat],
+            };
+        case CREATE_CHAT_USERS_START:
+            return {
+                ...state,
+                isFetchingChatUsers: true,
+            };
+        case CREATE_CHAT_USERS_SUCCESSFULL:
+            return {
+                ...state,
+                chatUsers: [...state.chatUsers, action.chatUser],
+                isFetchingChatUsers: false,
+            };
+        case CREATE_CHAT_USERS_FAILED:
+            return {
+                ...state,
+                isFetchingChatUsers: false,
+            };
+
+        case CLEAR_FETCH_STATE:
+            return {
+                ...state,
+                isFetchingChatUsers: false,
+            }
+        case SEND_CURRENT_CHAT_USER:
+            return {
+                ...state,
+                currentChatUser: action.chatUser,
+                isSettingCurrentChatUser: false,
+            }
         default:
             return state;
     }

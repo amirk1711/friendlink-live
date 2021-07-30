@@ -187,6 +187,7 @@ img {
     align-items: center;
     justify-content: center;
     background-color: var(--white);
+    cursor: pointer;
 }
 
 .post-actions > button:first-child {
@@ -1151,8 +1152,15 @@ textarea:focus {
     cursor: pointer;
 }
 
-.chat-users-list:hover {
+.add-lightbg {
     background-color: var(--light-white);
+}
+
+.chat-users-list:hover,
+.chat-users-list:focus {
+    background-color: var(--light-white);
+    border: none !important;
+    outline: none;
 }
 
 .chat-box {
@@ -1259,4 +1267,9 @@ textarea:focus {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+.chat-tab:focus {
+    background-color:var(--light-white);
 }

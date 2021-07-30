@@ -30,4 +30,5 @@ export const APIUrls = {
     fetchChatUser: (id) => `${API_ROOT}/chat-users/${id}`,
     createChat: () => `${API_ROOT}/chats`,
     fetchChat: (id) => `${API_ROOT}/chats/${id}`,
+
 };
