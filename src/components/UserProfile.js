@@ -71,7 +71,7 @@ class UserProfile extends Component {
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;
 
-        if (Object.keys(user).length === 0 && user.constructor === Object) {
+        if ((Object.keys(user).length === 0 && user.constructor === Object) || profile.inProgress) {
             return <h1>Loading!</h1>;
         }
 

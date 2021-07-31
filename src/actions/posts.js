@@ -26,7 +26,10 @@ export function fetchPosts() {
             .then((data) => {
                 console.log('data', data);
                 let sortedTimelinePosts = sortOn(data.data.timelinePosts, '-createdAt');
-                // console.log('sorted poists', sortedTimelinePosts);
+                for(let p of sortedTimelinePosts){
+                    p.comments = sortOn(p.comments, '-createdAt');
+                }
+                
                 dispatch(updatePosts(sortedTimelinePosts));
             });
     };

@@ -82,6 +82,9 @@ export function followUser(id) {
                 console.log('Follow user data', data);
                 if (data.success) {
                     dispatch(updateProfile(data.data.updated_profile));
+                    if (data.data.token) {
+                        localStorage.setItem('token', data.data.token);
+                    }
                     return;
                 }
                 dispatch(userProfileFailed(data.message));
@@ -99,7 +102,7 @@ export function updateProfile(updated_profile) {
 export function unfollowUser(id) {
     return (dispatch) => {
         const url = APIUrls.unfollow(id);
-        
+
         fetch(url, {
             method: 'PUT',
             headers: {
@@ -113,6 +116,9 @@ export function unfollowUser(id) {
                 console.log('UnFollow user data', data);
                 if (data.success) {
                     dispatch(updateProfile(data.data.updated_profile));
+                    if (data.data.token) {
+                        localStorage.setItem('token', data.data.token);
+                    }
                     return;
                 }
                 dispatch(userProfileFailed(data.message));

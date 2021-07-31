@@ -12,6 +12,7 @@ import {
 } from '@material-ui/icons';
 
 import { format } from 'timeago.js';
+import randomItem from 'random-item';
 
 
 class Post extends Component {
@@ -77,12 +78,20 @@ class Post extends Component {
 
         let followingLikedUser = [];
 
+        // console.log('post.likes', post.likes);
+
         for (let likedUser of post.likes) {
-            if (user.following.includes(likedUser._id)) {
-                followingLikedUser.push(likedUser);
+            // console.log('user.folowing', user.following);
+            for(let u of user.following){
+                // console.log('u', u);
+                // console.log('likedUser', likedUser);
+                if(u._id === likedUser._id){
+                    followingLikedUser.push(u);
+                }
             }
         }
 
+        // console.log('folowinglikesu', followingLikedUser);
         
         return (
             <div className="post">
@@ -146,14 +155,14 @@ class Post extends Component {
                         {followingLikedUser.length > 0 && (
                             <div className="liked-by-detail">
                                 <img
-                                    src={followingLikedUser[0].avatar}
+                                    src={randomItem(followingLikedUser).avatar}
                                     alt=""
                                 />
                                 {post.likes.length > 1 && (
                                     <p>
                                         Liked by{' '}
                                         <span>
-                                            {followingLikedUser[0].username}
+                                            {randomItem(followingLikedUser).username}
                                         </span>{' '}
                                         and{' '}
                                         <span>

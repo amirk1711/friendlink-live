@@ -1,16 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { follow } from '../actions/suggestions';
 
 function SuggestionsListItem(props) {
     const { suggestion } = props;
-
-    const dispatch = useDispatch();
-
-    const handleFollow = () => {
-        dispatch(follow(suggestion._id));
-    }
 
     return (
         <div className="friends-item">
@@ -33,10 +25,6 @@ function SuggestionsListItem(props) {
                         {suggestion.name}
                     </p>
                 </div>
-            </div>
-
-            <div className="follow-suggestion">
-                <span className="blue-text small-text" onClick={handleFollow}>Follow</span>
             </div>
         </div>
     );
