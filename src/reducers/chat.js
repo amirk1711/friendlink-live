@@ -14,10 +14,12 @@ import {
     CREATE_CHAT_USERS_SUCCESSFULL,
     CLEAR_FETCH_STATE,
     SEND_CURRENT_CHAT_USER,
+    SET_REDIRECTED_USER,
 } from '../actions/actionTypes';
 
 const initialChatState = {
     currentChatUser: {},
+    redirectedUser: {},
     chatUsers: [],
     chats: [],
     isSettingCurrentChatUser: false,
@@ -55,11 +57,13 @@ export default function chat(state = initialChatState, action) {
                 ...state,
                 chats: action.chats,
                 isFetchingChats: false,
+                isSettingCurrentChatUser: false,
             };
         case FETCH_CHATS_FAILED:
             return {
                 ...state,
                 isFetchingChats: false,
+                isSettingCurrentChatUser: false,
             };
         case CREATE_CHAT_START:
             return {
@@ -103,12 +107,18 @@ export default function chat(state = initialChatState, action) {
             return {
                 ...state,
                 isFetchingChatUsers: false,
-            }
+                isSettingCurrentChatUser: false,
+            };
         case SEND_CURRENT_CHAT_USER:
             return {
                 ...state,
                 currentChatUser: action.chatUser,
                 isSettingCurrentChatUser: false,
+            };
+        case SET_REDIRECTED_USER:
+            return {
+                ...state,
+                redirectedUser: action.redirectedUser,
             }
         default:
             return state;

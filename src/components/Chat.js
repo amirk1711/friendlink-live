@@ -26,7 +26,7 @@ function Chat(props) {
 
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(chat.redirectedUser);
     const [activeTab, setActiveTab] = useState(1);
 
     useEffect(() => {

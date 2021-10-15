@@ -4,6 +4,7 @@ import { fetchUserProfile, unfollowUser } from '../actions/profile';
 import { followUser } from '../actions/profile';
 import { Link } from 'react-router-dom';
 import { ProfilePostCard, FriendsList } from './';
+import { createChatUser, setRedirectedUser } from '../actions/chat';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -42,41 +43,47 @@ class UserProfile extends Component {
 
     checkIfUserIsAFriend = () => {
         const { profile, auth } = this.props;
-        for(let f of profile.user.followers){
-            if(f._id === auth.user._id){
+        for (let f of profile.user.followers) {
+            if (f._id === auth.user._id) {
                 return true;
             }
         }
         return false;
-        
     };
 
     handleAddFriendClick = async () => {
         const userId = this.props.match.params.userId;
         this.props.dispatch(followUser(userId));
-    }; 
+    };
 
     handleRemoveFriendClick = async () => {
         const userId = this.props.match.params.userId;
         this.props.dispatch(unfollowUser(userId));
     };
 
+    handleCreateChatUser = async () => {
+        const receiverId = this.props.match.params.userId;
+        const { user } = this.props.auth;
+        const senderId = user._id;
+        this.props.dispatch(createChatUser(senderId, receiverId));
+        this.props.dispatch(setRedirectedUser(this.props.profile.user));
+    };
+
     render() {
-        const {
-            profile,
-            auth,
-        } = this.props;
-        
+        const { profile, auth } = this.props;
+
         const user = profile.user;
         const loggedInUser = auth.user;
         const userPosts = profile.userPosts;
 
-        if ((Object.keys(user).length === 0 && user.constructor === Object) || profile.inProgress) {
+        if (
+            (Object.keys(user).length === 0 && user.constructor === Object) ||
+            profile.inProgress
+        ) {
             return <h1>Loading!</h1>;
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();
-        
 
         let activeTab = 1;
         return (
@@ -135,9 +142,14 @@ class UserProfile extends Component {
                                         </button>
                                     )}
 
-                                    <button className="msg-btn bold-text">
-                                        Message
-                                    </button>
+                                    <Link to="/messages">
+                                        <button
+                                            className="msg-btn bold-text"
+                                            onClick={this.handleCreateChatUser}
+                                        >
+                                            Message
+                                        </button>
+                                    </Link>
                                 </div>
                             )}
                         </div>
@@ -169,7 +181,10 @@ class UserProfile extends Component {
                         <span className="profile-bio large-text mb-8">
                             {user.bio}
                         </span>
-                        <Link to={user.website} className="profile-bio large-text mb-8">
+                        <Link
+                            to={user.website}
+                            className="profile-bio large-text mb-8"
+                        >
                             {user.website}
                         </Link>
                     </div>
@@ -205,11 +220,12 @@ class UserProfile extends Component {
     }
 }
 
-function mapStateToProps({ profile, friends, auth }) {
+function mapStateToProps({ profile, friends, auth, chat }) {
     return {
         profile,
         friends,
         auth,
+        chat,
     };
 }
 export default connect(mapStateToProps)(UserProfile);

@@ -16,6 +16,7 @@ import {
     CREATE_CHAT_USERS_SUCCESSFULL,
     CLEAR_FETCH_STATE,
     SEND_CURRENT_CHAT_USER,
+    SET_REDIRECTED_USER,
 } from './actionTypes';
 
 export function fetchChatUsers(id) {
@@ -84,7 +85,9 @@ export function createChatUser(senderId, receiverId) {
                         await dispatch(clearFetchState());
                         return;
                     }
-                    await dispatch(createChatUserSuccessfull(data.data.newChatUser));
+                    await dispatch(
+                        createChatUserSuccessfull(data.data.newChatUser)
+                    );
                     await dispatch(sendCurrentChatUser(data.data.newChatUser));
                     await dispatch(fetchChats(data.data.newChatUser._id));
                     return;
@@ -104,7 +107,7 @@ export function sendCurrentChatUser(chatUser) {
     return {
         type: SEND_CURRENT_CHAT_USER,
         chatUser,
-    }
+    };
 }
 export function createChatUserStart() {
     return {
@@ -217,5 +220,12 @@ export function addChat(chat) {
     return {
         type: ADD_CHAT,
         chat,
+    };
+}
+
+export function setRedirectedUser(redirectedUser) {
+    return {
+        type: SET_REDIRECTED_USER,
+        redirectedUser,
     };
 }
