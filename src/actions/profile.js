@@ -46,11 +46,11 @@ export function fetchUserProfile(userId) {
             mode: 'cors',
         })
             .then((response) => {
-                console.log('Response fetch user', response);
+                // console.log('Response fetch user', response);
                 return response.json();
             })
             .then((data) => {
-                console.log('USER PROFILE data', data);
+                // console.log('USER PROFILE data', data);
                 if (data.success) {
                     dispatch(
                         userProfileSuccess(
@@ -79,7 +79,7 @@ export function followUser(id) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Follow user data', data);
+                // console.log('Follow user data', data);
                 if (data.success) {
                     dispatch(updateProfile(data.data.updated_profile));
                     if (data.data.token) {
@@ -113,7 +113,7 @@ export function unfollowUser(id) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('UnFollow user data', data);
+                // console.log('UnFollow user data', data);
                 if (data.success) {
                     dispatch(updateProfile(data.data.updated_profile));
                     if (data.data.token) {

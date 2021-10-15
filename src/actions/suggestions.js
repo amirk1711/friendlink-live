@@ -18,7 +18,7 @@ export function fetchUserSuggestions(userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('FETCH Suggestions data', data);
+                // console.log('FETCH Suggestions data', data);
                 if (data.success) {
                     dispatch(fetchSuggestionsSucces(data.data.suggestions));
                 }
@@ -46,7 +46,7 @@ export function follow(userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Follow User Data', data);
+                // console.log('Follow User Data', data);
                 if (data.success) {
                     dispatch(followSuccess(userId));
                 }
@@ -77,7 +77,7 @@ export function unfollow(userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('UnFollow User Data', data);
+                // console.log('UnFollow User Data', data);
                 if (data.success) {
                     dispatch(unfollowSuccess(userId));
                 }

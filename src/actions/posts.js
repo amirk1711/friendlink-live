@@ -24,7 +24,7 @@ export function fetchPosts() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('data', data);
+                // console.log('data', data);
                 let sortedTimelinePosts = sortOn(data.data.timelinePosts, '-createdAt');
                 for(let p of sortedTimelinePosts){
                     p.comments = sortOn(p.comments, '-createdAt');
@@ -68,7 +68,7 @@ export function createPost(content, contentType, caption) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('CREATE POST data', data);
+                // console.log('CREATE POST data', data);
 
                 if (data.success) {
                     dispatch(addPost(data.data.post));
@@ -91,11 +91,11 @@ export function createComment(content, post) {
             body: getFormBody({ content, post }),
         })
             .then((response) => {
-                console.log('res', response);
+                // console.log('res', response);
                 return response.json();
             })
             .then((data) => {
-                console.log('Comment data', data);
+                // console.log('Comment data', data);
                 if (data.success) {
                     dispatch(addComment(data.data.comment, post));
                 }
@@ -116,11 +116,11 @@ export function deleteComment(id, postId) {
             mode: 'cors',
         })
             .then((response) => {
-                console.log('res', response);
+                // console.log('res', response);
                 return response.json();
             })
             .then((data) => {
-                console.log('Comment data', data);
+                // console.log('Comment data', data);
                 if (data.success) {
                     dispatch(removeComment(id, postId));
                 }
@@ -159,7 +159,7 @@ export function addLike(id, likeType, userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('LIKE data', data);
+                // console.log('LIKE data', data);
                 if (data.success) {
                     dispatch(addLikeToStore(id, userId, data.data.likes));
                 }
@@ -189,7 +189,7 @@ export function deletePost(postId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Delete Post data: ', data);
+                // console.log('Delete Post data: ', data);
                 if (data.success) {
                     dispatch(deletePostSuccessfull(postId));
                 }

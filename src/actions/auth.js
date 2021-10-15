@@ -61,11 +61,11 @@ export function login(email, password) {
             mode: 'cors',
         })
             .then((response) => {
-                console.log('response', response);
+                // console.log('response', response);
                 return response.json();
             })
             .then((data) => {
-                console.log('data', data);
+                // console.log('data', data);
                 if (data.success) {
                     // dispatch action to save user
                     //   save the token to make user persisitent
@@ -110,11 +110,11 @@ export function signup(email, password, username, name) {
             mode: 'cors',
         })
             .then((response) => {
-                console.log('response', response);
+                // console.log('response', response);
                 return response.json();
             })
             .then((data) => {
-                console.log('data', data);
+                // console.log('data', data);
                 if (data.success) {
                     localStorage.setItem('token', data.data.token);
                     dispatch(signupSuccessful(data.data.user));
@@ -193,7 +193,7 @@ export function editUser(name, username, website, bio, userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('EDIT PROFILE data', data);
+                // console.log('EDIT PROFILE data', data);
                 if (data.success) {
                     dispatch(editUserSuccessful(data.data.updated_profile));
                     if (data.data.token) {
@@ -224,7 +224,7 @@ export function changeProfilePic(profileUrl) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Change PROFILE Pic data', data);
+                // console.log('Change PROFILE Pic data', data);
                 if (data.success) {
                     dispatch(
                         changeUserProfileSuccessful(data.data.updated_profile)
@@ -270,7 +270,7 @@ export function changePassword(oldPassword, newPassword, confirmPassword) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Change Pasword data', data);
+                // console.log('Change Pasword data', data);
                 if (data.success) {
                     dispatch(changePasswordSuccessFull(data.data.user));
                     if (data.data.token) {
@@ -320,7 +320,7 @@ export function deleteAccount(id) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Delete User Data', data);
+                // console.log('Delete User Data', data);
                 if (data.success) {
                     dispatch(logoutUser());
                 }
