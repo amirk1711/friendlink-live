@@ -58,7 +58,7 @@ export function login(email, password) {
                 // i can, but it will not be neeeded
             },
             body: getFormBody({ email, password }),
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then((response) => response.json())
             .then((data) => {
@@ -104,7 +104,7 @@ export function signup(email, password, username, name) {
                 username,
                 name,
             }),
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then((response) => {
                 console.log('response', response);
