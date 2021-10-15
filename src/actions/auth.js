@@ -58,6 +58,7 @@ export function login(email, password) {
                 // i can, but it will not be neeeded
             },
             body: getFormBody({ email, password }),
+            mode: 'cors',
         })
             .then((response) => response.json())
             .then((data) => {
@@ -103,6 +104,7 @@ export function signup(email, password, username, name) {
                 username,
                 name,
             }),
+            mode: 'cors',
         })
             .then((response) => {
                 console.log('response', response);
@@ -316,7 +318,7 @@ export function deleteAccount(id) {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Delete User Data', data);
-                if(data.success){
+                if (data.success) {
                     dispatch(logoutUser());
                 }
             });
