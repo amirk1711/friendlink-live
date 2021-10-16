@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { startSignup, signup, clearAuthState } from '../actions/auth';
+import {
+    startSignup,
+    signup,
+    clearAuthState,
+    googleAuth,
+} from '../actions/auth';
+import { GoogleLogin } from 'react-google-login';
 
 class Signup extends Component {
     constructor(props) {
@@ -32,6 +38,14 @@ class Signup extends Component {
             this.props.dispatch(startSignup());
             this.props.dispatch(signup(email, password, username, name));
         }
+    };
+
+    handleGoogleLogin = (response) => {
+        this.props.dispatch(googleAuth(response));
+    };
+
+    handleGoogleFailure = () => {
+        <Redirect to="/login" />;
     };
 
     render() {
@@ -120,13 +134,26 @@ class Signup extends Component {
                             <div className="right-line"></div>
                         </div>
 
-                        <Link className="social-auth" to="/#">
-                            <img
-                                src="https://image.flaticon.com/icons/png/128/281/281764.png"
-                                alt=""
-                            />
-                            Continue with Google
-                        </Link>
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            render={(renderProps) => (
+                                <Link
+                                    to="#"
+                                    className="social-auth"
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                >
+                                    <img
+                                        src="https://image.flaticon.com/icons/png/128/281/281764.png"
+                                        alt=""
+                                    />
+                                    Continue with Google
+                                </Link>
+                            )}
+                            onSuccess={this.handleGoogleLogin}
+                            onFailure={this.handleGoogleFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
 
                         <span className="signup-text">
                             Already have an account?{' '}
