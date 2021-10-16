@@ -20,6 +20,11 @@ body::-webkit-scrollbar {
 }
 
 /* COMMON */
+.text-danger {
+    color: rgb(255, 49, 49);
+    font-size: 13px;
+    margin: 4px 0px 0px 4px;
+}
 a {
     text-decoration: none;
     display: inline-block;

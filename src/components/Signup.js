@@ -8,6 +8,7 @@ import {
     googleAuth,
 } from '../actions/auth';
 import { GoogleLogin } from 'react-google-login';
+import SimpleReactValidator from 'simple-react-validator';
 
 class Signup extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class Signup extends Component {
             name: '',
             username: '',
         };
+        this.validator = new SimpleReactValidator();
     }
 
     componentWillUnmount() {
@@ -32,11 +34,17 @@ class Signup extends Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        const { email, password, username, name } = this.state;
-
-        if (email && password && username && name) {
-            this.props.dispatch(startSignup());
-            this.props.dispatch(signup(email, password, username, name));
+        if (this.validator.allValid()) {
+            const { email, password, username, name } = this.state;
+            if (email && password && username && name) {
+                this.props.dispatch(startSignup());
+                this.props.dispatch(signup(email, password, username, name));
+            }
+        } else {
+            this.validator.showMessages();
+            // re-render to show messages for the first time
+            // you can use the autoForceUpdate option to do this automatically`
+            this.forceUpdate();
         }
     };
 
@@ -69,6 +77,12 @@ class Signup extends Component {
                                 this.handleInputChange('email', e.target.value)
                             }
                         />
+                        {this.validator.message(
+                            'email',
+                            this.state.email,
+                            'required|email',
+                            { className: 'text-danger' }
+                        )}
                     </div>
 
                     <div className="login-field">
@@ -80,6 +94,12 @@ class Signup extends Component {
                                 this.handleInputChange('name', e.target.value)
                             }
                         />
+                        {this.validator.message(
+                            'name',
+                            this.state.name,
+                            'required|alpha_space|max:60',
+                            { className: 'text-danger' }
+                        )}
                     </div>
 
                     <div className="login-field">
@@ -94,6 +114,12 @@ class Signup extends Component {
                                 )
                             }
                         />
+                        {this.validator.message(
+                            'username',
+                            this.state.username,
+                            'required|alpha_num_dash|max:60',
+                            { className: 'text-danger' }
+                        )}
                     </div>
 
                     <div className="login-field">
@@ -108,6 +134,12 @@ class Signup extends Component {
                                 )
                             }
                         />
+                        {this.validator.message(
+                            'password',
+                            this.state.password,
+                            'required|min:8',
+                            { className: 'text-danger' }
+                        )}
                     </div>
 
                     <div className="login-field">
