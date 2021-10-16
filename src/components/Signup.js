@@ -6,6 +6,7 @@ import {
     signup,
     clearAuthState,
     googleAuth,
+    checkUsername,
 } from '../actions/auth';
 import { GoogleLogin } from 'react-google-login';
 import SimpleReactValidator from 'simple-react-validator';
@@ -30,6 +31,9 @@ class Signup extends Component {
         this.setState({
             [field]: value,
         });
+        if (field === 'username') {
+            this.props.dispatch(checkUsername(value));
+        }
     };
 
     onFormSubmit = (e) => {
@@ -57,7 +61,8 @@ class Signup extends Component {
     };
 
     render() {
-        const { inProgress, error, isLoggedin } = this.props.auth;
+        const { inProgress, error, isLoggedin, isUsernameUnique } =
+            this.props.auth;
         if (isLoggedin) {
             return <Redirect to="/" />;
         }
@@ -119,6 +124,11 @@ class Signup extends Component {
                             this.state.username,
                             'required|alpha_num_dash|max:60',
                             { className: 'text-danger' }
+                        )}
+                        {isUsernameUnique === false && (
+                            <p className="text-danger">
+                                Username already taken.
+                            </p>
                         )}
                     </div>
 

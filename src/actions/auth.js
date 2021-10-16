@@ -19,6 +19,7 @@ import {
     CHANGE_PASSWORD_START,
     START_DELETE_ACCOUNT,
     DELETE_ACCOUNT_SUCCESSFULL,
+    CHECK_USERNAME,
 } from './actionTypes';
 
 export function startLogin() {
@@ -41,6 +42,30 @@ export function loginSuccess(user) {
     };
 }
 
+export function checkUsername(username) {
+    return (dispatch) => {
+        const url = APIUrls.checkUsername();
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: getFormBody({ username }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    dispatch(checkUsernameSuccess(data.isUnique));
+                }
+            });
+    };
+}
+export function checkUsernameSuccess(isUnique) {
+    return {
+        type: CHECK_USERNAME,
+        isUnique,
+    };
+}
 export function googleAuth(response) {
     return (dispatch) => {
         const url = APIUrls.googleAuth();

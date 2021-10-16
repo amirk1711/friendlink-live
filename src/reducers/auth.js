@@ -17,6 +17,7 @@ import {
     CHANGE_PASSWORD_START,
     START_DELETE_ACCOUNT,
     DELETE_ACCOUNT_SUCCESSFULL,
+    CHECK_USERNAME,
 } from '../actions/actionTypes';
 
 const initialAuthState = {
@@ -27,10 +28,16 @@ const initialAuthState = {
     isUpdating: false,
     isUploading: false,
     isUploaded: false,
+    isUsernameUnique: null,
 };
 
 export default function auth(state = initialAuthState, action) {
     switch (action.type) {
+        case CHECK_USERNAME:
+            return {
+                ...state,
+                isUsernameUnique: action.isUnique,
+            };
         case CLEAR_AUTH_STATE:
             return {
                 ...state,
@@ -55,6 +62,7 @@ export default function auth(state = initialAuthState, action) {
                 isLoggedin: true,
                 inProgress: false,
                 error: null,
+                isUsernameUnique: null,
             };
         case LOGIN_FAILED:
         case SIGNUP_FAILED:
@@ -62,18 +70,21 @@ export default function auth(state = initialAuthState, action) {
                 ...state,
                 inProgress: false,
                 error: action.error,
+                isUsernameUnique: null,
             };
         case AUTHENTICATE_USER:
             return {
                 ...state,
                 user: action.user,
                 isLoggedin: true,
+                isUsernameUnique: null,
             };
         case LOG_OUT:
             return {
                 ...state,
                 user: {},
                 isLoggedin: false,
+                isUsernameUnique: null,
             };
         case EDIT_USER_START:
             return {
@@ -120,6 +131,7 @@ export default function auth(state = initialAuthState, action) {
             return {
                 ...state,
                 isUpdating: false,
+                isUsernameUnique: null,
             };
         default:
             return state;
