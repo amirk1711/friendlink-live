@@ -46,6 +46,10 @@ class Login extends Component {
         this.props.dispatch(googleAuth(response));
     };
 
+    handleGoogleFailure = () => {
+        <Redirect to="/login" />;
+    };
+
     render() {
         const { error, inProgress, isLoggedin } = this.props.auth;
         const { from } = this.props.location.state || {
@@ -130,7 +134,7 @@ class Login extends Component {
                                 </Link>
                             )}
                             onSuccess={this.handleGoogleLogin}
-                            onFailure={this.handleGoogleLogin}
+                            onFailure={this.handleGoogleFailure}
                             cookiePolicy={'single_host_origin'}
                         />
                         {/* <GoogleLogout
