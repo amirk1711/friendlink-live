@@ -116,7 +116,7 @@ class Login extends Component {
                         <GoogleLogin
                             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                             render={(renderProps) => (
-                                <Link to="#"
+                                <Link
                                     className="social-auth"
                                     onClick={renderProps.onClick}
                                     disabled={renderProps.disabled}
