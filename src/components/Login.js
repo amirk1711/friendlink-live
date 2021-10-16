@@ -113,10 +113,6 @@ class Login extends Component {
                             Continue with Google
                         </Link> */}
 
-                        {console.log(
-                            'scrt id: ',
-                            process.env.REACT_APP_GOOGLE_CLIENT_ID
-                        )}
                         <GoogleLogin
                             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                             render={(renderProps) => (
