@@ -4,6 +4,9 @@ export const APIUrls = {
     login: () => `${API_ROOT}/users/login`,
     signup: () => `${API_ROOT}/users/signup`,
 
+    googleAuth: () => `${API_ROOT}/users/auth/google`,
+    googleAuthCallback: () => `${API_ROOT}/users/auth/google/callback`,
+
     userProfile: (id) => `${API_ROOT}/users/profile/${id}`,
     editProfile: (id) => `${API_ROOT}/users/update/${id}`,
     changeProfilePic: () => `${API_ROOT}/users/change/profile`,

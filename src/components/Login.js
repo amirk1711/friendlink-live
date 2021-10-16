@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import { login, clearAuthState } from '../actions/auth';
+import { login, clearAuthState, googleAuth } from '../actions/auth';
+import { GoogleLogin } from 'react-google-login';
 
 class Login extends Component {
     constructor(props) {
@@ -41,6 +42,10 @@ class Login extends Component {
         }
     };
 
+    handleGoogleLogin = (response) => {
+        this.props.dispatch(googleAuth(response));
+    };
+
     render() {
         const { error, inProgress, isLoggedin } = this.props.auth;
         const { from } = this.props.location.state || {
@@ -49,6 +54,7 @@ class Login extends Component {
         if (isLoggedin) {
             return <Redirect to={from} />;
         }
+
         return (
             <div>
                 <form className="login-form">
@@ -95,14 +101,45 @@ class Login extends Component {
                             <div className="left-line"></div>OR
                             <div className="right-line"></div>
                         </div>
-                        <Link className="social-auth" to="/#">
+                        {/* <Link
+                            className="social-auth"
+                            to="/#"
+                            onClick={this.handleGoogleLogin}
+                        >
                             <img
                                 src="https://image.flaticon.com/icons/png/128/281/281764.png"
                                 alt=""
                             />
                             Continue with Google
+                        </Link> */}
+
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            render={(renderProps) => (
+                                <Link to="#"
+                                    className="social-auth"
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                >
+                                    <img
+                                        src="https://image.flaticon.com/icons/png/128/281/281764.png"
+                                        alt=""
+                                    />
+                                    Continue with Google
+                                </Link>
+                            )}
+                            onSuccess={this.handleGoogleLogin}
+                            onFailure={this.handleGoogleLogin}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                        {/* <GoogleLogout
+                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                            buttonText="Logout"
+                            onLogoutSuccess={logout}
+                        ></GoogleLogout> */}
+                        <Link className="forgot-text" to="/#">
+                            Forgot Password?
                         </Link>
-                        <Link className="forgot-text" to="/#">Forgot Password?</Link>
                         <span className="signup-text">
                             Don't have an account?{' '}
                             <Link to="/signup" className="blue-text">

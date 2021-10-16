@@ -41,6 +41,32 @@ export function loginSuccess(user) {
     };
 }
 
+export function googleAuth(response) {
+    return (dispatch) => {
+        const url = APIUrls.googleAuth();
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: getFormBody({ token: response.tokenId }),
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    // dispatch action to save user
+                    //   save the token to make user persisitent
+                    localStorage.setItem('token', data.data.token);
+                    dispatch(loginSuccess(data.data.user));
+                    return;
+                }
+                dispatch(loginFailed(data.message));
+            });
+    };
+}
+
 export function login(email, password) {
     return (dispatch) => {
         // first dispatch startLogin action
