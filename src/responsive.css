@@ -1,0 +1,96 @@
+/* Responsive Design */
+
+/* #### Mobile Phones Portrait #### */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    /* some CSS here */
+    .login-form {
+        width: 90%;
+    }
+
+    .home {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .posts-list {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+    }
+
+    .side-bar {
+        width: 100%;
+        height: auto;
+    }
+
+    .suggestions-list-wrapper {
+        padding: 4px 12px;
+    }
+
+    .user-profile {
+        width: 100%;
+    }
+
+    .user-profile-upper {
+        padding: 20px 0;
+    }
+
+    .profile-img-container {
+        margin-right: 8px;
+        margin-left: 8px;
+        display: inline-block;
+        height: 110px;
+    }
+    
+    .profile-img-container img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .profile-user-details {
+        padding: 0 8px;
+    }
+
+    .username-row {
+        flex-direction: column;
+    }
+    .profile-username {
+        margin-bottom: 0;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .profile-user-btns {
+        margin-left: 0;
+    }
+    .profile-fullname, .profile-bio {
+        margin-left: -120px;
+    }
+    .stat-btn:last-child {
+        margin-right: 0;
+    }
+
+    .user-profile-lower {
+        padding: 0;
+    }
+
+    .profile-post-card-wrapper {
+        margin-bottom: 10px;
+    }
+
+    .profile-post-card  {
+        width: 32.7%;
+        margin: 0.3%;
+    }
+
+    .settings {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .setting-btns {
+        width: 100%;
+    }
+    .setting-actions {
+        width: 100%;
+    }
+}

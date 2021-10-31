@@ -723,7 +723,6 @@ nav .right-nav {
     display: flex;
     flex-direction: column;
 }
-
 .user-profile-upper {
     padding: 20px;
     display: flex;
@@ -745,6 +744,17 @@ nav .right-nav {
     font-size: 28px;
     font-weight: 300;
     margin-bottom: 14px;
+}
+.profile-user-btns {
+    /* border: 1px solid red; */
+    margin-left: 24px;
+    padding-top: 10px;
+}
+.edit-profile-btn {
+    padding: 4px 8px;
+}
+.settings-btn {
+    padding: 4px 8px;
 }
 .profile-fullname {
     margin-bottom: 6px;
@@ -1277,7 +1287,6 @@ textarea:focus {
     justify-content: center;
 }
 
-
 .chat-tab:focus {
-    background-color:var(--light-white);
+    background-color: var(--light-white);
 }

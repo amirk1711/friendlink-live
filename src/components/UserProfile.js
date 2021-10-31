@@ -102,10 +102,9 @@ class UserProfile extends Component {
                             <span className="profile-username black-text">
                                 {user.username}
                             </span>
-                            &emsp;&emsp;
                             {loggedInUser._id === user._id ? (
                                 <div className="profile-user-btns">
-                                    <button className="mr-10">
+                                    <button className="mr-10 edit-profile-btn">
                                         <Link
                                             to="/settings"
                                             className="black-text"
@@ -113,7 +112,7 @@ class UserProfile extends Component {
                                             Edit Profile
                                         </Link>
                                     </button>
-                                    <button>
+                                    <button className="settings-btn">
                                         <Link
                                             to="/settings"
                                             className="black-text"
@@ -183,7 +182,7 @@ class UserProfile extends Component {
                         </span>
                         <Link
                             to={user.website}
-                            className="profile-bio large-text mb-8"
+                            className="profile-bio large-text blue-text mb-8"
                         >
                             {user.website}
                         </Link>

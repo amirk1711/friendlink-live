@@ -3,8 +3,6 @@ import React from 'react';
 const ProfilePostCard = (props) => {
     const { posts } = props;
 
-    console.log('posts in card', posts);
-
     return (
         <div className="profile-post-card-wrapper">
             {posts.map((post) => {
