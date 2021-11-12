@@ -21,6 +21,8 @@ import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 import Help from './Help';
 import Chat from './Chat';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 export {
     PostsList,
@@ -46,4 +48,6 @@ export {
     DeleteAccount,
     Help,
     Chat,
+    ForgotPassword,
+    ResetPassword,
 };

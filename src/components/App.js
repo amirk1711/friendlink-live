@@ -17,6 +17,8 @@ import {
     UserProfile,
     Navbar,
     Chat,
+    ForgotPassword,
+    ResetPassword,
 } from './';
 
 // PrivateRoute is a functional component
@@ -85,8 +87,14 @@ class App extends React.Component {
                                 );
                             }}
                         />
-                        <Route path="/login" component={Login} />
-                        <Route path="/signup" component={Signup} />
+                        <Route path="/login" exact component={Login} />
+                        <Route path="/signup" exact component={Signup} />
+                        <Route
+                            path="/forgot-password"
+                            exact
+                            component={ForgotPassword}
+                        />
+                        <Route path="/accounts/reset" exact component={ResetPassword} />
                         {/* private route : settings component is accessible only when user is logged in */}
                         <PrivateRoute
                             path="/settings"

@@ -25,8 +25,10 @@ export const APIUrls = {
     createComment: () => `${API_ROOT}/comments/create`,
     deleteComment: (id) => `${API_ROOT}/comments/${id}`,
 
-    toggleLike: (id, likeType) => `${API_ROOT}/likes/toggle?id=${id}&type=${likeType}`,
-    fetchposts: (id, likeType) => `${API_ROOT}/likes/fetch?id=${id}&type=${likeType}`,
+    toggleLike: (id, likeType) =>
+        `${API_ROOT}/likes/toggle?id=${id}&type=${likeType}`,
+    fetchposts: (id, likeType) =>
+        `${API_ROOT}/likes/fetch?id=${id}&type=${likeType}`,
 
     userSearch: (searchText) => `${API_ROOT}/users/search?text=${searchText}`,
 
@@ -35,4 +37,8 @@ export const APIUrls = {
     createChat: () => `${API_ROOT}/chats`,
     fetchChat: (id) => `${API_ROOT}/chats/${id}`,
 
+    confirmEmail: () => `${API_ROOT}/accounts/confirm-email`,
+    validateResetLink: (token) =>
+        `${API_ROOT}/accounts/reset?accessToken=${token}`,
+    resetPassword: () => `${API_ROOT}/accounts/reset-password`,
 };

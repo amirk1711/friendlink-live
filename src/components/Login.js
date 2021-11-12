@@ -142,7 +142,7 @@ class Login extends Component {
                             buttonText="Logout"
                             onLogoutSuccess={logout}
                         ></GoogleLogout> */}
-                        <Link className="forgot-text" to="/#">
+                        <Link className="forgot-text" to="/forgot-password">
                             Forgot Password?
                         </Link>
                         <span className="signup-text">
