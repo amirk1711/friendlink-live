@@ -210,7 +210,7 @@ class UserProfile extends Component {
 
                 <div className="text-center footer-text">
                     <span className="copy-text medium-text">
-                        &copy; {new Date().getFullYear()} Friendlink From Amir
+                        &copy; {new Date().getFullYear()} Friendlink By Amir
                         Khan
                     </span>
                 </div>

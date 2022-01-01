@@ -105,7 +105,7 @@ function ResetPassword(props) {
 
             <div className="text-center footer-text">
                 <span className="copy-text medium-text">
-                    &copy; {new Date().getFullYear()} Friendlink from Amir Khan
+                    &copy; {new Date().getFullYear()} Friendlink By Amir Khan
                 </span>
             </div>
         </div>
