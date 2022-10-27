@@ -1,4 +1,4 @@
-const API_ROOT = 'https://friendlink-app.herokuapp.com/api/v1';
+const API_ROOT = 'https://friendlink.onrender.com/api/v1';
 
 export const APIUrls = {
     login: () => `${API_ROOT}/users/login`,
