@@ -1,4 +1,5 @@
 const API_ROOT = 'https://friendlink.onrender.com/api/v1';
+const CHAT_API = 'https://fl-chat.onrender.com'
 
 export const APIUrls = {
     login: () => `${API_ROOT}/users/login`,
