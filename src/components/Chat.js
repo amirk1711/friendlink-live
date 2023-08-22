@@ -35,7 +35,7 @@ function Chat(props) {
 
     useEffect(() => {
         console.log('setting up socket in client side');
-        socket.current = io('https://fl-chat.herokuapp.com/');
+        socket.current = io('https://fl-chat.onrender.com');
         // removed ws with https
 
         socket.current.on('getMessage', (data) => {
