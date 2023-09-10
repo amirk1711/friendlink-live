@@ -1,12 +1,8 @@
-const API_ROOT = 'https://friendlink.onrender.com/api/v1';
-const CHAT_API = 'https://fl-chat.onrender.com'
+const API_ROOT = 'https://friendlink.onrender.com';
 
 export const APIUrls = {
     login: () => `${API_ROOT}/users/login`,
     signup: () => `${API_ROOT}/users/signup`,
-
-    googleAuth: () => `${API_ROOT}/users/auth/google`,
-    googleAuthCallback: () => `${API_ROOT}/users/auth/google/callback`,
 
     userProfile: (id) => `${API_ROOT}/users/profile/${id}`,
     editProfile: (id) => `${API_ROOT}/users/update/${id}`,
@@ -37,9 +33,4 @@ export const APIUrls = {
     fetchChatUser: (id) => `${API_ROOT}/chat-users/${id}`,
     createChat: () => `${API_ROOT}/chats`,
     fetchChat: (id) => `${API_ROOT}/chats/${id}`,
-
-    confirmEmail: () => `${API_ROOT}/accounts/confirm-email`,
-    validateResetLink: (token) =>
-        `${API_ROOT}/accounts/reset?accessToken=${token}`,
-    resetPassword: () => `${API_ROOT}/accounts/reset-password`,
 };

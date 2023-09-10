@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changePassword } from '../actions/auth';
 
@@ -56,9 +55,6 @@ function ChangePassword(props) {
 
                 <div className="field">
                     <input type="submit" value="Change Password" onClick={handleSubmit}/>
-                    <Link to="/" className="blue-text medium-text">
-                        Forgot Password?
-                    </Link>
                 </div>
             </div>
         </div>

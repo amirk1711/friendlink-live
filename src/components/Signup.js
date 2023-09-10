@@ -5,10 +5,8 @@ import {
     startSignup,
     signup,
     clearAuthState,
-    googleAuth,
     checkUsername,
 } from '../actions/auth';
-import { GoogleLogin } from 'react-google-login';
 import SimpleReactValidator from 'simple-react-validator';
 
 class Signup extends Component {
@@ -50,14 +48,6 @@ class Signup extends Component {
             // you can use the autoForceUpdate option to do this automatically`
             this.forceUpdate();
         }
-    };
-
-    handleGoogleLogin = (response) => {
-        this.props.dispatch(googleAuth(response));
-    };
-
-    handleGoogleFailure = () => {
-        <Redirect to="/login" />;
     };
 
     render() {
@@ -171,32 +161,6 @@ class Signup extends Component {
                     </div>
 
                     <div className="other-actions">
-                        <div className="or-text">
-                            <div className="left-line"></div>OR
-                            <div className="right-line"></div>
-                        </div>
-
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                            render={(renderProps) => (
-                                <Link
-                                    to="#"
-                                    className="social-auth"
-                                    onClick={renderProps.onClick}
-                                    disabled={renderProps.disabled}
-                                >
-                                    <img
-                                        src="https://image.flaticon.com/icons/png/128/281/281764.png"
-                                        alt=""
-                                    />
-                                    Continue with Google
-                                </Link>
-                            )}
-                            onSuccess={this.handleGoogleLogin}
-                            onFailure={this.handleGoogleFailure}
-                            cookiePolicy={'single_host_origin'}
-                        />
-
                         <span className="signup-text">
                             Already have an account?{' '}
                             <Link to="/login" className="blue-text">
