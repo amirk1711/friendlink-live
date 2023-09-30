@@ -13,7 +13,7 @@ function EditProfile(props) {
     const [bio, setBio] = useState(loggedInUser.bio);
     const [profile, setProfile] = useState(loggedInUser.avatar);
 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(loggedInUser.avatar);
     const [localUrl, setLocalUrl] = useState(null);
     const [progress, setProgress] = useState(0);
 
@@ -126,13 +126,13 @@ function EditProfile(props) {
                             className="file"
                             onChange={handleFileChange}
                         />
-                        <label htmlFor="file-p">Change Profile Picture </label>
+                        <label htmlFor="file-p">Change </label>
                         <span className="black-text">&bull;</span>{' '}
                         <span
                             className="remove-profile-text"
                             onClick={handleRemoveBtn}
                         >
-                            Remove Profile Picture
+                            Remove
                         </span>
                     </span>
                 </div>

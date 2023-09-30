@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clearAuthState, editUser } from '../actions/auth';
-import { EditProfile, ChangePassword, DeleteAccount, Help } from './';
+import { clearAuthState, editUser, logoutUser } from '../actions/auth';
+import { EditProfile, ChangePassword, DeleteAccount } from './';
+
 
 class Settings extends Component {
     constructor(props) {
@@ -16,8 +17,6 @@ class Settings extends Component {
     }
 
     handleChange = (fieldName, val) => {
-        // let we have field as name and value as Amir
-        // it will automatically set name : Amir in the state
         this.setState({
             [fieldName]: val,
         });
@@ -37,6 +36,11 @@ class Settings extends Component {
         this.props.dispatch(clearAuthState());
     }
 
+    logOut = () => {
+        localStorage.removeItem('token');
+        this.props.dispatch(logoutUser());
+    };
+
     render() {
         const { activeTab } = this.state;
         return (
@@ -46,21 +50,17 @@ class Settings extends Component {
                         <button autoFocus onClick={() => {this.setState({activeTab: 1})}}>Edit Profile</button>
                         <button onClick={() => {this.setState({activeTab: 2})}}>Change Password</button>
                         <button onClick={() => {this.setState({activeTab: 3})}}>Delete Account</button>
-                        <button onClick={() => {this.setState({activeTab: 4})}}>Help</button>
+                        <button onClick={() => {this.logOut()}}>Logout</button>
                     </div>
-
-                    {/* {console.log('active tab', activeTab)} */}
 
                     {activeTab === 1 && <EditProfile />}
                     {activeTab === 2 && <ChangePassword />}
                     {activeTab === 3 && <DeleteAccount />}
-                    {activeTab === 4 && <Help />}
                 </div>
 
                 <div className="text-center footer-text">
                     <span className="copy-text medium-text">
-                        &copy; {new Date().getFullYear()} Friendlink By Amir
-                        Khan
+                        &copy; {new Date().getFullYear()} Friendlink By Amir Khan
                     </span>
                 </div>
             </div>

@@ -80,7 +80,11 @@ class UserProfile extends Component {
             (Object.keys(user).length === 0 && user.constructor === Object) ||
             profile.inProgress
         ) {
-            return <h1>Loading!</h1>;
+            return (
+                <div class="loader">
+                    <img src="https://amirk1711.github.io/SampleImages/loader_blue.gif" alt="loader"/>
+                </div>
+            );
         }
 
         const isUserAFriend = this.checkIfUserIsAFriend();

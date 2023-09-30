@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import { PostsList, Sidebar } from './';
 import { Redirect } from 'react-router-dom';
-
-import { authenticateUser } from '../actions/auth';
+import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import { PostsList, Sidebar } from './';
 import { fetchPosts } from '../actions/posts';
+import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { fetchUserSuggestions } from '../actions/suggestions';
-import jwtDecode from 'jwt-decode';
-import { connect } from 'react-redux';
+
 
 class Home extends Component {
     componentDidMount() {
         const token = getAuthTokenFromLocalStorage();
-        // console.log('Home mounted ');
         if (token) {
-            // user is logged in
-            // get user out of token
             const user = jwtDecode(token);
-            // authenticate user
-            // console.log('user here ',user);
-            // pass the whole user if needed
-
             this.props.dispatch(
                 authenticateUser({
                     username: user.username,
@@ -36,19 +29,13 @@ class Home extends Component {
                 })
             );
 
-            // dispatch an async action to fetch posts from an api
-            // and store those posts in the redux store
+            // dispatch async actions to fetch data from the server and store it in the redux store
             this.props.dispatch(fetchPosts());
-
-            // fetch user suggestions
             this.props.dispatch(fetchUserSuggestions(user._id));
-
-            // fetch user profile
-            // this.props.dispatch(fetchUserProfile());
         }
     }
     render() {
-        const { posts, isLoggedin, suggestions } = this.props;
+        const {  isLoggedin } = this.props.auth;
         return (
             <div className="home">
                 {!isLoggedin && (
@@ -58,18 +45,16 @@ class Home extends Component {
                         }}
                     />
                 )}
-                {isLoggedin && <PostsList posts={posts} />}
-                {isLoggedin && <Sidebar suggestions={suggestions} />}
+                {isLoggedin && <PostsList />}
+                {isLoggedin && <Sidebar />}
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {
-        posts: state.posts,
+    return { 
         auth: state.auth,
-        suggestions: state.suggestions,
     };
 }
 

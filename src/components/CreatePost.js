@@ -39,9 +39,7 @@ const CreatePost = (props) => {
 
     const handleChange = async (e) => {
         if (e.target.files[0]) {
-            // if user has uploded a photo
-            // set that photo in 'image' variable
-
+            // if user has uploded a photo, set that photo in 'image' variable
             setImage(e.target.files[0]);
             setFileType(e.target.files[0].type);
             setLocalUrl(URL.createObjectURL(e.target.files[0]));
@@ -50,19 +48,15 @@ const CreatePost = (props) => {
 
     const handleCancelBtn = () => {
         setImage(null);
-        // document.getElementById('file').value = null;
     };
 
     const handleCaptionChange = (e) => {
         e.preventDefault();
-        console.log('caption', e.target.value);
         setCaption(e.target.value);
     };
 
     return (
         <div className="create-post">
-            {/* With file inputs, clicking on the label also opens up the file picker */}
-
             {image && (
                 <div className="preview-and-caption">
                     <img src={localUrl} alt="" className="post-preview-img" />
@@ -108,6 +102,4 @@ const CreatePost = (props) => {
     );
 };
 
-// if i dont pass any callback function like mapStatetoProps then
-// i'll get only dispatch function in the CreatePost component
 export default connect()(CreatePost);

@@ -7,11 +7,8 @@ import {
     fetchChats,
     fetchChatUsers,
     addChat,
-    createChatUser,
 } from '../actions/chat';
 import { io } from 'socket.io-client';
-
-// import { format } from 'timeago.js';
 const dateformat = require('dateformat');
 
 function Chat(props) {
@@ -25,9 +22,7 @@ function Chat(props) {
     const scrollRef = useRef();
 
     const [arrivalMessage, setArrivalMessage] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(chat.redirectedUser);
-    const [activeTab, setActiveTab] = useState(1);
 
     useEffect(() => {
         setCurrentChatUser(chat.currentChatUser);
@@ -36,10 +31,8 @@ function Chat(props) {
     useEffect(() => {
         console.log('setting up socket in client side');
         socket.current = io('https://fl-chat.onrender.com');
-        // removed ws with https
 
         socket.current.on('getMessage', (data) => {
-            // console.log('data in getMessage', data);
             setArrivalMessage({
                 sender: data.senderId,
                 message: data.message,
@@ -49,7 +42,6 @@ function Chat(props) {
     }, []);
 
     useEffect(() => {
-        // console.log('inside, a hook', arrivalMessage, currentChatUser);
         arrivalMessage &&
             (Object.values(currentChatUser?.connections[0]).includes(
                 arrivalMessage.sender
@@ -62,13 +54,7 @@ function Chat(props) {
 
     useEffect(() => {
         socket.current.emit('addUser', user._id);
-        // console.log('before setting online users', user);
         socket.current.on('getUsers', (users) => {
-            setOnlineUsers(
-                user.following.filter((f) =>
-                    users.some((u) => u.userId === f._id)
-                )
-            );
         });
     }, [user]);
 
@@ -82,20 +68,8 @@ function Chat(props) {
         dispatch(fetchChats(user._id));
     };
 
-    const handleOnlineChatClick = async (onlineUser) => {
-        // console.log('online user', onlineUser);
-        // console.log('sender :', user);
-
-        // fetch currentChatUser from chat store
-        // await setCurrentChatUser(chat.currentChatUser);
-
-        await setSelectedUser(onlineUser);
-        await dispatch(createChatUser(user._id, onlineUser._id));
-    };
-
     const handleSendBtn = async (e) => {
         e.preventDefault();
-        // console.log('Indide send btn current chat user', currentChatUser);
         const chatObj = await {
             sender: user._id,
             message: newChat,
@@ -112,9 +86,7 @@ function Chat(props) {
             message: newChat,
         });
 
-        // console.log('chtobj', chatObj);
         setNewChat('');
-
         await props.dispatch(createChat(chatObj));
     };
 
@@ -141,28 +113,8 @@ function Chat(props) {
                         <span>{user.username}</span>
                     </Link>
                 </div>
-
-                <div className="post-actions">
-                    <button
-                        autoFocus
-                        className="post-like no-btn chat-tab"
-                        onClick={() => {
-                            setActiveTab(1);
-                        }}
-                    >
-                        Messages
-                    </button>
-                    <button
-                        className="post-comments no-btn chat-tab"
-                        onClick={() => {
-                            setActiveTab(2);
-                        }}
-                    >
-                        Online
-                    </button>
-                </div>
-
-                {!isFetchingChatUsers && activeTab === 1 && (
+              
+                {!isFetchingChatUsers && (
                     <div className="chat-users">
                         {chatUsers?.map((chatuser) => {
                             let otherUser =
@@ -198,42 +150,9 @@ function Chat(props) {
                     </div>
                 )}
 
-                {isFetchingChatUsers && activeTab === 1 && (
-                    <div>Fetching Chat Users </div>
-                )}
-
-                {activeTab === 2 && (
-                    <div className="chat-users">
-                        {onlineUsers.map((onlineUser) => {
-                            // let otherUser =
-                            //     onlineUser.connections[0]._id === user._id
-                            //         ? onlineUser.connections[1]
-                            //         : onlineUser.connections[0];
-
-                            return (
-                                <div
-                                    className="chat-users-list"
-                                    onClick={() => {
-                                        handleOnlineChatClick(onlineUser);
-                                    }}
-                                >
-                                    <img
-                                        src={onlineUser.avatar}
-                                        alt="user-pic"
-                                        className="large profile-pic"
-                                    />
-                                    &ensp;&nbsp;
-                                    <div>
-                                        <p className="black-text medium-text bold-text">
-                                            {onlineUser.username}
-                                        </p>
-                                        <p className="grey-text medium-text">
-                                            {onlineUser.name}
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                {isFetchingChatUsers && (
+                    <div class="loader">
+                        <img src="https://amirk1711.github.io/SampleImages/loader_blue.gif" alt="loader" />
                     </div>
                 )}
             </div>

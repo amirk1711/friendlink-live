@@ -433,63 +433,37 @@ nav span {
 nav .right-nav {
     display: flex;
     align-items: center;
-    flex: 4;
-    justify-content: space-around;
+    justify-content: flex-end;
     color: var(--white);
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
 }
 
 .nav-icons {
-    width: 30%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     align-items: center;
 }
 .nav-icon-item {
-    position: relative;
+    display: flex;
+    align-items: center;
     color: var(--black);
 }
-.noti-icon {
-    width: 23px !important;
-    height: 23px !important;
-}
 .msg-icon {
-    width: 21px !important;
-    height: 21px !important;
-}
-.nav-icon-badge {
-    color: rgb(236, 55, 55);
-    font-size: 16px;
-    position: absolute;
-    top: 16px;
-    left: -1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 25px !important;
+    height: 25px !important;
 }
 .user {
-    width: 50%;
+    margin-left: 20px;
 }
 .user a {
     display: inline-block;
 }
 #user-dp {
     display: block;
-    height: 40px;
-    width: 40px;
+    height: 36px;
+    width: 36px;
     border-radius: 50%;
     object-fit: cover;
 }
-
-/* 
-.nav-links {
-    width: 10%; 
-    border: 1px solid red; 
-}
-*/
-
 .nav-links ul {
     display: flex;
     list-style-type: none;
@@ -1286,4 +1260,8 @@ textarea:focus {
 
 .chat-tab:focus {
     background-color: var(--light-white);
+}
+.loader {
+    display: flex;
+    justify-content: center;
 }

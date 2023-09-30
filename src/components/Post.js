@@ -90,8 +90,6 @@ class Post extends Component {
                 }
             }
         }
-
-        // console.log('folowinglikesu', followingLikedUser);
         
         return (
             <div className="post">

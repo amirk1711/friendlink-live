@@ -5,16 +5,14 @@ import { login, clearAuthState } from '../actions/auth';
 
 class Login extends Component {
     constructor(props) {
-        // call parents(React.Component) constructor first
         super(props);
-
         this.state = {
             email: '',
             password: '',
         };
     }
 
-    // when component will unmount, clear the auth state
+    // clear auth state, when the component unmounts
     componentWillUnmount() {
         this.props.dispatch(clearAuthState());
     }
@@ -35,8 +33,6 @@ class Login extends Component {
         e.preventDefault();
         const { email, password } = this.state;
         if (email && password) {
-            // to use dispatch, first connect
-            // this component to the store
             this.props.dispatch(login(email, password));
         }
     };
@@ -46,7 +42,9 @@ class Login extends Component {
         const { from } = this.props.location.state || {
             from: { pathname: '/' },
         };
+        console.log('check auth in login comp', isLoggedin)
         if (isLoggedin) {
+            console.log('check auth in login comp')
             return <Redirect to={from} />;
         }
 

@@ -8,10 +8,6 @@ class Sidebar extends Component {
         const { suggestions } = this.props;
         return (
             <div className="side-bar">
-                {/* <div className="friends-list-wrapper">
-                    <p className="grey-text mb-8 medium-text">Friends</p>
-                    <FriendsList friends={friends} />
-                </div> */}
 
                 <div className="suggestions-list-wrapper">
                     <p className="grey-text mb-8 medium-text">
@@ -33,7 +29,7 @@ class Sidebar extends Component {
 
 function mapStateToProps(state) {
     return {
-        auth: state.auth,
+        suggestions: state.suggestions,
     };
 }
 
